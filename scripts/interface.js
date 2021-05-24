@@ -1,18 +1,10 @@
 const canvas = document.getElementById('canvas1');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { alpha: false });
 
+const cooldown = 15
+let currentCooldown = cooldown;
 
-const keysPressed = {
-    'walkUp': false,
-    'walkDown': false,
-    'walkLeft': false,
-    'walkRight': false,
-
-    'lookUp': false,
-    'lookDown': false,
-    'lookLeft': false,
-    'lookRight': false
-};
+const keysPressed = {};
 
 const mouse = {
     'x': undefined,
@@ -21,7 +13,6 @@ const mouse = {
 
 const handlers = {
     click(e) {
-        // console.log(e.clientX, e.clientY);
         drawing.isDrawing = true;
     },
     unclick(e) {
@@ -44,7 +35,17 @@ const drawing = {
         'y' : undefined
     },
     start() {
+        if (currentCooldown <= 0) currentCooldown = cooldown;
+        if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown --;
+
         if (!this.isDrawing) {
+            if (keysPressed.Control && keysPressed.z && currentCooldown == cooldown) {
+                currentCooldown = cooldown - 1;
+                wallCount --;
+                walls.pop();
+
+            } 
+            // if (keysPressed.)
             if (mouse.x < canvas.width && mouse.x > 0 && mouse.y < canvas.height && mouse.y > 0) {
                 this.startpos.x = mouse.x;
                 this.startpos.y = mouse.y;
