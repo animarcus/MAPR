@@ -22,7 +22,7 @@ player.draw();
 
 let show2D = true;
 let show2D2 = false;
-let show3D = false;
+let show3D = true;
 let pause = false;
 
 
@@ -42,8 +42,6 @@ function gameLoop() {
     // console.log(renderWalls);
     renderWalls.splice(0, renderWalls.length)
     // console.log(renderWalls);
-
-    
     walls.forEach(wall => {
         // wall.hue +=1;
         if (show2D) wall.draw();
@@ -55,24 +53,57 @@ function gameLoop() {
         }
     });
 
-    if (renderWalls.length > 1 ) {
-        
-        renderWalls.sort(compareWalls);
+    if (renderWalls.length >= 1 ) {
 
         // console.log(renderWalls);
-        renderWalls.forEach(wall => {   // when moving check if renderwalls has items
-            // console.log(wall.index)
-            if (show3D) wall.display3D();
-        })
+        // wallIndexes = [];       //  TESTING
+        // for (i in renderWalls) {
+        //     wallIndexes.push(i);
+        // }
+        // logSorted(renderWalls);
+        
+        renderWalls.sort(compareWalls);
+        // console.log(" ");
+        
+        
+        let tmp = [];
+        renderWalls.forEach(i => {
+            tmp.push(i.index)
+        });
+        // console.log(tmp)
+
+        
+        // logSorted(renderWalls);
+
+        // wallIndexes = [];       //  TESTING
+        // for (i in renderWalls) {
+        //     wallIndexes.push(i);
+        // }
+        // console.log(wallIndexes);
+        
+
+
+        if (show3D) {
+            renderWalls.forEach(wall => {   // when moving check if renderwalls has items
+                // console.log(wall.index)
+                wall.display3D();
+            })
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'white';
+            if (show2D) ctx.fillText(tmp, 50, 50);
+            ctx.restore();
+        }
     }
 
     // walls.sort(compareWalls);
-    ctx.save();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.font = "30px Arial";
-    ctx.fillStyle = 'white';
-    ctx.fillText(renderWalls.length, 50, 50);
-    ctx.restore();
+    // ctx.save();
+    // ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // ctx.font = "30px Arial";
+    // ctx.fillStyle = 'white';
+    // ctx.fillText(renderWalls.length, 50, 50);
+    // ctx.restore();
 
     drawing.start();
 
@@ -80,8 +111,19 @@ function gameLoop() {
 }
 
 
+function logSorted(lst) {
+    let tmp = [];
+    lst.forEach(i => {
+        tmp.push(i.index)
+    });
+    console.log(tmp)
+}
+
+
+
 function compareWalls (v1, v2) {  // each wall has v1 and v2 (compare walls from renderwalls)
     if (pause) return 0;
+    // console.log(v1.index, v2.index)
     // V2p corresponds to v2.pos
     // V2h corresponds to v2.header
     // V1 corresponds to v1.pos
@@ -103,12 +145,12 @@ function compareWalls (v1, v2) {  // each wall has v1 and v2 (compare walls from
     // line(canvas.width / 2, canvas.height / 2, canvas.width / 2 + V1toV2p.x, canvas.height / 2 + V1toV2p.y, "yellow", 5);
     // line(canvas.width / 2, canvas.height / 2, canvas.width / 2 + V1toV2p.x, canvas.height / 2 + V1toV2p.y, "pink", 5);
     // line(canvas.width / 2, canvas.height / 2, canvas.width / 2 + V1toV2h.x, canvas.height / 2 + V1toV2h.y, "pink", 5);
-
+    // console.log(v1.index, v2.index);
 
     // check if both v2.v1 and v2.v2 are either to the left of v1.v1 or to the right of v1.v2
     // if the case, dont bother sorting
-    if ((!isClockwiseOrder(v1.v1, v2.v1) && !isClockwiseOrder(v1.v1, v2.v2))
-        || (isClockwiseOrder(v1.v2, v2.v1) && isClockwiseOrder(v1.v2, v2.v2))) return 0;
+    // if ((!isClockwiseOrder(v1.v1, v2.v1) && !isClockwiseOrder(v1.v1, v2.v2))
+    //     || (isClockwiseOrder(v1.v2, v2.v1) && isClockwiseOrder(v1.v2, v2.v2))) return 0;
 
 
     // player to each header and pos of v1 and v2
@@ -136,7 +178,6 @@ function compareWalls (v1, v2) {  // each wall has v1 and v2 (compare walls from
     const anyV2UnderV1 = (V2pUnderV1 || V2hUnderV1);
     const bothV2UnderV1 = (V2pUnderV1 && V2hUnderV1);
 
-    // console.log(bothV2UnderV1, (V21InsideTri && !V2pUnderV1), (V22InsideTri && !V2hUnderV1))
     // These two if statements are basically a mirror of eachother
     // One condifition is if both v2 points are under or on top of v1
     // Two conditions are if either V2 point is between the V1 points and if that point is on top or under
@@ -145,27 +186,30 @@ function compareWalls (v1, v2) {  // each wall has v1 and v2 (compare walls from
 
     if (V21InsideTri) {
         if (V2pUnderV1) {
-            console.log("v2.v1 inside tri and v2.v1 is under v1");
+            // console.log("v2.v1 inside tri and v2.v1 is under v1");
             return -1;
         } else {
-            console.log("v2.v1 inside tri and v2.v1 is ABOVE v1")
+            // console.log("v2.v1 inside tri and v2.v1 is ABOVE v1")
             return 1;
         }
     } else if (V22InsideTri) {
         if (V2hUnderV1) {
-            console.log("v2.v2 inside tri and v2.v2 is under V1")
+            // console.log("v2.v2 inside tri and v2.v2 is under V1")
             return -1;
         } else {
-            console.log("v2.v2 inside tri and v2.v2 is ABOVE v1")
+            // console.log("v2.v2 inside tri and v2.v2 is ABOVE v1")
             return 1;
         }
-    } else if (anyV2UnderV1) {
-        console.log("one of v2 under v1");
-        return -1;
-    } else if (bothV2UnderV1) {
-        console.log("both v2 ABOVE v1");
+    } else if (!bothV2UnderV1) {
+        // console.log("both v2 ABOVE v1");
         return 1;
+    } else {
+        return -1;
     }
+    //  else if (anyV2UnderV1) {
+    //     // console.log("one of v2 under v1");
+    //     return -1;
+    // }
 }
 
 

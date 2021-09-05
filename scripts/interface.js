@@ -37,9 +37,9 @@ const drawing = {
     start() {
         if (currentCooldown <= 0) currentCooldown = cooldown;
         if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown --;
-
         if (!this.isDrawing) {
             if (keysPressed.Control && keysPressed.z && currentCooldown == cooldown) {
+                console.log("undioing") // TEST
                 currentCooldown = cooldown - 1;
                 wallCount --;
                 walls.pop();

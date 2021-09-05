@@ -49,7 +49,7 @@ class Boundary {
 
         if ((isIntersection(player.fov.v1, this) || isIntersection(player.fov.v2, this)) ||
             (isClockwiseOrder(player.fov.v1.header, this.v1) && !isClockwiseOrder(player.fov.v2.header, this.v1) &&
-             isClockwiseOrder(player.fov.v1.header, this.v2) && !isClockwiseOrder(player.fov.v2.header, this.v2))
+            isClockwiseOrder(player.fov.v1.header, this.v2) && !isClockwiseOrder(player.fov.v2.header, this.v2))
         ) return true;
     }
 
