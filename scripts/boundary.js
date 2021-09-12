@@ -10,7 +10,7 @@ class Boundary {
             'y': y2 - y1,
         };
         wallCount++;
-        this.index = wallCount;
+        this.index = wallCount -1;
         this.length = Math.sqrt((this.header.x) * (this.header.x) + (this.header.y) * (this.header.y));
 
         this.rotation = getRotation(this.pos, this.header);
