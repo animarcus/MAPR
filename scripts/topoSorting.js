@@ -4,7 +4,7 @@ function wallsToGraph(w) {
     
     for (let i = 0; i < w.length; i++) {
         for (let j = i+1; j < w.length; j++) {
-            console.log(v1LowerThanv2(w[i], w[j]), i, j)
+            // console.log(v1LowerThanv2(w[i], w[j]), i, j)
             if (v1LowerThanv2(w[i], w[j]) == true) {
                 g.addEdge(i, j);
             } else {
@@ -40,8 +40,10 @@ function v1LowerThanv2(v1, v2) {
     const PltoV2p = vectorAdd(v2.v1, player.pos);
     const PltoV2h = vectorAdd(v2.v2, player.pos);
 
-    if(v1 == v2) return false; // if lines are the same, ignore
-
+    if(v1 == v2) {
+        console.log(v1.index, v2.index)
+        return false; // if lines are the same, ignore
+    }
     // checks if PltoV2p is in the sector defined by PltoV1p and PltoV1h
     if(ccw(origin, PltoV1p, PltoV2p) && !ccw(origin, PltoV1h, PltoV2p)){
         // if it is, checks if PltoV2p is on the same side of line a as origin
