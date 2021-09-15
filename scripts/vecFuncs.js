@@ -32,16 +32,18 @@ function vectorAdd(A, B) {
     }
 }
 
-function isIntersection(v1, v2) {   // condensed version of intersection() but only the conditional
-    const x1 = v1.pos.x;
-    const y1 = v1.pos.y;
-    const x2 = x1 + v1.header.x * v1.header.length;
-    const y2 = y1 + v1.header.y * v1.header.length;
+function isIntersection(w1, w2) {   // condensed version of intersection() but only the conditional
+    const x1 = w1.pos.x;
+    const y1 = w1.pos.y;
+    const x2 = x1 + w1.header.x * w1.header.length;
+    const y2 = y1 + w1.header.y * w1.header.length;
 
-    const x3 = v2.pos.x;
-    const y3 = v2.pos.y;
-    const x4 = x3 + v2.header.x;
-    const y4 = y3 + v2.header.y;
+    const x3 = w2.pos.x;
+    const y3 = w2.pos.y;
+    const x4 = x3 + w2.header.x;
+    const y4 = y3 + w2.header.y;
+
+    // console.log(x1, y1, x2, y2, x3, y3, x4, y4)
 
     const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
     if (den == 0) return false;

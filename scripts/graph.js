@@ -1,45 +1,48 @@
-// create a graph class
+// https://www.freecodecamp.org/news/8-essential-graph-algorithms-in-javascript/
 class Graph {
-    // defining vertex array and
-    // adjacent list
-    constructor(noOfVertices) {
-        this.AdjList = new Map();
-        this.noOfVertices = noOfVertices;
-        for (let i=0; i < noOfVertices; i++) {
-            this.addVertex(i);
-        }
-        
+    constructor() {
+        this.adjacencyList = new Map();
+        // this.noOfVertices = noOfVertices;
+        // for (let i=0; i < noOfVertices; i++) {
+        //     this.addVertex(i);
+        // }
+
+        // this.adjacencyList.set(1, []);
+        // this.adjacencyList.get(1).push(2);
+        // this.adjacencyList.set(2, []);
+        // this.adjacencyList.get(2).push(5);
+        // console.log(this.adjacencyList)
     }
 
     // add vertex to the graph
-    addVertex(v) {
-        // initialize the adjacent list with a
-        // null array
-        this.AdjList.set(v, []);
+    addVertex(vertex) {
+        if (!this.adjacencyList.get(vertex)) {
+            this.adjacencyList.set(vertex, []);
+        }
     }
-
     // add edge to the graph
-    addEdge(v, w) {
-        // get the list for vertex v and put the
-        // vertex w denoting edge between v and w
-        // console.log(v, w)
-        this.AdjList.get(v).push(w);
-    
-        // Since graph is undirected,
-        // add an edge from w to v also
-        // this.AdjList.get(w).push(v);
+    addEdge(source, destination) {
+        if (!this.adjacencyList.get(source)) {
+            this.addVertex(source);
+        }
+        if (!this.adjacencyList.get(destination)) {
+            this.addVertex(destination);
+        }
+        this.adjacencyList.get(source).push(destination);
+        // this.adjacencyList.get(destination).push(source);
     }
 
     // Prints the vertex and adjacency list
     printGraph() {
         // get all the vertices
-        var get_keys = this.AdjList.keys();
+        console.log(this.adjacencyList)
+        var get_keys = this.adjacencyList.keys();
     
         // iterate over the vertices
         for (var i of get_keys) {
             // great the corresponding adjacency list
             // for the vertex
-            var get_values = this.AdjList.get(i);
+            var get_values = this.adjacencyList.get(i);
             var conc = "";
             // console.log(get_values)
             // iterate over the adjacency list

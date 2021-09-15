@@ -11,11 +11,11 @@ const walls = [];
 let renderWalls = [];
 // const walls = JSON.parse(localStorage.getItem("walls"));
 
-walls.push(new Boundary(canvas.width / 3, 350, canvas.width - canvas.width / 3, 350));
+walls.push(new Boundary(canvas.width / 2, 350, canvas.width - canvas.width / 3, 350));
 walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
-walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
+// walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
 
-walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
+// walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
 player.setFOV();
 
 
