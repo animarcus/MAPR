@@ -1,67 +1,69 @@
 function wallsToGraph(w) {
     const g = new Graph();
-    
     for (let i = 0; i < w.length; i++) {
         for (let j = 0; j < w.length; j++) {
             if (i == j) continue
-            // console.log(v1HigherThanv2(w[i], w[j]), i, j);
+            // v1HigherThanv2(w[i], w[j])
+            // console.log(i, j)
+            // console.log(i, j, v1HigherThanv2(w[i], w[j]));
             if (v1HigherThanv2(w[i], w[j])) {
-                g.addEdge(i, j);
+                console.log("yay")
+                // g.addEdge(i, j);
             }
         }
     }
-    g.printGraph()
+    // g.printGraph()
 }
 
 // returns true if v1 is higher than v2
 function v1HigherThanv2(w1, w2) {
-    console.log(w1.index, w2.index)
-    const PltoW1p = w1.v1;
-    const PltoW1h = w1.v2;
-
-    const PltoW2p = w2.v1;
-    const PltoW2h = w2.v2;
+    // console.log(player.pos, w1.h)
+    // console.log(w1.index, w2.index)
 
     // V2 Just the wall vector (v1header - v1pos)
     // Creating the vector is different so that we can check for intersections
-    const W2ptoW2h = {  "pos": {    "x": player.pos.x + w2.v2.x + w2.v1.x,
-                                    "y": player.pos.y + w2.v2.y + w2.v1.y },
-                        "header": { "x": w2.v2.x - w2.v1.x,
-                                    "y": w2.v2.y - w2.v1.y,
-                                    "length": vectorDist(w2.v2.x - w2.v1.x, w2.v2.y - w2.v1.y)},
+    const W2ptoW2h = {  "pos": {    "x": player.pos.x + w2.p.x * w2.p.dist,
+                                    "y": player.pos.y + w2.p.y * w2.p.dist },
+                        "header": { "x": w2.h.x - w2.p.x,
+                                    "y": w2.h.y - w2.p.y,
+                                    "length": vectorDist(w2.h.x * w1.h.dist - w2.p.x * w2.p.dist, w2.h.y * w2.h.dist - w2.p.y * w2.p.dist)},
                     };
+    W2ptoW2h.header.length = vectorDist(
+        W2ptoW2h.header.x, W2ptoW2h.header.y
+    )
 
     // V1 Just the wall vector (v1header - v1pos)
     // Creating the vector is different so that we can check for intersections
-    const W1ptoW1h = {  "pos": {    "x": player.pos.x + w1.v2.x + w1.v1.x,
-                                    "y": player.pos.y + w1.v2.y + w1.v1.y },
-                        "header": { "x": w1.v2.x - w1.v1.x,
-                                    "y": w1.v2.y - w1.v1.y,
-                                    "length": vectorDist(w1.v2.x - w1.v1.x, w1.v2.y - w1.v1.y)},
+    const W1ptoW1h = {  "pos": {    "x": player.pos.x + w1.p.x * w1.p.dist,
+                                    "y": player.pos.y + w1.p.y * w1.p.dist },
+                        "header": { "x": w1.h.x - w1.p.x,
+                                    "y": w1.h.y - w1.p.y,
+                                    "length": vectorDist(   w1.h.x * w1.h.dist - w1.p.x * w1.p.dist,
+                                                            w1.h.y * w1.h.dist - w1.p.y * w1.p.dist)},
                     };
-    
-    line(player.pos.x, player.pos.y, player.pos.x + w1.v2.x - w1.v1.x, player.pos.y + w1.v2.y - w1.v1.y)
 
     // Vector going from v1 pos to v2 pos (v2pos - v1pos)
-    const W1ptoW2p = vectorCreate(  w2.v1.x - w1.v1.x,
-                                    w2.v1.y - w1.v1.y);
+    const W1ptoW2p = vectorCreate(  w2.p.x - w1.p.x,
+                                    w2.p.y - w1.p.y);
 
     // Vector going from v1 pos to v2 header (v2header - v1pos)
-    const W1ptoW2h = vectorCreate(  w2.v2.x - w1.v1.x,
-                                    w2.v2.y - w1.v1.y);
+    const W1ptoW2h = vectorCreate(  w2.h.x - w1.p.x,
+                                    w2.h.y - w1.p.y);
 
-    if (w1 == w2) {
-        // console.log(v1.index, v2.index)
-        return false; // if lines are the same, ignore
-    }
-
-    // if either point of v2 is overlapping with v1
-    console.log(isClockwiseOrder(PltoW1p, PltoW2p),
-                !isClockwiseOrder(PltoW1h, PltoW2p))
-    console.log(isClockwiseOrder(W1ptoW1h.header, W1ptoW2p),
-                isClockwiseOrder(W1ptoW1h.header, W1ptoW2h))
-    if ((isClockwiseOrder(PltoW1p, PltoW2p) && !isClockwiseOrder(PltoW1h, PltoW2p)) ||  // first check with v2 pos
-        (isClockwiseOrder(PltoW1p, PltoW2h) && !isClockwiseOrder(PltoW1h, PltoW2h))) {  // second check with v2 header
+    // if (w1 == w2) {
+    //     console.log("v1.index, v2.index")
+    //     return false; // if lines are the same, ignore
+    // }
+    line(
+        player.pos.x,
+        player.pos.y,
+        player.pos.x + W1ptoW1h.header.x * W1ptoW1h.header.length,
+        player.pos.y + W1ptoW1h.header.y * W1ptoW1h.header.length
+    )
+    
+    if ((isClockwiseOrder(w1.p, w2.p) && isClockwiseOrder(w2.p, w1.h)) ||  // first check with w2 pos
+        (isClockwiseOrder(w1.p, w2.h) && isClockwiseOrder(w2.h, w1.h))) {  // second check with w2 header
+            console.log(isClockwiseOrder(W1ptoW1h.header, W1ptoW2p), isClockwiseOrder(W1ptoW1h.header, W1ptoW2h))
             // if either of v2 is on top of v1
             if (isClockwiseOrder(W1ptoW1h.header, W1ptoW2p) || isClockwiseOrder(W1ptoW1h.header, W1ptoW2h)) {   // 
                     return true;

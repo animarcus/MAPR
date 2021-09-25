@@ -98,7 +98,7 @@ function gameLoop() {
 
     // drawing.start();
 
-    // requestAnimationFrame(gameLoop);
+    requestAnimationFrame(gameLoop);
 }
 
 

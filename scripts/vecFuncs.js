@@ -40,8 +40,8 @@ function isIntersection(w1, w2) {   // condensed version of intersection() but o
 
     const x3 = w2.pos.x;
     const y3 = w2.pos.y;
-    const x4 = x3 + w2.header.x;
-    const y4 = y3 + w2.header.y;
+    const x4 = x3 + w2.header.x * w2.header.length;
+    const y4 = y3 + w2.header.y * w2.header.length;
 
     // console.log(x1, y1, x2, y2, x3, y3, x4, y4)
 
@@ -53,18 +53,18 @@ function isIntersection(w1, w2) {   // condensed version of intersection() but o
     return u >= 0 && u <= 1 && t >= 0 && t <= 1;  // if t and u are between 0 and 1 then the intersection falls between v1 and v2
 }
 
-function intersection(v1, v2) {
-    if (!isIntersection(v1, v2)) return;
+function intersection(w1, w2) {
+    if (!isIntersection(w1, w2)) return;
 
-    const x1 = v1.pos.x;
-    const y1 = v1.pos.y;
-    const x2 = x1 + v1.header.x * v1.header.length;
-    const y2 = y1 + v1.header.y * v1.header.length;
+    const x1 = w1.pos.x;
+    const y1 = w1.pos.y;
+    const x2 = x1 + w1.header.x * w1.header.length;
+    const y2 = y1 + w1.header.y * w1.header.length;
 
-    const x3 = v2.pos.x;
-    const y3 = v2.pos.y;
-    const x4 = x3 + v2.header.x;
-    const y4 = y3 + v2.header.y;
+    const x3 = w2.pos.x;
+    const y3 = w2.pos.y;
+    const x4 = x3 + w2.header.x * w2.header.length;
+    const y4 = y3 + w2.header.y * w2.header.length;
 
     const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);    
     const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;  // t is needed to check if the intersection exists but not for calculating the point
