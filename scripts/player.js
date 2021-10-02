@@ -19,7 +19,7 @@ class Player {
         };
 
         this.fov = {
-            'xamount': 235,  //based on human eyes
+            'xamount': 235,  //based on human eyes 235 degrees
             'yamount': 280
         };
         this.fov.v1 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) + this.fov.xamount / 2, this.farSight);
@@ -30,11 +30,11 @@ class Player {
     draw() {
         ctx.fillStyle = 'white';
         ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
-        // line(this.pos.x, this.pos.y, this.pos.x + (this.header.x) * 100, this.pos.y + (this.header.y) * 100, 'white', 1);
+        line(this.pos.x, this.pos.y, this.pos.x + (this.header.x) * 100, this.pos.y + (this.header.y) * 100, 'white', 1);
 
-        // this.fov.v1.draw('green');
+        this.fov.v1.draw('green');
 
-        // this.fov.v2.draw('red');
+        this.fov.v2.draw('red');
     }
 
 

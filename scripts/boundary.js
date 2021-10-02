@@ -63,7 +63,6 @@ class Boundary {
 
         //  redefine wall if it intersects with LEFT fov ray
         if (!isClockwiseOrder(player.fov.v1.header, this.p) && isClockwiseOrder(player.fov.v1.header, this.h)) {
-            // console.log("11111");
             this.p = intersection(player.fov.v1, this);
             this.p.x -= player.pos.x;
             this.p.y -= player.pos.y;
@@ -71,7 +70,6 @@ class Boundary {
 
         //  redefine wall if it intersects with RIGHT fov ray
         if (!isClockwiseOrder(player.fov.v2.header, this.p) && isClockwiseOrder(player.fov.v2.header, this.h)) {
-            // console.log("22222");
             this.h = intersection(player.fov.v2, this);
             this.h.x -= player.pos.x;
             this.h.y -= player.pos.y;
@@ -162,6 +160,8 @@ class Boundary {
         let L2 = this.h.projectedDist * a + maxh;
         if (L2 < minh) L2 = minh;
         if (L2 > maxh) L2 = maxh;
+        // ctx.globalAlpha = 0.5
+
         const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
                     this.x2 + canvas.width / 2, canvas.height / 2);
 
@@ -177,6 +177,8 @@ class Boundary {
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height / 2,
         this.x2 + canvas.width / 2, this.h2.h0 + canvas.height / 2
         ], `grd`); // `hsla(1, 50%, 50%, 0.5)`
+
+        // ctx.globalAlpha = 1
     }
 
 

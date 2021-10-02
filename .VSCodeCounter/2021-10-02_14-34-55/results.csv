@@ -1,0 +1,17 @@
+"filename", "language", "JSON with Comments", "TXT", "Markdown", "CSS", "HTML", "JavaScript", "comment", "blank", "total"
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/README.md", "Markdown", 0, 0, 2, 0, 0, 0, 0, 1, 3
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/index.html", "HTML", 0, 0, 0, 0, 29, 0, 1, 1, 31
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/links.txt", "TXT", 0, 1, 0, 0, 0, 0, 9, 0, 10
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/raycasting.code-workspace", "JSON with Comments", 8, 0, 0, 0, 0, 0, 0, 1, 9
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/boundary.js", "JavaScript", 0, 0, 0, 0, 0, 131, 24, 39, 194
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/graph.js", "JavaScript", 0, 0, 0, 0, 0, 30, 22, 6, 58
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/interface.js", "JavaScript", 0, 0, 0, 0, 0, 65, 3, 12, 80
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/main.js", "JavaScript", 0, 0, 0, 0, 0, 49, 50, 36, 135
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/player.js", "JavaScript", 0, 0, 0, 0, 0, 97, 12, 17, 126
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/ray.js", "JavaScript", 0, 0, 0, 0, 0, 16, 2, 1, 19
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/shortcuts.js", "JavaScript", 0, 0, 0, 0, 0, 62, 5, 9, 76
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/test.js", "JavaScript", 0, 0, 0, 0, 0, 23, 1, 10, 34
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/topoSorting.js", "JavaScript", 0, 0, 0, 0, 0, 88, 42, 30, 160
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/vecFuncs.js", "JavaScript", 0, 0, 0, 0, 0, 62, 3, 16, 81
+"/home/marcus/ServerMount/shared_projects/raycasting-v4/style.css", "CSS", 0, 0, 0, 11, 0, 0, 3, 5, 19
+"Total", "-", 8, 1, 2, 11, 29, 623, 177, 184, 1035

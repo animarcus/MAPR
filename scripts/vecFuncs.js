@@ -1,6 +1,6 @@
 function isClockwiseOrder(v1, v2) {  // Tests if the cross product with z=0, returns positive or negative (clockwise or anticlockwise)
     // const crossProduct = v1.x*v2.y - v1.y*v2.x;
-    return v1.x*v2.y - v1.y*v2.x < 0;
+    return v1.x*v2.y - v1.y*v2.x <= 0;
 }
 
 function vectorDist(x, y) { // returns distance of a vector
@@ -33,15 +33,16 @@ function vectorAdd(A, B) {
 }
 
 function isIntersection(w1, w2) {   // condensed version of intersection() but only the conditional
-    const x1 = w1.pos.x;
+    const x1 = w1.pos.x; // meant for fov
     const y1 = w1.pos.y;
     const x2 = x1 + w1.header.x * w1.header.length;
     const y2 = y1 + w1.header.y * w1.header.length;
 
-    const x3 = w2.pos.x;
+    const x3 = w2.pos.x; // meant for wall
     const y3 = w2.pos.y;
-    const x4 = x3 + w2.header.x * w2.header.length;
-    const y4 = y3 + w2.header.y * w2.header.length;
+    const x4 = x3 + w2.header.x;
+    const y4 = y3 + w2.header.y;
+    // console.log(x1, y1, x2, y2)
 
     // console.log(x1, y1, x2, y2, x3, y3, x4, y4)
 
@@ -63,8 +64,8 @@ function intersection(w1, w2) {
 
     const x3 = w2.pos.x;
     const y3 = w2.pos.y;
-    const x4 = x3 + w2.header.x * w2.header.length;
-    const y4 = y3 + w2.header.y * w2.header.length;
+    const x4 = x3 + w2.header.x;
+    const y4 = y3 + w2.header.y;
 
     const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);    
     const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;  // t is needed to check if the intersection exists but not for calculating the point

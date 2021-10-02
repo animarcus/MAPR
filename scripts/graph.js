@@ -2,6 +2,7 @@
 class Graph {
     constructor() {
         this.adjacencyList = new Map();
+        this.edges = []
         // this.noOfVertices = noOfVertices;
         // for (let i=0; i < noOfVertices; i++) {
         //     this.addVertex(i);
@@ -28,6 +29,7 @@ class Graph {
         if (!this.adjacencyList.get(destination)) {
             this.addVertex(destination);
         }
+        this.edges.push([source, destination])
         this.adjacencyList.get(source).push(destination);
         // this.adjacencyList.get(destination).push(source);
     }
@@ -35,7 +37,7 @@ class Graph {
     // Prints the vertex and adjacency list
     printGraph() {
         // get all the vertices
-        console.log(this.adjacencyList)
+        console.log(this.adjacencyList, this.edges)
         var get_keys = this.adjacencyList.keys();
     
         // iterate over the vertices

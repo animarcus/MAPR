@@ -3,7 +3,7 @@ handlers.updateCanvasSize();
 ctx.translate(0,canvas.height);
 ctx.scale(1,-1);
 const player = new Player(canvas.width/2 , canvas.height/2 - 100, 90);
-player.fov.xamount = 135;
+player.fov.xamount = 45;
 
 
 let wallCount = 0
@@ -11,11 +11,11 @@ const walls = [];
 let renderWalls = [];
 // const walls = JSON.parse(localStorage.getItem("walls"));
 
+walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
+// walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
 walls.push(new Boundary(canvas.width / 2, 350, canvas.width - canvas.width / 3, 350));
-walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
-// walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
-
-// walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
+walls[0].hue = 50
+walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
 player.setFOV();
 
 
@@ -55,35 +55,37 @@ function gameLoop() {
         }
     });
 
-    if (renderWalls.length >= 1 ) {
+
+    if (renderWalls.length >= 1 && pause) {
         // renderWalls.sort(compareWalls);
         // console.log(" ");
         
         
-        
-        wallsToGraph(renderWalls);
-        // const sorted = tsort(G.edges);
-        // console.log(sorted)
-
-
-
+        const sorted = wallsToGraph(renderWalls);
         // let tmp = [];
         // renderWalls.forEach(i => {
         //     tmp.push(i.index)
         // });
+
+        let tmp = [];
+        sorted.forEach(i => {
+            tmp.push(renderWalls[i].index)
+        });
         // console.log(tmp)
-        // if (show3D) {
-        //     sorted.forEach(index => {   // when moving check if renderwalls has items
-        //         console.log(index, renderWalls)
-        //         renderWalls[index].display3D();
-        //     })
-        //     ctx.save();
-        //     ctx.setTransform(1, 0, 0, 1, 0, 0);
-        //     ctx.font = "30px Arial";
-        //     ctx.fillStyle = 'white';
-        //     if (show2D) ctx.fillText(tmp, 50, 50);
-        //     ctx.restore();
-        // }
+        if (show3D) {
+            // renderWalls.forEach(i => {
+            //     i.display3D()
+            // })
+            sorted.forEach(index => {
+                renderWalls[index].display3D();
+            });
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'white';
+            if (show2D) ctx.fillText(tmp, 50, 50);
+            ctx.restore();
+        }
     }
 
     // walls.sort(compareWalls);
@@ -96,7 +98,7 @@ function gameLoop() {
 
 
 
-    // drawing.start();
+    drawing.start();
 
     requestAnimationFrame(gameLoop);
 }
