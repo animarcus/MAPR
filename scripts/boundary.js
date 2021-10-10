@@ -160,7 +160,6 @@ class Boundary {
         let L2 = this.h.projectedDist * a + maxh;
         if (L2 < minh) L2 = minh;
         if (L2 > maxh) L2 = maxh;
-        // ctx.globalAlpha = 0.5
 
         const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
                     this.x2 + canvas.width / 2, canvas.height / 2);
@@ -177,8 +176,6 @@ class Boundary {
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height / 2,
         this.x2 + canvas.width / 2, this.h2.h0 + canvas.height / 2
         ], `grd`); // `hsla(1, 50%, 50%, 0.5)`
-
-        // ctx.globalAlpha = 1
     }
 
 

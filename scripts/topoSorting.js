@@ -3,18 +3,31 @@ function wallsToGraph(w) {
     // const test = v1HigherThanv2(w[0], w[1])
     // console.log(test)
     const g = new Graph();
-    for (let i = 0; i < w.length; i++) {
-        for (let j = 0; j < w.length; j++) {
-            if (i == j) continue
-    //         // v1HigherThanv2(w[i], w[j])
+    const tmp = []
+    for (let i = 0; i < w.length - 1; i++) {
+        g.addEdge(-1, i)
+        for (let j = i+1; j < w.length; j++) {
+            tmp.push(i + ", "+ j)
+            // console.log(i, j)
+            // if (i == j) continue
             // console.log(i, j)
             if (v1HigherThanv2(w[i], w[j])) {
+                // console.log("i higher than j", i, j)
                 // console.log("yay")
+                g.addEdge(j, i);
+            } else if (v1HigherThanv2(w[j], w[j])) {
+                // console.log("j higher than i", i, j)
                 g.addEdge(i, j);
             }
         }
     }
-    return tsort(g.edges)
+    // console.log(g.edges)
+
+    g.printGraph();
+    const final = g.topologicalSort().slice(0, w.length);
+    console.log(final)
+    // const final = tsort(g.edges);
+    return final;
 }
 
 // returns true if v1 is higher than v2
@@ -88,19 +101,6 @@ function v1HigherThanv2(w1, w2) {
     return false;
 }
 
-// function CClockwiseToB(origin, B, C) {
-//     const newB = {
-//         "x": origin.x - B.x,
-//         "y": origin.y - B.y
-//     }
-//     const newC = {
-//         "x": origin.x - C.x,
-//         "y": origin.y - C.y
-//     }
-//     return isClockwiseOrder(newB, newC);
-// }
-
-
 
 
 // https://gist.github.com/shinout/1232505
@@ -156,8 +156,8 @@ function tsort(edges) {
         visited[idstr] = true;
 
         node.afters.forEach(function(afterID) {
-        // if (ancestors.indexOf(afterID) >= 0)  // if already in ancestors, a closed chain exists.
-        //     throw new Error('closed chain : ' +  afterID + ' is in ' + id);
+        if (ancestors.indexOf(afterID) >= 0)  // if already in ancestors, a closed chain exists.
+            throw new Error('closed chain : ' +  afterID + ' is in ' + id);
 
         visit(afterID.toString(), ancestors.map(function(v) { return v })); // recursive call
         });

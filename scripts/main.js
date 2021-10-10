@@ -14,17 +14,19 @@ let renderWalls = [];
 walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
 // walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
 walls.push(new Boundary(canvas.width / 2, 350, canvas.width - canvas.width / 3, 350));
-walls[0].hue = 50
-walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
-player.setFOV();
 
+walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
+
+walls[0].hue = 50;
+player.setFOV();
+// console.log(walls)
 
 player.draw();
 
 
 let show2D = true;
 let show2D2 = false;
-let show3D = true;
+let show3D = false;
 let pause = false;
 
 
@@ -56,13 +58,19 @@ function gameLoop() {
     });
 
 
-    if (renderWalls.length >= 1 && pause) {
+    if (renderWalls.length >= 1 && !pause) {
         // renderWalls.sort(compareWalls);
         // console.log(" ");
         
         
-        const sorted = wallsToGraph(renderWalls);
-        // let tmp = [];
+        let sorted = wallsToGraph(renderWalls);
+        
+        if (JSON.stringify(sorted) == JSON.stringify([2, 0, 1])) console.log("HOORAY IT WORKS i think");
+        
+        
+        
+        // console.log(sorted)
+        if (sorted.length <= 1) sorted = [0]// let tmp = [];
         // renderWalls.forEach(i => {
         //     tmp.push(i.index)
         // });
@@ -76,14 +84,21 @@ function gameLoop() {
             // renderWalls.forEach(i => {
             //     i.display3D()
             // })
+            // ctx.globalAlpha = 0.5;
             sorted.forEach(index => {
                 renderWalls[index].display3D();
             });
+            ctx.globalAlpha = 1;
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.font = "30px Arial";
             ctx.fillStyle = 'white';
-            if (show2D) ctx.fillText(tmp, 50, 50);
+            if (show2D) {
+                ctx.fillText(tmp, 50, 50);
+                ctx.font = "20px Arial";
+                ctx.fillText("expected: 2,0,1", 50, 75);
+                ctx.fillText(renderWalls.length, 50, 100);
+            }
             ctx.restore();
         }
     }
@@ -98,9 +113,9 @@ function gameLoop() {
 
 
 
-    drawing.start();
+    // drawing.start();
 
-    requestAnimationFrame(gameLoop);
+    // requestAnimationFrame(gameLoop);
 }
 
 
