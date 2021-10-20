@@ -36,7 +36,7 @@ class Graph {
 
     // Prints the vertex and adjacency list
     printGraph() {
-        console.log(this.adjacencyList)
+        // console.log(this.adjacencyList)
         // get all the vertices
         // console.log(this.adjacencyList, this.edges)
         var get_keys = this.adjacencyList.keys();
@@ -62,34 +62,41 @@ class Graph {
     // https://stackoverflow.com/questions/32857997/get-topological-ordering-of-graph-from-adjacency-list
     topologicalSort() {
         let G = this.adjacencyList;
-        // console.log(this.adjacencyList.keys(), this.adjacencyList);
-        let vertices = []
-        let explored = new Set()
-        // console.log(G.get(-1));
-        // for (let i of G.keys()) {
-        //     console.log(i)
-        // }
+        let distance = new Map();
+
         for (let v of G.keys()) {
             
-            if (!explored.has(v)) {
-                this.dfs(G, v, explored, vertices)
+            if (!distance.has(v)) {
+                distance.set(v, 0);
+                this.dfs(v, distance);
             }
-            //     dfs(G, v, explored, distance, current_label)
+        }
+        
+        
+        // let M = Math.max(distance.entries());
+        let vertices = []
+        let i = 0;
+        while (distance.size > 0) {
+            for (let v of G.keys()) {
+                if (distance.get(v) == i) {
+                    vertices.push(v)
+                    distance.delete(v)
+                }
+            }
+            i += 1
         }
         return vertices;
     }
 
-    dfs(G, s, explored, vertices) {
-        explored.add(s)
-        
-        // #print G[s]
-        for (let v of G.keys()) {
-            // console.log(v)
-            if (!explored.has(v)) {
-                this.dfs(G, v, explored, vertices)
+    dfs(s, distance) {
+        // console.log(s);
+        let ds = distance.get(s);
+        for (let v of this.adjacencyList.get(s)) {
+            
+            if (!distance.has(v) || distance.get(v) < ds + 1) {
+                distance.set(v, ds+1);
+                this.dfs(v, distance);
             }
         }
-        vertices.push(s)
-        console.log(vertices);
     }
 }

@@ -30,11 +30,11 @@ class Player {
     draw() {
         ctx.fillStyle = 'white';
         ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
-        line(this.pos.x, this.pos.y, this.pos.x + (this.header.x) * 100, this.pos.y + (this.header.y) * 100, 'white', 1);
+        // line(this.pos.x, this.pos.y, this.pos.x + (this.header.x) * 100, this.pos.y + (this.header.y) * 100, 'white', 1);
 
-        this.fov.v1.draw('green');
+        this.fov.v1.draw('white'); // green
 
-        this.fov.v2.draw('red');
+        this.fov.v2.draw('white'); // green
     }
 
 
@@ -63,22 +63,17 @@ class Player {
         }
     }
     sideMove(step) {
-        if (this.collision(step)) return;
+        // if (this.collision(step)) return;
         this.pos.x += -step * this.header.y;
         this.pos.y += step * this.header.x;
         this.setFOV();
     }
     straightMove(step) {
-        if (this.collision(step)) return;
+        // if (this.collision(step)) return;
         this.pos.x = this.pos.x + step * this.header.x;
         this.pos.y = this.pos.y + step * this.header.y;
         this.setFOV();
     }
-    collision(step) {
-        // walls.forEach(wall => {
-        //     if (isIntersection(this.header, wall)) 
-        // });
-    } 
 
     setFOV() {
         this.fov.v1.setAngle(degrees(this.rotation) + this.fov.xamount / 2);

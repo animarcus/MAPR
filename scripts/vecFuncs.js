@@ -32,26 +32,25 @@ function vectorAdd(A, B) {
     }
 }
 
-function isIntersection(w1, w2) {   // condensed version of intersection() but only the conditional
-    const x1 = w1.pos.x; // meant for fov
+// condensed version of intersection() but only the conditional
+function isIntersection(w1, w2) {   
+    const x1 = w1.pos.x; // meant for fov rays
     const y1 = w1.pos.y;
     const x2 = x1 + w1.header.x * w1.header.length;
     const y2 = y1 + w1.header.y * w1.header.length;
 
-    const x3 = w2.pos.x; // meant for wall
+    const x3 = w2.pos.x; // meant for wall objects
     const y3 = w2.pos.y;
     const x4 = x3 + w2.header.x;
     const y4 = y3 + w2.header.y;
-    // console.log(x1, y1, x2, y2)
-
-    // console.log(x1, y1, x2, y2, x3, y3, x4, y4)
 
     const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
     if (den == 0) return false;
     const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
     const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
     
-    return u >= 0 && u <= 1 && t >= 0 && t <= 1;  // if t and u are between 0 and 1 then the intersection falls between v1 and v2
+    // if t and u are between 0 and 1 then the intersection falls between v1 and v2
+    return u >= 0 && u <= 1 && t >= 0 && t <= 1;  
 }
 
 function intersection(w1, w2) {
@@ -67,8 +66,8 @@ function intersection(w1, w2) {
     const x4 = x3 + w2.header.x;
     const y4 = y3 + w2.header.y;
 
-    const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);    
-    const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;  // t is needed to check if the intersection exists but not for calculating the point
+    const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;
 
     const xint = x3 + u * (x4 - x3);
     const yint = y3 + u * (y4 - y3);

@@ -59,7 +59,7 @@ const drawing = {
     },
     stop() {
         if (this.isDrawing && (Math.abs(this.startpos.x - mouse.x) > 10 || Math.abs(this.startpos.y - mouse.y) > 10)) {
-            walls.push(new Boundary(this.startpos.x, this.startpos.y, mouse.x, mouse.y));
+            walls.push(new Boundary(this.startpos.x, this.startpos.y, mouse.x, mouse.y, HEXtoHSL(document.getElementById("colorpick").value).h));
         }
         this.isDrawing = false;
     }

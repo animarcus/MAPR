@@ -3,7 +3,7 @@ handlers.updateCanvasSize();
 ctx.translate(0,canvas.height);
 ctx.scale(1,-1);
 const player = new Player(canvas.width/2 , canvas.height/2 - 100, 90);
-player.fov.xamount = 45;
+player.fov.xamount = 90;
 
 
 let wallCount = 0
@@ -11,13 +11,34 @@ const walls = [];
 let renderWalls = [];
 // const walls = JSON.parse(localStorage.getItem("walls"));
 
+
+
 walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
-// walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
+/// walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
 walls.push(new Boundary(canvas.width / 2, 350, canvas.width - canvas.width / 3, 350));
 
 walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
-
 walls[0].hue = 50;
+
+let tmp = ""
+walls.forEach(w => {
+    tmp = tmp + "walls.push(new Boundary(" + w.pos.x + ", " + w.pos.y + ", " +
+                                        w.header.x + ", " + w.header.y + ", " + w.hue + "));\n"
+});
+console.log(tmp);
+// walls.push(new Boundary(430, 270, 530, 270));
+// walls.push(new Boundary(339, 118, 232, 192));
+// walls.push(new Boundary(157, 197, 113, 387));
+// walls.push(new Boundary(201, 417, 289, 321));
+// walls.push(new Boundary(354, 427, 488, 495));
+// walls.push(new Boundary(615, 464, 702, 417));
+// walls.push(new Boundary(790, 200, 694, 59));
+// walls.push(new Boundary(429, 20, 304, 32));
+// walls.push(new Boundary(148, 58, 39, 95));
+// walls.push(new Boundary(488, 115, 613, 157));
+// walls.push(new Boundary(912, 251, 931, 409));
+// walls.push(new Boundary(762, 345, 815, 472));
+
 player.setFOV();
 // console.log(walls)
 
@@ -65,7 +86,7 @@ function gameLoop() {
         
         let sorted = wallsToGraph(renderWalls);
         
-        if (JSON.stringify(sorted) == JSON.stringify([2, 0, 1])) console.log("HOORAY IT WORKS i think");
+        // if (JSON.stringify(sorted) == JSON.stringify([2, 0, 1])) console.log("HOORAY IT WORKS i think");
         
         
         
@@ -103,19 +124,9 @@ function gameLoop() {
         }
     }
 
-    // walls.sort(compareWalls);
-    // ctx.save();
-    // ctx.setTransform(1, 0, 0, 1, 0, 0);
-    // ctx.font = "30px Arial";
-    // ctx.fillStyle = 'white';
-    // ctx.fillText(renderWalls.length, 50, 50);
-    // ctx.restore();
+    drawing.start();
 
-
-
-    // drawing.start();
-
-    // requestAnimationFrame(gameLoop);
+    requestAnimationFrame(gameLoop);
 }
 
 
@@ -131,7 +142,8 @@ function logSorted(lst) {
 
 // background terrain
 function background() {
-    ctx.fillStyle = '#00d2ff';
+    // ctx.fillStyle = '#00d2ff';
+    ctx.fillStyle = "#b3b3b3";
     ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height);
     ctx.fillStyle = 'gray';
     ctx.fillRect(0, -canvas.height/2, canvas.width, canvas.height);

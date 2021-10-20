@@ -1,0 +1,45 @@
+Date : 2021-10-15 20:03:33
+Directory : /home/marcus/ServerMount/shared_projects/raycasting-v4
+Total : 15 files,  719 codes, 190 comments, 196 blanks, all 1105 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JavaScript         |         10 |        668 |        177 |        188 |      1,033 |
+| HTML               |          1 |         29 |          1 |          1 |         31 |
+| CSS                |          1 |         11 |          3 |          5 |         19 |
+| JSON with Comments |          1 |          8 |          0 |          1 |          9 |
+| Markdown           |          1 |          2 |          0 |          1 |          3 |
+| TXT                |          1 |          1 |          9 |          0 |         10 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                |         15 |        719 |        190 |        196 |      1,105 |
+| scripts                                                                          |         10 |        668 |        177 |        188 |      1,033 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                         | language           | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/README.md                 | Markdown           |          2 |          0 |          1 |          3 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/index.html                | HTML               |         29 |          1 |          1 |         31 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/links.txt                 | TXT                |          1 |          9 |          0 |         10 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/raycasting.code-workspace | JSON with Comments |          8 |          0 |          1 |          9 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/boundary.js       | JavaScript         |        131 |         24 |         40 |        195 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/graph.js          | JavaScript         |         65 |         26 |         12 |        103 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/interface.js      | JavaScript         |         65 |          3 |         12 |         80 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/main.js           | JavaScript         |         75 |         45 |         37 |        157 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/player.js         | JavaScript         |         95 |          9 |         17 |        121 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/ray.js            | JavaScript         |         16 |          2 |          1 |         19 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/shortcuts.js      | JavaScript         |         62 |          5 |          9 |         76 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/test.js           | JavaScript         |         23 |          1 |         10 |         34 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/topoSorting.js    | JavaScript         |         74 |         58 |         35 |        167 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/scripts/vecFuncs.js       | JavaScript         |         62 |          4 |         15 |         81 |
+| /home/marcus/ServerMount/shared_projects/raycasting-v4/style.css                 | CSS                |         11 |          3 |          5 |         19 |
+| Total                                                                            |                    |        719 |        190 |        196 |      1,105 |
++----------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

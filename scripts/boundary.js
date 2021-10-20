@@ -1,5 +1,5 @@
 class Boundary {
-    constructor(x1, y1, x2, y2) {
+    constructor(x1, y1, x2, y2, hue="0") {
         // console.log(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
         this.pos = {
             'x': x1,
@@ -14,7 +14,8 @@ class Boundary {
         this.length = Math.sqrt((this.header.x) * (this.header.x) + (this.header.y) * (this.header.y));
 
         this.rotation = getRotation(this.pos, this.header);
-        this.hue = 0;
+        console.log(hue)
+        this.hue = hue; //colorpicker element in main.js
         this.opacity = 0.5;
 
         this.height0 = 0;
@@ -24,9 +25,11 @@ class Boundary {
     }
 
     draw() {
-        line(this.pos.x, this.pos.y, this.pos.x + this.header.x, this.pos.y + this.header.y, 'white', 3);
+        line(this.pos.x, this.pos.y, this.pos.x + this.header.x, this.pos.y + this.header.y, "hsl(" + this.hue + ", 100, 50)", 3);
         ellipse(this.pos.x, this.pos.y, 5, 5, 'green');
         ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 5, 5, 'red');
+        // ellipse(this.pos.x, this.pos.y, 2, 2, 'white');  // green
+        // ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 2, 2, 'white'); // red
 
         ctx.save();
         ctx.setTransform(1, 0, 0, 1, 0, 0);
