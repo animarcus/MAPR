@@ -1,5 +1,5 @@
 class Boundary {
-    constructor(x1, y1, x2, y2, hue="0") {
+    constructor(x1, y1, x2, y2, hue="0", opacity=1, height0=0, height1=500) {
         // console.log(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
         this.pos = {
             'x': x1,
@@ -14,12 +14,12 @@ class Boundary {
         this.length = Math.sqrt((this.header.x) * (this.header.x) + (this.header.y) * (this.header.y));
 
         this.rotation = getRotation(this.pos, this.header);
-        console.log(hue)
+        // console.log(hue)
         this.hue = hue; //colorpicker element in main.js
-        this.opacity = 0.5;
+        this.opacity = opacity;
 
-        this.height0 = 0;
-        this.height1 = 500;
+        this.height0 = height0;
+        this.height1 = height1;
 
         
     }
@@ -50,7 +50,7 @@ class Boundary {
             'y': (this.pos.y + this.header.y) - player.pos.y
         };
 
-        if ((isIntersection(player.fov.v1, this) || isIntersection(player.fov.v2, this)) ||
+        if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
             (isClockwiseOrder(player.fov.v1.header, this.p) && !isClockwiseOrder(player.fov.v2.header, this.p) &&
             isClockwiseOrder(player.fov.v1.header, this.h) && !isClockwiseOrder(player.fov.v2.header, this.h))
         ) return true;
@@ -66,21 +66,21 @@ class Boundary {
 
         //  redefine wall if it intersects with LEFT fov ray
         if (!isClockwiseOrder(player.fov.v1.header, this.p) && isClockwiseOrder(player.fov.v1.header, this.h)) {
-            this.p = intersection(player.fov.v1, this);
+            this.p = intersectionFovW(player.fov.v1, this);
             this.p.x -= player.pos.x;
             this.p.y -= player.pos.y;
         }
 
         //  redefine wall if it intersects with RIGHT fov ray
         if (!isClockwiseOrder(player.fov.v2.header, this.p) && isClockwiseOrder(player.fov.v2.header, this.h)) {
-            this.h = intersection(player.fov.v2, this);
+            this.h = intersectionFovW(player.fov.v2, this);
             this.h.x -= player.pos.x;
             this.h.y -= player.pos.y;
         }
         this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
         this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
 
-        // debugging
+        // debugging  2D Representation
         if (show2D2) {
             ellipse(player.pos.x + this.p.x, player.pos.y + this.p.y, 10, 10, 'yellow');
             line(player.pos.x, player.pos.y, player.pos.x + this.p.x, player.pos.y + this.p.y, 'purple', 5);
@@ -108,11 +108,9 @@ class Boundary {
 
         v2xangle = v2xangle + v1xangle; // make v2 relative to v1
 
-        this.p.projectedDist = this.p.dist * Math.cos(v1xangle) // correcting the projection because otherwise we get some kind of fisheye effect
         this.x1 = degrees(v1xangle) * canvas.width / fovamount;
         this.h1 = this.calculateHeight(this.p);
 
-        this.h.projectedDist = this.h.dist * Math.cos(v2xangle) // correcting the projection because otherwise we get some kind of fisheye effect
         this.x2 = degrees(v2xangle) * canvas.width / fovamount;
         this.h2 = this.calculateHeight(this.h);
         // console.log(this.h2.h0, this.h2.h1, this.h2.dist);
@@ -122,13 +120,13 @@ class Boundary {
 
     //works by supposing a 2d side view of the player looking at the wall and using trigonometry to find the angle of the top and bottom of the wall
     calculateHeight(v) {
-        const header = vectorCreate(v.projectedDist, 0);
-        const h0 = vectorCreate(v.projectedDist, this.height0 - player.height);
-        const h1 = vectorCreate(v.projectedDist, this.height1 - player.height);
+        const header = vectorCreate(v.dist, 0);
+        const h0 = vectorCreate(v.dist, this.height0 - player.height);
+        const h1 = vectorCreate(v.dist, this.height1 - player.height);
 
 
-        let anglev1 = Math.acos((vectorDotProduct(header, h0)) / (vectorDist(h0.x, h0.y) * v.projectedDist));
-        let anglev2 = Math.acos((vectorDotProduct(header, h1)) / (vectorDist(h1.x, h1.y) * v.projectedDist));
+        let anglev1 = Math.acos((vectorDotProduct(header, h0)) / (vectorDist(h0.x, h0.y) * v.dist));
+        let anglev2 = Math.acos((vectorDotProduct(header, h1)) / (vectorDist(h1.x, h1.y) * v.dist));
 
         // console.log(Math.round(vectorDist(h1.x, h1.y)), Math.round(degrees(anglev2)), Math.round(h1.y))
         if (isClockwiseOrder(header, h0)) anglev1 = -anglev1;
@@ -138,7 +136,7 @@ class Boundary {
             'h0': 1 * degrees(anglev1) * canvas.height / player.fov.yamount * 2,
             'h1': 1 * degrees(anglev2) * canvas.height / player.fov.yamount * 2,
             'sat': 1,
-            'dist': v.projectedDist
+            'dist': v.dist
         };
     }
 
@@ -146,21 +144,17 @@ class Boundary {
 
 
     display3D() {
-        // const fovamount = player.fov.xamount;
-        // const fov = player.fov;
-        // const fovmax = player.header.length;
-        // const hue = fov;
         const minh = 25;
         const maxh = 50;
         const ver = maxh - minh;
         const hor = 450;
         const a = -ver/hor;
         // function determined with https://math.stackexchange.com/questions/2170013/looking-for-a-decreasing-function-which-initially-decreases-slowly-and-then-decr
-        let L1 = this.p.projectedDist * a + maxh;
+        let L1 = this.p.dist * a + maxh;
         if (L1 < minh) L1 = minh;
         if (L1 > maxh) L1 = maxh;
 
-        let L2 = this.h.projectedDist * a + maxh;
+        let L2 = this.h.dist * a + maxh;
         if (L2 < minh) L2 = minh;
         if (L2 > maxh) L2 = maxh;
 
@@ -169,16 +163,16 @@ class Boundary {
 
         grd.addColorStop(0, `hsla(${this.hue}, 100%, ${L1}%, 1)`);
         grd.addColorStop(1, `hsla(${this.hue}, 100%, ${L2}%, 1)`);
-        // grd.addColorStop(0, "red");
-        // grd.addColorStop(1, 'white');
         ctx.fillStyle = grd;
-        // this.hue = grd;
-
+        
+        let tmpalpha = ctx.globalAlpha;
+        ctx.globalAlpha = this.opacity;
         polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
         this.x1 + canvas.width / 2, this.h1.h1 + canvas.height / 2,
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height / 2,
         this.x2 + canvas.width / 2, this.h2.h0 + canvas.height / 2
         ], `grd`); // `hsla(1, 50%, 50%, 0.5)`
+        ctx.globalAlpha = tmpalpha;
     }
 
 
@@ -189,7 +183,5 @@ class Boundary {
         this.header.x = Math.cos(angle) * this.length;
         this.header.y = Math.sin(angle) * this.length;
         this.rotation = getRotation(this.pos, this.header);
-        // console.log(this.header.x, this.header.y);
-        // this.length = Math.sqrt((this.header.x)*(this.header.x) - (this.header.y)*(this.header.y));
     }
 }

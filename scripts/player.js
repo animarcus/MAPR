@@ -5,7 +5,7 @@ class Player {
 
         this.height = 180; // height is in cm
 
-        this.farSight = 950
+        this.farSight = 1000
         this.moveStep = 2;
         this.lookStep = 5;
         this.pos = {

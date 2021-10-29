@@ -1,0 +1,17 @@
+"filename", "language", "HTML", "JSON with Comments", "CSS", "JavaScript", "TXT", "Markdown", "comment", "blank", "total"
+"/home/marcus/github/raycasting-v4/README.md", "Markdown", 0, 0, 0, 0, 0, 2, 0, 1, 3
+"/home/marcus/github/raycasting-v4/index.html", "HTML", 31, 0, 0, 0, 0, 0, 1, 2, 34
+"/home/marcus/github/raycasting-v4/links.txt", "TXT", 0, 0, 0, 0, 1, 0, 9, 0, 10
+"/home/marcus/github/raycasting-v4/raycasting.code-workspace", "JSON with Comments", 0, 8, 0, 0, 0, 0, 0, 1, 9
+"/home/marcus/github/raycasting-v4/scripts/boundary.js", "JavaScript", 0, 0, 0, 125, 0, 0, 31, 40, 196
+"/home/marcus/github/raycasting-v4/scripts/graph.js", "JavaScript", 0, 0, 0, 84, 0, 0, 44, 14, 142
+"/home/marcus/github/raycasting-v4/scripts/interface.js", "JavaScript", 0, 0, 0, 65, 0, 0, 3, 12, 80
+"/home/marcus/github/raycasting-v4/scripts/main.js", "JavaScript", 0, 0, 0, 82, 0, 0, 37, 30, 149
+"/home/marcus/github/raycasting-v4/scripts/player.js", "JavaScript", 0, 0, 0, 95, 0, 0, 9, 17, 121
+"/home/marcus/github/raycasting-v4/scripts/ray.js", "JavaScript", 0, 0, 0, 16, 0, 0, 2, 1, 19
+"/home/marcus/github/raycasting-v4/scripts/shortcuts.js", "JavaScript", 0, 0, 0, 109, 0, 0, 7, 12, 128
+"/home/marcus/github/raycasting-v4/scripts/test.js", "JavaScript", 0, 0, 0, 23, 0, 0, 1, 10, 34
+"/home/marcus/github/raycasting-v4/scripts/topoSorting.js", "JavaScript", 0, 0, 0, 50, 0, 0, 7, 12, 69
+"/home/marcus/github/raycasting-v4/scripts/vecFuncs.js", "JavaScript", 0, 0, 0, 98, 0, 0, 6, 23, 127
+"/home/marcus/github/raycasting-v4/style.css", "CSS", 0, 0, 11, 0, 0, 0, 3, 5, 19
+"Total", "-", 31, 8, 11, 747, 1, 2, 160, 180, 1140

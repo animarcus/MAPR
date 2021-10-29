@@ -1,0 +1,45 @@
+Date : 2021-10-29 12:38:46
+Directory : /home/marcus/github/raycasting-v4
+Total : 15 files,  800 codes, 160 comments, 180 blanks, all 1140 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JavaScript         |         10 |        747 |        147 |        171 |      1,065 |
+| HTML               |          1 |         31 |          1 |          2 |         34 |
+| CSS                |          1 |         11 |          3 |          5 |         19 |
+| JSON with Comments |          1 |          8 |          0 |          1 |          9 |
+| Markdown           |          1 |          2 |          0 |          1 |          3 |
+| TXT                |          1 |          1 |          9 |          0 |         10 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                        | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                           |         15 |        800 |        160 |        180 |      1,140 |
+| scripts                                                     |         10 |        747 |        147 |        171 |      1,065 |
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                    | language           | code       | comment    | blank      | total      |
++-------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /home/marcus/github/raycasting-v4/README.md                 | Markdown           |          2 |          0 |          1 |          3 |
+| /home/marcus/github/raycasting-v4/index.html                | HTML               |         31 |          1 |          2 |         34 |
+| /home/marcus/github/raycasting-v4/links.txt                 | TXT                |          1 |          9 |          0 |         10 |
+| /home/marcus/github/raycasting-v4/raycasting.code-workspace | JSON with Comments |          8 |          0 |          1 |          9 |
+| /home/marcus/github/raycasting-v4/scripts/boundary.js       | JavaScript         |        125 |         31 |         40 |        196 |
+| /home/marcus/github/raycasting-v4/scripts/graph.js          | JavaScript         |         84 |         44 |         14 |        142 |
+| /home/marcus/github/raycasting-v4/scripts/interface.js      | JavaScript         |         65 |          3 |         12 |         80 |
+| /home/marcus/github/raycasting-v4/scripts/main.js           | JavaScript         |         82 |         37 |         30 |        149 |
+| /home/marcus/github/raycasting-v4/scripts/player.js         | JavaScript         |         95 |          9 |         17 |        121 |
+| /home/marcus/github/raycasting-v4/scripts/ray.js            | JavaScript         |         16 |          2 |          1 |         19 |
+| /home/marcus/github/raycasting-v4/scripts/shortcuts.js      | JavaScript         |        109 |          7 |         12 |        128 |
+| /home/marcus/github/raycasting-v4/scripts/test.js           | JavaScript         |         23 |          1 |         10 |         34 |
+| /home/marcus/github/raycasting-v4/scripts/topoSorting.js    | JavaScript         |         50 |          7 |         12 |         69 |
+| /home/marcus/github/raycasting-v4/scripts/vecFuncs.js       | JavaScript         |         98 |          6 |         23 |        127 |
+| /home/marcus/github/raycasting-v4/style.css                 | CSS                |         11 |          3 |          5 |         19 |
+| Total                                                       |                    |        800 |        160 |        180 |      1,140 |
++-------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -1,18 +1,78 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    /* touch-action: manipulation; */
+}
+
 body {
-    display: flex;
-    justify-content: center;
+    
+    overflow: hidden;
+    position: fixed;
+    /* display: flex;
+    justify-content: center; */
     background: rgb(2,0,36);
     background: linear-gradient(140deg, rgb(202, 246, 223) 10%, rgba(0,212,255,1) 100%) fixed;
 }
 
 
 
-#canvas1 {
-    /* width: 80vw;
-    height: 60vw; */
-    width:1000px;
-    height: 500px;
-    /* background:rgb(255, 255, 255); */
 
+.container {
+    /* height: 100%; */
+    display: grid;
+    grid-template-columns: 65% auto;
+    grid-template-rows: 75% auto;
+    grid-template-areas:
+        "perspective flatview"
+        "controls controls";
+    
+    width: 100vw;
+    height: 100vh;
+}
+
+.controls {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding-top: 30px;
+
+    background-color: crimson;
+    grid-area: controls;
+}
+.perspective {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    background-color: blue;
+    grid-area: perspective;
+}
+.flatview { 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+
+    background-color: yellow;
+    grid-area: flatview;
+} 
+
+
+#canvas3D {
+    width: 100%;
+    height: auto;
+
+    background:rgb(56, 56, 56);
+
+}
+
+#canvas2D {
+    width: 100%;
+    padding-top: 50%;
     background:rgb(56, 56, 56);
 }

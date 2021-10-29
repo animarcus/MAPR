@@ -2,7 +2,7 @@
 handlers.updateCanvasSize();
 ctx.translate(0,canvas.height);
 ctx.scale(1,-1);
-const player = new Player(canvas.width/2 , canvas.height/2 - 100, 90);
+const player = new Player(canvas.width/2 , -388, 90);
 player.fov.xamount = 90;
 
 
@@ -11,14 +11,14 @@ const walls = [];
 let renderWalls = [];
 // const walls = JSON.parse(localStorage.getItem("walls"));
 
+let showGraph = false;
 
+// walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
+// /// walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
+// walls.push(new Boundary(canvas.width / 2, 350, canvas.width - canvas.width / 3, 350));
 
-walls.push(new Boundary(canvas.width / 5, 400, canvas.width - canvas.width / 5, 400));
-/// walls.push(new Boundary(canvas.width / 5, 450, canvas.width - canvas.width / 5, 450));
-walls.push(new Boundary(canvas.width / 2, 350, canvas.width - canvas.width / 3, 350));
-
-walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
-walls[0].hue = 50;
+// walls.push(new Boundary(canvas.width / 7, 470, canvas.width - canvas.width / 7, 470));
+// walls[0].hue = 50;
 
 let tmp = ""
 walls.forEach(w => {
@@ -26,18 +26,18 @@ walls.forEach(w => {
                                         w.header.x + ", " + w.header.y + ", " + w.hue + "));\n"
 });
 console.log(tmp);
-// walls.push(new Boundary(430, 270, 530, 270));
-// walls.push(new Boundary(339, 118, 232, 192));
-// walls.push(new Boundary(157, 197, 113, 387));
-// walls.push(new Boundary(201, 417, 289, 321));
-// walls.push(new Boundary(354, 427, 488, 495));
-// walls.push(new Boundary(615, 464, 702, 417));
-// walls.push(new Boundary(790, 200, 694, 59));
-// walls.push(new Boundary(429, 20, 304, 32));
-// walls.push(new Boundary(148, 58, 39, 95));
-// walls.push(new Boundary(488, 115, 613, 157));
-// walls.push(new Boundary(912, 251, 931, 409));
-// walls.push(new Boundary(762, 345, 815, 472));
+walls.push(new Boundary(430, 270, 530, 270));
+walls.push(new Boundary(339, 118, 232, 192));
+walls.push(new Boundary(157, 197, 113, 387));
+walls.push(new Boundary(201, 417, 289, 321));
+walls.push(new Boundary(354, 427, 488, 495));
+walls.push(new Boundary(615, 464, 702, 417));
+walls.push(new Boundary(790, 200, 694, 59));
+walls.push(new Boundary(429, 20, 304, 32));
+walls.push(new Boundary(148, 58, 39, 95));
+walls.push(new Boundary(488, 115, 613, 157));
+walls.push(new Boundary(912, 251, 931, 409));
+walls.push(new Boundary(762, 345, 815, 472));
 
 player.setFOV();
 // console.log(walls)
@@ -45,17 +45,12 @@ player.setFOV();
 player.draw();
 
 
-let show2D = true;
+let show2D = false;
 let show2D2 = false;
-let show3D = false;
+let show3D = true;
 let pause = false;
 
 
-// var points = [40, 100, 1, 5, 25, 10];
-
-// console.log(points);
-// points.sort(function (a, b) { return b - a });
-// console.log(points);
 
 gameLoop();
 function gameLoop() {
@@ -63,63 +58,52 @@ function gameLoop() {
     background();
     playerHandler.movement();
     if (show2D) player.draw();
-
-    // console.log(renderWalls);
     renderWalls.splice(0, renderWalls.length)
-    // console.log(renderWalls);
     walls.forEach(wall => {
         // wall.hue +=1;
         if (show2D) wall.draw();
         if (wall.isInsideFOV()) {
             wall.processFOV();
             wall.calculate3D();
-            // wall.display3D();
             renderWalls.push(wall);
         }
     });
+    
 
 
     if (renderWalls.length >= 1 && !pause) {
-        // renderWalls.sort(compareWalls);
-        // console.log(" ");
-        
-        
         let sorted = wallsToGraph(renderWalls);
-        
-        // if (JSON.stringify(sorted) == JSON.stringify([2, 0, 1])) console.log("HOORAY IT WORKS i think");
-        
-        
-        
-        // console.log(sorted)
-        if (sorted.length <= 1) sorted = [0]// let tmp = [];
-        // renderWalls.forEach(i => {
-        //     tmp.push(i.index)
-        // });
-
-        let tmp = [];
-        sorted.forEach(i => {
-            tmp.push(renderWalls[i].index)
-        });
-        // console.log(tmp)
+        if (sorted.length <= 1) sorted = [0]
+        ctx.save();
+                let tmp = [];
+                sorted.forEach(i => {
+                    tmp.push(renderWalls[i].index)
+                });
+                
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.font = "30px Arial";
+                ctx.fillStyle = "white";
+                // if (show2D) {
+                ctx.fillText(tmp, 50, 50);
+                ctx.font = "20px Arial";
+                // ctx.fillText("expected: 2,0,1", 50, 75);
+                ctx.fillText(renderWalls.length, 50, 100);
+                // }
+        ctx.restore();
         if (show3D) {
-            // renderWalls.forEach(i => {
-            //     i.display3D()
-            // })
-            // ctx.globalAlpha = 0.5;
             sorted.forEach(index => {
                 renderWalls[index].display3D();
             });
-            ctx.globalAlpha = 1;
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.font = "30px Arial";
             ctx.fillStyle = 'white';
-            if (show2D) {
+            // if (show2D) {
                 ctx.fillText(tmp, 50, 50);
                 ctx.font = "20px Arial";
-                ctx.fillText("expected: 2,0,1", 50, 75);
+                // ctx.fillText("expected: 2,0,1", 50, 75);
                 ctx.fillText(renderWalls.length, 50, 100);
-            }
+            // }
             ctx.restore();
         }
     }
