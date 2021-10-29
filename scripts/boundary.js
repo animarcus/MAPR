@@ -14,7 +14,6 @@ class Boundary {
         this.length = Math.sqrt((this.header.x) * (this.header.x) + (this.header.y) * (this.header.y));
 
         this.rotation = getRotation(this.pos, this.header);
-        // console.log(hue)
         this.hue = hue; //colorpicker element in main.js
         this.opacity = opacity;
 
@@ -25,7 +24,8 @@ class Boundary {
     }
 
     draw() {
-        line(this.pos.x, this.pos.y, this.pos.x + this.header.x, this.pos.y + this.header.y, "hsl(" + this.hue + ", 100, 50)", 3);
+        set2Dctx();
+        line(this.pos.x, this.pos.y, this.pos.x + this.header.x, this.pos.y + this.header.y, "hsl(" + this.hue + ", 100%, 50%)", 3);
         ellipse(this.pos.x, this.pos.y, 5, 5, 'green');
         ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 5, 5, 'red');
         // ellipse(this.pos.x, this.pos.y, 2, 2, 'white');  // green
@@ -37,6 +37,7 @@ class Boundary {
         ctx.fillStyle = 'white';
         ctx.fillText(this.index, (this.pos.x*2 + this.header.x)/2 - 10, canvas.height - (this.pos.y*2 + this.header.y)/2 - 10);
         ctx.restore();
+        set3Dctx();
     }
 
     isInsideFOV() {
@@ -82,10 +83,12 @@ class Boundary {
 
         // debugging  2D Representation
         if (show2D2) {
+            set2Dctx();
             ellipse(player.pos.x + this.p.x, player.pos.y + this.p.y, 10, 10, 'yellow');
             line(player.pos.x, player.pos.y, player.pos.x + this.p.x, player.pos.y + this.p.y, 'purple', 5);
             ellipse(player.pos.x + this.h.x, player.pos.y + this.h.y, 10, 10, 'cyan');
             line(player.pos.x, player.pos.y, player.pos.x + this.h.x, player.pos.y + this.h.y, 'purple', 5);
+            set3Dctx();
         }
         return true;
     }
