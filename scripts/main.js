@@ -19,12 +19,12 @@ let renderWalls = [];
 let showGraph = false;
 
 
-// let tmp = ""
-// walls.forEach(w => {
-//     tmp = tmp + "walls.push(new Boundary(" + w.pos.x + ", " + w.pos.y + ", " +
-//                                         w.header.x + ", " + w.header.y + ", " + w.hue + "));\n"
-// });
-// console.log(tmp);
+let tmp = ""
+walls.forEach(w => {
+    tmp = tmp + "walls.push(new Boundary(" + w.pos.x + ", " + w.pos.y + ", " +
+                                        (w.pos.x + w.header.x) + ", " + (w.pos.y + w.header.y) + ", " + w.hue + "));\n"
+});
+console.log(tmp);
 
 
 // walls.push(new Boundary(430, 270, 530, 270));
@@ -39,27 +39,35 @@ let showGraph = false;
 // walls.push(new Boundary(488, 115, 613, 157));
 // walls.push(new Boundary(912, 251, 931, 409));
 // walls.push(new Boundary(762, 345, 815, 472));
-walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270));
-walls.push(new Boundary(339, canvas2D.height - 118,   232,    canvas2D.height - 192));
-walls.push(new Boundary(157, canvas2D.height - 197,   113,    canvas2D.height - 387));
-walls.push(new Boundary(201, canvas2D.height - 417,   289,    canvas2D.height - 321));
-walls.push(new Boundary(354, canvas2D.height - 427,   488,    canvas2D.height - 495));
-walls.push(new Boundary(615, canvas2D.height - 464,   702,    canvas2D.height - 417));
-walls.push(new Boundary(790, canvas2D.height - 200,   694,    canvas2D.height - 59));
-walls.push(new Boundary(429, canvas2D.height - 20,    304,    canvas2D.height - 32));
-walls.push(new Boundary(148, canvas2D.height - 58,    39,     canvas2D.height - 95));
-walls.push(new Boundary(488, canvas2D.height - 115,   613,    canvas2D.height - 157));
-walls.push(new Boundary(912, canvas2D.height - 251,   931,    canvas2D.height - 409));
-walls.push(new Boundary(762, canvas2D.height - 345,   815,    canvas2D.height - 472));
+function exampleScene() {
+    renderWalls.splice(0, renderWalls.length);
+    wallCount = 0;
+    walls.splice(0, walls.length);
+    walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270));
+    walls.push(new Boundary(339, canvas2D.height - 118,   232,    canvas2D.height - 192));
+    walls.push(new Boundary(157, canvas2D.height - 197,   113,    canvas2D.height - 387));
+    walls.push(new Boundary(201, canvas2D.height - 417,   289,    canvas2D.height - 321));
+    walls.push(new Boundary(354, canvas2D.height - 427,   488,    canvas2D.height - 495));
+    walls.push(new Boundary(615, canvas2D.height - 464,   702,    canvas2D.height - 417));
+    walls.push(new Boundary(790, canvas2D.height - 200,   694,    canvas2D.height - 59));
+    walls.push(new Boundary(429, canvas2D.height - 20,    304,    canvas2D.height - 32));
+    walls.push(new Boundary(148, canvas2D.height - 58,    39,     canvas2D.height - 95));
+    walls.push(new Boundary(488, canvas2D.height - 115,   613,    canvas2D.height - 157));
+    walls.push(new Boundary(912, canvas2D.height - 251,   931,    canvas2D.height - 409));
+    walls.push(new Boundary(762, canvas2D.height - 345,   815,    canvas2D.height - 472));
+}
 
+
+exampleScene();
 
 
 // let show2D = true;
 let show2D2 = false;
+let showWallNums = false;
 // let show3D = true;
 // let pause = false;
 
-
+// avg 15.60 fps
 
 gameLoop();
 function gameLoop() {

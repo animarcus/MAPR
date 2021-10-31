@@ -30,13 +30,14 @@ class Boundary {
         ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 5, 5, 'red');
         // ellipse(this.pos.x, this.pos.y, 2, 2, 'white');  // green
         // ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 2, 2, 'white'); // red
-
-        // ctx.save();
-        // ctx.setTransform(1, 0, 0, 1, 0, 0);
-        // ctx.font = "30px Arial";
-        // ctx.fillStyle = 'white';
-        // ctx.fillText(this.index, (this.pos.x*2 + this.header.x)/2 - 10, canvas.height - (this.pos.y*2 + this.header.y)/2 - 10);
-        // ctx.restore();
+        if (showWallNums) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'white';
+            ctx.fillText(this.index, (this.pos.x*2 + this.header.x)/2 - 10, canvas2D.height - (this.pos.y*2 + this.header.y)/2 - 10);
+            ctx.restore();
+        }
         set3Dctx();
     }
 
@@ -158,6 +159,7 @@ class Boundary {
         if (L2 < minh) L2 = minh;
         if (L2 > maxh) L2 = maxh;
 
+        if (!this.x1 || !this.x2) return;
         const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
                     this.x2 + canvas.width / 2, canvas.height / 2);
 
@@ -167,11 +169,20 @@ class Boundary {
         
         let tmpalpha = ctx.globalAlpha;
         ctx.globalAlpha = this.opacity;
+
+        polygon([   this.x1 + canvas.width / 2, this.h1.h0 + canvas.height /2,
+                this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2,
+                this.x1 + canvas.width / 2, this.h1.h0 - canvas.height /2,
+                this.x2 + canvas.width / 2, this.h2.h0 - canvas.height /2,
+        ], '#969696', 0); // `hsla(1, 50%, 50%, 0.5)`
+
         polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
-        this.x1 + canvas.width / 2, this.h1.h1 + canvas.height / 2,
-        this.x2 + canvas.width / 2, this.h2.h1 + canvas.height / 2,
-        this.x2 + canvas.width / 2, this.h2.h0 + canvas.height / 2
+        this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
+        this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,
+        this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2
         ], `grd`, 3); // `hsla(1, 50%, 50%, 0.5)`
+
+        
         ctx.globalAlpha = tmpalpha;
     }
 

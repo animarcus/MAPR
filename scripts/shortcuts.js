@@ -43,6 +43,7 @@ function polygon(coords, fill = "white", lineWidth = 1, lineColor = fill) {
         console.warn('undefined number of args when drawing polygon');
         return;
     }
+    ctx.save();
     ctx.beginPath();
     ctx.moveTo(coords[0], coords[1]);
     for (let i = 2; i < coords.length; i += 2) {
@@ -55,6 +56,7 @@ function polygon(coords, fill = "white", lineWidth = 1, lineColor = fill) {
     ctx.strokeStyle = lineColor;
     ctx.stroke();
     ctx.fill();
+    ctx.restore();
     return coords;
 }
 

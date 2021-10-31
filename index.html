@@ -24,7 +24,16 @@
             </p>
             <button onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
             <input type="color" value="#ff0000" id="colorpick">
-            <button onclick="undoWall = true">Undo new Wall</button>
+            <div class="sceneSettings">
+                <button onclick="undoWall = true">Undo new Wall</button>
+                <button onclick="
+                                renderWalls.splice(0, renderWalls.length);
+                                walls.splice(0, walls.length);
+                                wallCount = 0;
+                                ">Reset all Walls</button>
+                <button onclick="exampleScene()">Generate example scene</button>
+                <button onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
+            </div>
         </div>
         <!-- <div id="other">Credit blblb</div> -->
     </div>

@@ -42,7 +42,7 @@ const handlers = {
     updateCanvasSize() {
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
-        canvas2D.height = canvas2D.offsetHeight;
+        canvas2D.height = canvas2D.offsetWidth;
         canvas2D.width = canvas2D.offsetWidth;
         // console.log(canvas.height, canvas.width);
     }
