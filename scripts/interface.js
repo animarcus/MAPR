@@ -42,7 +42,7 @@ const handlers = {
     updateCanvasSize() {
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
-        canvas2D.height = canvas.height;
+        canvas2D.height = canvas2D.offsetHeight;
         canvas2D.width = canvas2D.offsetWidth;
         // console.log(canvas.height, canvas.width);
     }
@@ -75,6 +75,18 @@ const drawing = {
             }
         }
         if (this.isDrawing && (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0)) {
+            // if (keysPressed.Shift) {
+            //     walls.forEach(wall => {
+            //         if (mouse.x >= wall.pos.x -5 && mouse.x <= wall.pos.x + 5 &&
+            //             mouse.y >= wall.pos.y -5 && mouse.y <= wall.pos.y + 5 ) {
+            //             console.log("yay");
+            //         }
+            //         if (mouse.x >= wall.pos.x + wall.header.x -5 && mouse.x <= wall.pos.x + wall.header.x + 5 &&
+            //             mouse.y >= wall.pos.y + wall.header.y -5 && mouse.y <= wall.pos.y + wall.header.y + 5) {
+            //             console.log("yay")
+            //         }
+            //     });
+            // }
             set2Dctx();
             line(this.startpos.x, this.startpos.y, mouse.x, mouse.y);
             set3Dctx();

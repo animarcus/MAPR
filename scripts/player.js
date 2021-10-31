@@ -7,7 +7,8 @@ class Player {
 
         this.farSight = 1000
         this.moveStep = 2;
-        this.lookStep = 5;
+        this.lookStepH = 2;
+        this.lookStepV = 5;
         this.pos = {
             'x': x,
             'y': y
@@ -28,13 +29,16 @@ class Player {
     }
 
     draw() {
-        ctx.fillStyle = 'white';
-        ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
+
+        ellipse(this.pos.x, this.pos.y, 7, 7, "orange");
+
         // line(this.pos.x, this.pos.y, this.pos.x + (this.header.x) * 100, this.pos.y + (this.header.y) * 100, 'white', 1);
 
-        this.fov.v1.draw('white'); // green
+        this.fov.v1.draw('orange', 3); // green
 
-        this.fov.v2.draw('white'); // green
+        this.fov.v2.draw("orange", 3); // green
     }
 
 
@@ -103,16 +107,16 @@ const playerHandler = {
             player.sideMove(-player.moveStep);
         }
         if (keysPressed.ArrowUp) {
-            player.verticalLook(-player.lookStep);
+            player.verticalLook(-player.lookStepV);
         }
         if (keysPressed.ArrowDown) {
-            player.verticalLook(player.lookStep);
+            player.verticalLook(player.lookStepV);
         }
         if (keysPressed.ArrowLeft) {
-            player.sideLook(player.lookStep);
+            player.sideLook(player.lookStepH);
         }
         if (keysPressed.ArrowRight) {
-            player.sideLook(-player.lookStep);
+            player.sideLook(-player.lookStepH);
         }
     }
 };

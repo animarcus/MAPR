@@ -1,5 +1,5 @@
 class Boundary {
-    constructor(x1, y1, x2, y2, hue="0", opacity=1, height0=0, height1=500) {
+    constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=0, height1=500) {
         // console.log(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
         this.pos = {
             'x': x1,
@@ -31,12 +31,12 @@ class Boundary {
         // ellipse(this.pos.x, this.pos.y, 2, 2, 'white');  // green
         // ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 2, 2, 'white'); // red
 
-        ctx.save();
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.font = "30px Arial";
-        ctx.fillStyle = 'white';
-        ctx.fillText(this.index, (this.pos.x*2 + this.header.x)/2 - 10, canvas.height - (this.pos.y*2 + this.header.y)/2 - 10);
-        ctx.restore();
+        // ctx.save();
+        // ctx.setTransform(1, 0, 0, 1, 0, 0);
+        // ctx.font = "30px Arial";
+        // ctx.fillStyle = 'white';
+        // ctx.fillText(this.index, (this.pos.x*2 + this.header.x)/2 - 10, canvas.height - (this.pos.y*2 + this.header.y)/2 - 10);
+        // ctx.restore();
         set3Dctx();
     }
 
@@ -116,9 +116,6 @@ class Boundary {
 
         this.x2 = degrees(v2xangle) * canvas.width / fovamount;
         this.h2 = this.calculateHeight(this.h);
-        // console.log(this.h2.h0, this.h2.h1, this.h2.dist);
-
-        // this.display3D();
     }
 
     //works by supposing a 2d side view of the player looking at the wall and using trigonometry to find the angle of the top and bottom of the wall
@@ -174,7 +171,7 @@ class Boundary {
         this.x1 + canvas.width / 2, this.h1.h1 + canvas.height / 2,
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height / 2,
         this.x2 + canvas.width / 2, this.h2.h0 + canvas.height / 2
-        ], `grd`); // `hsla(1, 50%, 50%, 0.5)`
+        ], `grd`, 3); // `hsla(1, 50%, 50%, 0.5)`
         ctx.globalAlpha = tmpalpha;
     }
 

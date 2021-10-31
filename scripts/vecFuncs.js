@@ -31,7 +31,6 @@ function vectorAdd(A, B) {
         "y": A.y + B.y
     }
 }
-// When checking for intersection between two segments
 function isIntersectionVectors(v1, v2) {   
     const x1 = v1.pos.x;
     const y1 = v1.pos.y;

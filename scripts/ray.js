@@ -6,8 +6,8 @@ class Ray {
                         'y': Math.sin(radians(rotation)),
                         'length': length };
     }
-    draw(COLOR) { // 2D
-        line(this.pos.x, this.pos.y, this.pos.x + this.header.x*this.header.length, this.pos.y + this.header.y*this.header.length, COLOR, 1);
+    draw(COLOR, lineWidth=1) { // 2D
+        line(this.pos.x, this.pos.y, this.pos.x + this.header.x*this.header.length, this.pos.y + this.header.y*this.header.length, COLOR, lineWidth);
     }
     setAngle(angle) { //input is in degrees but handled in radians
         // if (this.rotation < 0) this.rotation += 2* Math.PI;
