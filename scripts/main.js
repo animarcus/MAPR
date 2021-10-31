@@ -57,7 +57,6 @@ function exampleScene() {
     walls.push(new Boundary(762, canvas2D.height - 345,   815,    canvas2D.height - 472));
 }
 
-
 exampleScene();
 
 
