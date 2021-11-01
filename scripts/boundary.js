@@ -124,16 +124,19 @@ class Boundary {
         const header = vectorCreate(v.dist, 0);
         const h0 = vectorCreate(v.dist, this.height0 - player.height);
         const h1 = vectorCreate(v.dist, this.height1 - player.height);
-
-
-        let anglev1 = Math.acos((vectorDotProduct(header, h0)) / (vectorDist(h0.x, h0.y) * v.dist));
+        
+        const floor = vectorCreate(v.dist, -player.height);
+        let floorAngle =    Math.acos((vectorDotProduct(header, floor)) / (vectorDist(floor.x, floor.y) * v.dist));
+        
+        let anglev1 =       Math.acos((vectorDotProduct(header, h0)) / (vectorDist(h0.x, h0.y) * v.dist));
         let anglev2 = Math.acos((vectorDotProduct(header, h1)) / (vectorDist(h1.x, h1.y) * v.dist));
 
-        // console.log(Math.round(vectorDist(h1.x, h1.y)), Math.round(degrees(anglev2)), Math.round(h1.y))
+        if (isClockwiseOrder(header, floorAngle)) floorAngle = -floorAngle;
         if (isClockwiseOrder(header, h0)) anglev1 = -anglev1;
         if (isClockwiseOrder(header, h1)) anglev2 = -anglev2;
-
+        if (floorAngle == anglev1) console.log("aa")
         return {
+            'floor': 1 * degrees(floorAngle) * canvas.height / player.fov.yamount * 2,
             'h0': 1 * degrees(anglev1) * canvas.height / player.fov.yamount * 2,
             'h1': 1 * degrees(anglev2) * canvas.height / player.fov.yamount * 2,
             'sat': 1,
@@ -159,7 +162,7 @@ class Boundary {
         if (L2 < minh) L2 = minh;
         if (L2 > maxh) L2 = maxh;
 
-        if (!this.x1 || !this.x2) return;
+        // if (!this.x1 || !this.x2) {console.log("aha"); return; }
         const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
                     this.x2 + canvas.width / 2, canvas.height / 2);
 
@@ -169,18 +172,18 @@ class Boundary {
         
         let tmpalpha = ctx.globalAlpha;
         ctx.globalAlpha = this.opacity;
-
-        polygon([   this.x1 + canvas.width / 2, this.h1.h0 + canvas.height /2,
-                this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2,
-                this.x1 + canvas.width / 2, this.h1.h0 - canvas.height /2,
-                this.x2 + canvas.width / 2, this.h2.h0 - canvas.height /2,
-        ], '#969696', 0); // `hsla(1, 50%, 50%, 0.5)`
+        
+        polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
+                this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
+                this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
+                this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
+        ], "#969696", 0); // `hsla(1, 50%, 50%, 0.5)`s
 
         polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
         this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,
         this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2
-        ], `grd`, 3); // `hsla(1, 50%, 50%, 0.5)`
+        ], `grd`, 2); // `hsla(1, 50%, 50%, 0.5)`
 
         
         ctx.globalAlpha = tmpalpha;

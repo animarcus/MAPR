@@ -49,11 +49,6 @@ function v1HigherThanv2(w1, w2) {
                         "header": { "x": w1.h.x * w1.h.dist,
                                     "y": w1.h.y * w1.h.dist }};
 
-    // line(W1p.x, W1p.y, player.pos.x, player.pos.y, 'purple', 1)
-    // line(W1h.x, W1h.y, player.pos.x, player.pos.y, 'purple', 1);
-    // line(W2p.x, W2p.y, player.pos.x, player.pos.y, 'purple', 1);
-    // line(W2h.x, W2h.y, player.pos.x, player.pos.y, 'purple', 1);
-
     return  isIntersectionVectors(PltoW1P, W2ptoW2h) || isIntersectionVectors(PltoW1H, W2ptoW2h) ||
             ptInTriangle(W2p, player.pos, W1p, W1h) || ptInTriangle(W2h, player.pos, W1p, W1h)
 }

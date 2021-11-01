@@ -1,4 +1,3 @@
-// https://www.freecodecamp.org/news/8-essential-graph-algorithms-in-javascript/
 class Graph {
     constructor() {
         this.adjacencyList = new Map();

@@ -101,3 +101,15 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.wallOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toggles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

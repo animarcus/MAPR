@@ -30,7 +30,6 @@ const handlers = {
         mouse.y = canvas2D.height - e.offsetY;
         drawing.startpos.x = mouse.x;
         drawing.startpos.y = mouse.y;
-        // console.table([mouse.x, mouse.y, e.clientX, e.clientY]);
         e.preventDefault();
         drawing.isDrawing = true;
     },
@@ -75,18 +74,6 @@ const drawing = {
             }
         }
         if (this.isDrawing && (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0)) {
-            // if (keysPressed.Shift) {
-            //     walls.forEach(wall => {
-            //         if (mouse.x >= wall.pos.x -5 && mouse.x <= wall.pos.x + 5 &&
-            //             mouse.y >= wall.pos.y -5 && mouse.y <= wall.pos.y + 5 ) {
-            //             console.log("yay");
-            //         }
-            //         if (mouse.x >= wall.pos.x + wall.header.x -5 && mouse.x <= wall.pos.x + wall.header.x + 5 &&
-            //             mouse.y >= wall.pos.y + wall.header.y -5 && mouse.y <= wall.pos.y + wall.header.y + 5) {
-            //             console.log("yay")
-            //         }
-            //     });
-            // }
             set2Dctx();
             line(this.startpos.x, this.startpos.y, mouse.x, mouse.y);
             set3Dctx();
@@ -125,8 +112,6 @@ canvas2D.addEventListener("pointermove", (e) => {
     e.preventDefault();
     mouse.x = e.offsetX;
     mouse.y = canvas2D.height - e.offsetY;
-    // console.table([mouse.x, mouse.y, e.clientX, e.clientY]);
 });
 canvas2D.addEventListener("pointerdown", (e) => handlers.click(e));
-// canvas 3d event listener in controller
 document.addEventListener('pointerup', (e) => handlers.unclick(e));

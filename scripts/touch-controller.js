@@ -74,9 +74,7 @@ let buttons = [
     new Button(W, 0, W, H, "cyan", "S"),
     new Button(W,H, W, H, "orange", "W"),
     new Button(3*W, 0, W, H, "yellow", "⇦"),
-    new Button(5*W, 0, W, H, "green", "⇨"),
-    // new Button(4*W, 0, W, H, "cyan"),
-    // new Button(4*W,H, W, H, "orange")
+    new Button(5*W, 0, W, H, "green", "⇨")
 ]
 
 function touchControls() {
@@ -100,9 +98,6 @@ function detectButtons() {
         if (
             pointer.x > button.x && pointer.x < button.x + button.width &&
             pointer.y > button.y && pointer.y < button.y + button.height) {
-            // console.log("hoo")
-
-            // document.getElementById("booger").style.backgroundColor = "white";
             button.active = true;
             break;
         }
@@ -141,67 +136,4 @@ function handleButtons() {
     } else {
         keysPressed.ArrowRight = false;
     }
-    // if (buttons[6].active) {
-    //     keysPressed.ArrowDown = true;
-    // } else {
-    //     keysPressed.ArrowDown = false;
-    // }
-    // if (buttons[7].active) {
-    //     keysPressed.ArrowUp = true;
-    // } else {
-    //     keysPressed.ArrowUp = false;
-    // }
 }
-// const playerHandler = {
-//     movement() {
-//         if (keysPressed.w) {
-//             player.straightMove(player.moveStep);
-//         }
-//         if (keysPressed.s) {
-//             player.straightMove(-player.moveStep);
-//         }
-//         if (keysPressed.a) {
-//             player.sideMove(player.moveStep);
-//         }
-//         if (keysPressed.d) {
-//             player.sideMove(-player.moveStep);
-//         }
-//         if (keysPressed.ArrowUp) {
-//             player.verticalLook(-player.lookStep);
-//         }
-//         if (keysPressed.ArrowDown) {
-//             player.verticalLook(player.lookStep);
-//         }
-//         if (keysPressed.ArrowLeft) {
-//             player.sideLook(player.lookStep);
-//         }
-//         if (keysPressed.ArrowRight) {
-//             player.sideLook(-player.lookStep);
-//         }
-//     }
-// };
-
-
-// canvas2D.addEventListener("pointermove", (e) => {
-//     e.preventDefault();
-//     mouse.x = e.offsetX;
-//     mouse.y = canvas2D.height - e.offsetY;
-//     // console.table([mouse.x, mouse.y, e.clientX, e.clientY]);
-// });
-// canvas2D.addEventListener("pointerdown", (e) => handlers.click(e));
-// // canvas 3d event listener in controller
-// document.addEventListener('pointerup', (e) => handlers.unclick(e));
-// click(e) {
-//         mouse.x = e.offsetX;
-//         mouse.y = canvas2D.height - e.offsetY;
-//         drawing.startpos.x = mouse.x;
-//         drawing.startpos.y = mouse.y;
-//         // console.table([mouse.x, mouse.y, e.clientX, e.clientY]);
-//         e.preventDefault();
-//         drawing.isDrawing = true;
-//     },
-//     unclick(e) {
-//         e.preventDefault();
-//         document.activeElement.blur();
-//         drawing.stop();
-//     },

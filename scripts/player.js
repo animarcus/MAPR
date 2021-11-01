@@ -25,7 +25,6 @@ class Player {
         };
         this.fov.v1 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) + this.fov.xamount / 2, this.farSight);
         this.fov.v2 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) - this.fov.xamount / 2, this.farSight);
-        // console.log(degrees(this.rotation) + this.fov.amount/2);
     }
 
     draw() {
@@ -52,12 +51,9 @@ class Player {
         this.header.y = Math.sin(this.rotation);
     }
     sideLook(angle) { //input is in degrees but handled in radians
-        // console.log(angle, this.rotation);
-        // angle = radians(angle);
         this.setAngle(degrees(this.rotation) + angle);
     }
     verticalLook(angle) {
-        // this.height + 5;
         let vertLimit = {};
         vertLimit.max = this.fov.yamount;
         vertLimit.min = -this.fov.yamount;
@@ -67,13 +63,11 @@ class Player {
         }
     }
     sideMove(step) {
-        // if (this.collision(step)) return;
         this.pos.x += -step * this.header.y;
         this.pos.y += step * this.header.x;
         this.setFOV();
     }
     straightMove(step) {
-        // if (this.collision(step)) return;
         this.pos.x = this.pos.x + step * this.header.x;
         this.pos.y = this.pos.y + step * this.header.y;
         this.setFOV();
@@ -84,13 +78,8 @@ class Player {
         this.fov.v2.setAngle(degrees(this.rotation) - this.fov.xamount / 2);
         this.fov.v1.pos = this.pos;
         this.fov.v2.pos = this.pos;
-        // console.log(degrees(this.fov.v1.rotation), degrees(this.rotation), degrees(this.fov.v2.rotation));
     }
 }
-
-
-// const walls = JSON.parse(localStorage.getItem("walls"));
-
 
 const playerHandler = {
     movement() {

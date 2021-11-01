@@ -1,11 +1,8 @@
 function radians(degreeValue) {
-    // console.log("[radians dunc]", degreeValue, degreeValue * (Math.PI/180));
     return degreeValue * (Math.PI/180);
 }
 
 function degrees(radianValue) {
-    // console.log();
-    // return parseInt((Math.round(radianValue * (180/Math.PI))).toFixed(2));
     return radianValue * (180/Math.PI);
 }
 
@@ -48,7 +45,6 @@ function polygon(coords, fill = "white", lineWidth = 1, lineColor = fill) {
     ctx.moveTo(coords[0], coords[1]);
     for (let i = 2; i < coords.length; i += 2) {
         ctx.lineTo(coords[i], coords[i+1]);
-        // console.log(i, i+1);
     }
     ctx.closePath();
     ctx.fillStyle = fill;
@@ -71,8 +67,6 @@ function getRotation(pos, header) {
     if (x2 <= x && y2 > y) rotation = Math.PI - rotation; //Q2  add 90 degrees
     if (x2 < x && y2 <= y) rotation += Math.PI;
     if (x2 >= x && y2 < y) rotation = Math.PI*2 - rotation;
-
-    // console.log(degrees(rotation));
     return rotation;
 }
 
