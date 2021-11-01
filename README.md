@@ -1,2 +1,3 @@
-# raycasting-v4
-A complete refactoring of v3 of my raycasting engine. The code needs to be fixed and cleaned up.
+# Raycasting
+
+Demo of my high school graduation project. This is an algorithm I created myself for a raycasting rendering engine. It's not perfect but it looks good.
