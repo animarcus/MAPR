@@ -3,36 +3,6 @@
 Demo of my high school graduation project. This is an algorithm I created myself for a raycasting rendering engine. It's not perfect but it looks good.
 
 
-<!-- Copy and paste the converted output. -->
-
-<!-----
-NEW: Check the "Suppress top comment" option to remove this info from the output.
-
-Conversion time: 3.617 seconds.
-
-
-Using this Markdown file:
-
-1. Paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* Docs to Markdown version 1.0β31
-* Tue Nov 02 2021 15:12:36 GMT-0700 (PDT)
-* Source doc: Raycasting TM
-* Tables are currently converted to HTML tables.
-
-WARNING:
-You have some equations: look for ">>>>>  gd2md-html alert:  equation..." in output.
-
-* This document has images: check for >>>>>  gd2md-html alert:  inline image link in generated source and store images to your server. NOTE: Images in exported zip file from Google Docs may not appear in  the same order as they do in your doc. Please check the images!
-
------>
-
-
 <p style="color: red; font-weight: bold">>>>>>  gd2md-html alert:  ERRORs: 0; WARNINGs: 1; ALERTS: 39.</p>
 <ul style="color: red; font-weight: bold"><li>See top comment block for details on ERRORs and WARNINGs. <li>In the converted Markdown or HTML, search for inline alerts that start with >>>>>  gd2md-html alert:  for specific instances that need correction.</ul>
 
@@ -2090,3 +2060,4 @@ Le code qui suit est un rassemblement de toutes les parties qui constituent mon 
 
 [^12]:
      Représentation de l'anti commutativité du produit vectoriel, (auteur inconnu), 2008, Disponible à l’adresse : [https://commons.wikimedia.org/wiki/File:Cross_product_vector.svg](https://commons.wikimedia.org/wiki/File:Cross_product_vector.svg)
+
