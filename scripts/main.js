@@ -6,16 +6,22 @@ ctx.scale(1,-1);
 ctx2D.translate(0, canvas2D.height);
 ctx2D.scale(1, -1);
 
+
+let wallCount = 0;
+const walls = [];
+let renderWalls = [];
+
+let showGraph = false;
+
+
+
+
 const player = new Player(canvas2D.width/2 , canvas2D.height - canvas2D.height/1.4, 90);
 player.fov.xamount = 90;
 
 player.setFOV();
 
-let wallCount = 0
-const walls = [];
-let renderWalls = [];
 
-let showGraph = false;
 
 // let tmp = ""
 // walls.forEach(w => {
@@ -49,12 +55,22 @@ let show2D2 = false;
 let showWallNums = false;
 let rainbowMode = false;
 
+function changeSlider() {
+    let sliderH0 = document.getElementById("sliderH0");
+    let sliderH1 = document.getElementById("sliderH1");
+    let showH0 = document.getElementById("showH0");
+    let showH1 = document.getElementById("showH1");
+    showH0.innerHTML = sliderH0.value;
+    showH1.innerHTML = sliderH1.value;
+    walls[0].height0 = sliderH0.value;
+    walls[0].height1 = sliderH1.value;
+}
+
 gameLoop();
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx2D.clearRect(0, 0, canvas2D.width, canvas2D.height);
 
-    
 
     background();
     playerHandler.movement();
@@ -96,9 +112,9 @@ function gameLoop() {
 function background() {
     // ctx.fillStyle = '#00d2ff';
     ctx.fillStyle = "#64a7ff";
-    ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height);
+    ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height*5);
     ctx.fillStyle = "#969696";
-    ctx.fillRect(0, -canvas.height/2, canvas.width, canvas.height);
+    ctx.fillRect(0, -canvas.height*5.5, canvas.width, canvas.height*6);
 
     ctx2D.fillStyle = 'gray';
     ctx2D.fillRect(0, 0, canvas2D.width, canvas2D.height);

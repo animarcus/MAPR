@@ -28,6 +28,14 @@
             </div>
             <div class="wallOptions">
                 Wall color <input type="color" value="#ff0000" id="colorpick">
+                <div class="slider">
+                    <label id="showH0" for="sliderH0"> 0 </label>
+                    <input id="sliderH0" type="range" min="0" max="500" onchange="changeSlider(this.id)">
+                </div>
+                <div class="slider">
+                    <label id="showH1" for="sliderH1"> 0 </label>
+                    <input id="sliderH1" type="range" min="0" max="500" onchange="changeSlider(this.id)">
+                </div>
             </div>
             <div class="sceneSettings">
                 <button onclick="undoWall = true">Undo new Wall</button>

@@ -8,7 +8,7 @@ class Player {
         this.farSight = 1000
         this.moveStep = 2;
         this.lookStepH = 2;
-        this.lookStepV = 5;
+        this.lookStepV = 15;
         this.pos = {
             'x': x,
             'y': y
@@ -55,9 +55,10 @@ class Player {
     }
     verticalLook(angle) {
         let vertLimit = {};
-        vertLimit.max = this.fov.yamount;
-        vertLimit.min = -this.fov.yamount;
+        vertLimit.max = 1350;
+        vertLimit.min = -600;
         if (this.vertRotation + angle >= vertLimit.min && this.vertRotation + angle <= vertLimit.max) {
+            console.log(this.vertRotation)
             this.vertRotation += angle;
             ctx.translate(0, angle);
         }

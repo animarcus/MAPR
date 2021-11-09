@@ -1,5 +1,5 @@
 class Boundary {
-    constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=0, height1=500) {
+    constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=0, height1=350) {
         // console.log(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
         this.pos = {
             'x': x1,
@@ -112,11 +112,16 @@ class Boundary {
 
         v2xangle = v2xangle + v1xangle; // make v2 relative to v1
 
+        this.p.projectedDist = this.p.dist * Math.cos(radians(v1xangle));
         this.x1 = degrees(v1xangle) * canvas.width / fovamount;
         this.h1 = this.calculateHeight(this.p);
 
+        this.h.projectedDist = this.h.dist * Math.cos(radians(v2xangle));
         this.x2 = degrees(v2xangle) * canvas.width / fovamount;
         this.h2 = this.calculateHeight(this.h);
+
+        if (this.h1 > 10000) this.h1 = 10000;
+        if (this.h2 > 10000) this.h2 = 10000;
     }
 
     //works by supposing a 2d side view of the player looking at the wall and using trigonometry to find the angle of the top and bottom of the wall
@@ -126,19 +131,17 @@ class Boundary {
         const h1 = vectorCreate(v.dist, this.height1 - player.height);
         
         const floor = vectorCreate(v.dist, -player.height);
-        let floorAngle =    Math.acos((vectorDotProduct(header, floor)) / (vectorDist(floor.x, floor.y) * v.dist));
-        
-        let anglev1 =       Math.acos((vectorDotProduct(header, h0)) / (vectorDist(h0.x, h0.y) * v.dist));
-        let anglev2 = Math.acos((vectorDotProduct(header, h1)) / (vectorDist(h1.x, h1.y) * v.dist));
 
-        if (isClockwiseOrder(header, floorAngle)) floorAngle = -floorAngle;
-        if (isClockwiseOrder(header, h0)) anglev1 = -anglev1;
-        if (isClockwiseOrder(header, h1)) anglev2 = -anglev2;
-        if (floorAngle == anglev1) console.log("aa")
+        // console.log(canvas.height, Math.tan(radians(player.fov.yamount/2)) * v.dist)
+        // console.log((floor.y * canvas.height) / (Math.tan(radians(player.fov.yamount/2) * v.dist))
+        // (h0.y * canvas.height) / (Math.tan(radians(player.fov.yamount/2)) * v.dist)
+        // (h1.y * canvas.height) / (Math.tan(radians(player.fov.yamount/2)) * v.dist)
+        
+
         return {
-            'floor': 1 * degrees(floorAngle) * canvas.height / player.fov.yamount * 2,
-            'h0': 1 * degrees(anglev1) * canvas.height / player.fov.yamount * 2,
-            'h1': 1 * degrees(anglev2) * canvas.height / player.fov.yamount * 2,
+            'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount/2)) * v.dist),
+            'h0':    (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount/2)) * v.dist),
+            'h1':    (h1.y * canvas.height) / (-Math.tan(radians(player.fov.yamount/2)) * v.dist),
             'sat': 1,
             'dist': v.dist
         };
@@ -188,10 +191,6 @@ class Boundary {
         
         ctx.globalAlpha = tmpalpha;
     }
-
-
-
-
 
     setAngle(angle) {
         this.header.x = Math.cos(angle) * this.length;

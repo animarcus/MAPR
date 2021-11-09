@@ -7,9 +7,7 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
-
 }
-
 body {
     
     overflow: hidden;
@@ -19,9 +17,6 @@ body {
     background: rgb(2,0,36);
     background: linear-gradient(140deg, rgb(202, 246, 223) 10%, rgba(0,212,255,1) 100%) fixed;
 }
-
-
-
 
 .container {
     display: grid;
@@ -33,7 +28,6 @@ body {
     width: 100vw;
     height: 100vh;
 }
-
 .controls {
     display:flex;
     flex-direction: row;
@@ -66,50 +60,37 @@ body {
     background-color: rgb(0, 110, 255);
     grid-area: flatview;
 } 
-
-
 #canvas3D {
     width: 100%;
     height: auto;
-
-    /* width: 960px;
-    height: 540px; */
-
     background:rgb(56, 56, 56);
-
 }
-
 #canvas2D {
     width: 100%;
     height: auto;
-
-    /* width: 960px; */
-    /* height: 540px; */
-    /* margin: 10px; */
-
-    /* padding-top: 50%; */
     background:rgb(56, 56, 56);
 }
-
 
 .instructions {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size:large;
 }
-
 .sceneSettings {
     display: flex;
     flex-direction: column;
 }
-
 .wallOptions {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .toggles {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.slider {
+    display: flex;
+    flex-direction: row;
 }
