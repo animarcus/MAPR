@@ -34,18 +34,18 @@ function exampleScene() {
     renderWalls.splice(0, renderWalls.length);
     wallCount = 0;
     walls.splice(0, walls.length);
-    walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270));
-    walls.push(new Boundary(339, canvas2D.height - 118,   232,    canvas2D.height - 192));
-    walls.push(new Boundary(157, canvas2D.height - 197,   113,    canvas2D.height - 387));
-    walls.push(new Boundary(201, canvas2D.height - 417,   289,    canvas2D.height - 321));
-    walls.push(new Boundary(354, canvas2D.height - 427,   488,    canvas2D.height - 495));
-    walls.push(new Boundary(615, canvas2D.height - 464,   702,    canvas2D.height - 417));
-    walls.push(new Boundary(790, canvas2D.height - 200,   694,    canvas2D.height - 59));
-    walls.push(new Boundary(429, canvas2D.height - 20,    304,    canvas2D.height - 32));
-    walls.push(new Boundary(148, canvas2D.height - 58,    39,     canvas2D.height - 95));
-    walls.push(new Boundary(488, canvas2D.height - 115,   613,    canvas2D.height - 157));
-    walls.push(new Boundary(912, canvas2D.height - 251,   931,    canvas2D.height - 409));
-    walls.push(new Boundary(762, canvas2D.height - 345,   815,    canvas2D.height - 472));
+    walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270, 100, 1, 0, 300));
+    walls.push(new Boundary(339, canvas2D.height - 118,   232,    canvas2D.height - 192, 100, 1, 0, 300));
+    walls.push(new Boundary(157, canvas2D.height - 197,   113,    canvas2D.height - 387, 100, 1, 0, 300));
+    walls.push(new Boundary(201, canvas2D.height - 417,   289,    canvas2D.height - 321, 100, 1, 0, 300));
+    walls.push(new Boundary(354, canvas2D.height - 427,   488,    canvas2D.height - 495, 100, 1, 0, 300));
+    walls.push(new Boundary(615, canvas2D.height - 464,   702,    canvas2D.height - 417, 100, 1, 0, 300));
+    walls.push(new Boundary(790, canvas2D.height - 200,   694,    canvas2D.height - 59, 100, 1, 0, 300));
+    walls.push(new Boundary(429, canvas2D.height - 20,    304,    canvas2D.height - 32, 100, 1, 0, 300));
+    walls.push(new Boundary(148, canvas2D.height - 58,    39,     canvas2D.height - 95, 100, 1, 0, 300));
+    walls.push(new Boundary(488, canvas2D.height - 115,   613,    canvas2D.height - 157, 100, 1, 0, 300));
+    walls.push(new Boundary(912, canvas2D.height - 251,   931,    canvas2D.height - 409, 100, 1, 0, 300));
+    walls.push(new Boundary(762, canvas2D.height - 345,   815,    canvas2D.height - 472, 100, 1, 0, 300));
 }
 
 exampleScene();
@@ -54,6 +54,12 @@ let show2D = true;
 let show2D2 = false;
 let showWallNums = false;
 let rainbowMode = false;
+let changeAll = true;
+document.getElementById("changeAll").checked = true;
+document.getElementById("sortedActive").checked = true;
+document.getElementById("sliderH0").value = 0;
+document.getElementById("sliderH1").value = 300;
+let sortedActive = true;
 
 function changeSlider() {
     let sliderH0 = document.getElementById("sliderH0");
@@ -62,8 +68,16 @@ function changeSlider() {
     let showH1 = document.getElementById("showH1");
     showH0.innerHTML = sliderH0.value;
     showH1.innerHTML = sliderH1.value;
-    walls[0].height0 = sliderH0.value;
-    walls[0].height1 = sliderH1.value;
+    if (changeAll) {
+        for (wall of walls) {
+            wall.height0 = sliderH0.value;
+            wall.height1 = sliderH1.value;
+        }
+    } else {
+        walls[walls.length - 1].height0 = sliderH0.value;
+        walls[walls.length-1].height1 = sliderH1.value;
+    }
+    
 }
 
 gameLoop();
@@ -95,11 +109,17 @@ function gameLoop() {
     });
     
     if (renderWalls.length >= 1) {
-        let sorted = wallsToGraph(renderWalls);
-        if (sorted.length <= 1) sorted = [0]
-            sorted.forEach(index => {
-                renderWalls[index].display3D();
+        if (sortedActive) {
+            let sorted = wallsToGraph(renderWalls);
+            if (sorted.length <= 1) sorted = [0]
+                sorted.forEach(index => {
+                    renderWalls[index].display3D();
             });
+        } else {
+            renderWalls.forEach(wall => {
+                wall.display3D();
+            });
+        }
     }
 
     drawing.start();

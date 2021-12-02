@@ -175,13 +175,13 @@ class Boundary {
         
         let tmpalpha = ctx.globalAlpha;
         ctx.globalAlpha = this.opacity;
-        
-        polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
-                this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
-                this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
-                this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
-        ], "#969696", 0); // `hsla(1, 50%, 50%, 0.5)`s
-
+        if (sortedActive) {
+            polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
+                    this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
+                    this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
+                    this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
+            ], "#969696", 0); // `hsla(1, 50%, 50%, 0.5)`s
+        }
         polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
         this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,

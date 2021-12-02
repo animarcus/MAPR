@@ -15,7 +15,7 @@ function wallsToGraph(w) {
         }
     }
 
-    g.printGraph();
+    // g.printGraph();
     let final = g.topologicalSort().reverse()
     
     return final;

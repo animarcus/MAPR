@@ -30,11 +30,17 @@
                 Wall color <input type="color" value="#ff0000" id="colorpick">
                 <div class="slider">
                     <label id="showH0" for="sliderH0"> 0 </label>
-                    <input id="sliderH0" type="range" min="0" max="500" onchange="changeSlider(this.id)">
+                    <input id="sliderH0" type="range" min="0" max="500" value="0" onchange="changeSlider(this.id)">
                 </div>
                 <div class="slider">
-                    <label id="showH1" for="sliderH1"> 0 </label>
-                    <input id="sliderH1" type="range" min="0" max="500" onchange="changeSlider(this.id)">
+                    <label id="showH1" for="sliderH1"> 300 </label>
+                    <input id="sliderH1" type="range" min="0" max="500" value="300" onchange="changeSlider(this.id)">
+                    <label>
+                        <input type="checkbox" id="changeAll" onchange="changeAll = !changeAll; changeSlider(this.id)">
+                        Change All </label>
+                    <label>
+                        <input type="checkbox" id="sortedActive" onchange="sortedActive = !sortedActive">
+                        Sorting </label>
                 </div>
             </div>
             <div class="sceneSettings">
