@@ -62,7 +62,7 @@ body {
 } 
 #canvas3D {
     width: 100%;
-    height: auto;
+    height: 100%;
     background:rgb(56, 56, 56);
 }
 #canvas2D {
@@ -92,5 +92,5 @@ body {
 
 .slider {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }

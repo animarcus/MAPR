@@ -1,4 +1,8 @@
 # Ray casting
+
+This project was done for my high school graduation and it's inspired by a habitual way of creating a 3D first-person perspective of a player dropped into a map who is surrounded by walls.
+[Lodev has a great tutorial that goes much further than me into his engine](https://lodev.org/cgtutor/raycasting.html) but I had a specific way I wanted to do the rendering and I wanted it to work in any web browser (including on mobile).
+
 ### A different approach to 3D rendering
 
 In my last year of high school, I had to give in a report as a graduation project. I was fascinated by the use of Ray casting for use in a rendering engine, just like what the first 3D games like [Wolfenstein 3D](https://en.wikipedia.org/wiki/Wolfenstein_3D) did.
@@ -11,4 +15,4 @@ If I had the time, I would create a full javascript library where one could easi
 Maybe my plan isn't possible due to performance limitations, or maybe it is not interesting enough to make a game with this.
 Nonetheless, I have learned a lot from building this project especially in math.
 
-I was able to apply what I had learned throughout the year in math class on vector geometry and I also discovered the use of Graphs for POSETs (Partially Ordered Sets for which we use DFS to sort)
+I was able to apply what I had learned throughout the year in math class on vector geometry and I also discovered the use of Graphs for POSETs (Partially Ordered Sets for which we use DFS to sort).
