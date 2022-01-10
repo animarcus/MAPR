@@ -104,7 +104,10 @@ const drawing = {
 
 document.addEventListener('resize', handlers.updateCanvasSize());
 document.onkeyup = (e) => delete keysPressed[e.key];
-document.onkeydown = (e) => (keysPressed[e.key] = true);
+document.onkeydown = (e) => {
+    keysPressed[e.key] = true;
+    e.preventDefault()
+}
 
 document.ondblclick = (e) => e.preventDefault();
 

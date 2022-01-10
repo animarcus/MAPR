@@ -5,8 +5,8 @@ class Player {
 
         this.height = 180; // height is in cm
 
-        this.farSight = 1000
-        this.moveStep = 2;
+        this.farSight = 3000
+        this.moveStep = 1.4;
         this.lookStepH = 2;
         this.lookStepV = 15;
         this.pos = {
@@ -69,8 +69,8 @@ class Player {
         this.setFOV();
     }
     straightMove(step) {
-        this.pos.x = this.pos.x + step * this.header.x;
-        this.pos.y = this.pos.y + step * this.header.y;
+        this.pos.x += step * this.header.x;
+        this.pos.y += step * this.header.y;
         this.setFOV();
     }
 
@@ -81,7 +81,8 @@ class Player {
         this.fov.v2.pos = this.pos;
     }
 }
-
+let timer = 0
+let timer1, timer2
 const playerHandler = {
     movement() {
         if (keysPressed.w) {

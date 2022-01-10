@@ -9,9 +9,9 @@
     user-select: none; /* Standard */
 }
 body {
-    
-    overflow: hidden;
-    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
     /* display: flex;
     justify-content: center; */
     background: rgb(2,0,36);
@@ -78,19 +78,35 @@ body {
 .sceneSettings {
     display: flex;
     flex-direction: column;
+    row-gap: 10px;
+}
+
+.sceneSelection {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
 }
 .wallOptions {
     display: flex;
     flex-direction: column;
     align-items: center;
+    row-gap: 10px;
 }
 .toggles {
     display: flex;
     flex-direction: column;
     align-items: center;
+    row-gap: 10px;
 }
 
 .slider {
     display: flex;
     flex-direction: column;
+}
+
+.fovslider {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    column-gap: 20px;
 }

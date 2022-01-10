@@ -1,6 +1,10 @@
 class Boundary {
-    constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=0, height1=350) {
+    constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
         // console.log(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
+        // this.currCanvas = {
+        //     "width": canvas2D.width,
+        //     "height": canvas2D.width
+        // }
         this.pos = {
             'x': x1,
             'y': y1
@@ -79,6 +83,7 @@ class Boundary {
             this.h.x -= player.pos.x;
             this.h.y -= player.pos.y;
         }
+        
         this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
         this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
 
@@ -111,6 +116,7 @@ class Boundary {
         if (!isClockwiseOrder(this.p, this.h)) v2xangle = -v2xangle;
 
         v2xangle = v2xangle + v1xangle; // make v2 relative to v1
+        // console.log(degrees(v1xangle), degrees(v2xangle))
 
         this.p.projectedDist = this.p.dist * Math.cos(radians(v1xangle));
         this.x1 = degrees(v1xangle) * canvas.width / fovamount;

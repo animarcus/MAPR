@@ -16,39 +16,23 @@ let showGraph = false;
 
 
 
-const player = new Player(canvas2D.width/2 , canvas2D.height - canvas2D.height/1.4, 90);
-player.fov.xamount = 90;
+const player = new Player(canvas2D.width/2 , canvas2D.height - canvas2D.height/2, 90);
+player.fov.xamount = 120;
+let recommendedFOV = player.fov.xamount
+
+document.getElementById("showFov").innerHTML = player.fov.xamount
+document.getElementById("sliderFov").value = player.fov.xamount
 
 player.setFOV();
 
+loadScene("example")
+
+// walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270, 100, 1, 0, 300));
 
 
-// let tmp = ""
-// walls.forEach(w => {
-//     tmp = tmp + "walls.push(new Boundary(" + w.pos.x + ", " + w.pos.y + ", " +
-//                                         (w.pos.x + w.header.x) + ", " + (w.pos.y + w.header.y) + ", " + w.hue + "));\n"
-// });
-// console.log(tmp);
+// walls.push(new Boundary(1957201 / canvas2D.width, 0 / canvas2D.width, 1957201 / canvas2D.width, 1957201 / canvas2D.width, 100, 1, 0, 350));
 
-function exampleScene() {
-    renderWalls.splice(0, renderWalls.length);
-    wallCount = 0;
-    walls.splice(0, walls.length);
-    walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270, 100, 1, 0, 300));
-    walls.push(new Boundary(339, canvas2D.height - 118,   232,    canvas2D.height - 192, 100, 1, 0, 300));
-    walls.push(new Boundary(157, canvas2D.height - 197,   113,    canvas2D.height - 387, 100, 1, 0, 300));
-    walls.push(new Boundary(201, canvas2D.height - 417,   289,    canvas2D.height - 321, 100, 1, 0, 300));
-    walls.push(new Boundary(354, canvas2D.height - 427,   488,    canvas2D.height - 495, 100, 1, 0, 300));
-    walls.push(new Boundary(615, canvas2D.height - 464,   702,    canvas2D.height - 417, 100, 1, 0, 300));
-    walls.push(new Boundary(790, canvas2D.height - 200,   694,    canvas2D.height - 59, 100, 1, 0, 300));
-    walls.push(new Boundary(429, canvas2D.height - 20,    304,    canvas2D.height - 32, 100, 1, 0, 300));
-    walls.push(new Boundary(148, canvas2D.height - 58,    39,     canvas2D.height - 95, 100, 1, 0, 300));
-    walls.push(new Boundary(488, canvas2D.height - 115,   613,    canvas2D.height - 157, 100, 1, 0, 300));
-    walls.push(new Boundary(912, canvas2D.height - 251,   931,    canvas2D.height - 409, 100, 1, 0, 300));
-    walls.push(new Boundary(762, canvas2D.height - 345,   815,    canvas2D.height - 472, 100, 1, 0, 300));
-}
 
-exampleScene();
 
 let show2D = true;
 let show2D2 = false;
@@ -69,15 +53,21 @@ function changeSlider() {
     showH0.innerHTML = sliderH0.value;
     showH1.innerHTML = sliderH1.value;
     if (changeAll) {
-        for (wall of walls) {
-            wall.height0 = sliderH0.value;
-            wall.height1 = sliderH1.value;
+        for (w of walls) {
+            w.height0 = sliderH0.value;
+            w.height1 = sliderH1.value;
         }
     } else {
         walls[walls.length - 1].height0 = sliderH0.value;
         walls[walls.length-1].height1 = sliderH1.value;
     }
-    
+}
+
+function sliderFOV(value) {
+    player.fov.xamount = value;
+    player.setFOV();
+    document.getElementById("showFov").innerHTML = value
+    document.getElementById("sliderFov").value = value
 }
 
 gameLoop();
@@ -124,7 +114,7 @@ function gameLoop() {
 
     drawing.start();
     touchControls();
-
+    
     requestAnimationFrame(gameLoop);
 }
 

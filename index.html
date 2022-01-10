@@ -30,11 +30,11 @@
                 Wall color <input type="color" value="#ff0000" id="colorpick">
                 <div class="slider">
                     <label id="showH0" for="sliderH0"> 0 </label>
-                    <input id="sliderH0" type="range" min="0" max="500" value="0" onchange="changeSlider(this.id)">
+                    <input id="sliderH0" type="range" min="0" max="500" value="0" oninput="changeSlider(this.id)">
                 </div>
                 <div class="slider">
                     <label id="showH1" for="sliderH1"> 300 </label>
-                    <input id="sliderH1" type="range" min="0" max="500" value="300" onchange="changeSlider(this.id)">
+                    <input id="sliderH1" type="range" min="0" max="500" value="300" oninput="changeSlider(this.id)">
                     <label>
                         <input type="checkbox" id="changeAll" onchange="changeAll = !changeAll; changeSlider(this.id)">
                         Change All </label>
@@ -42,16 +42,23 @@
                         <input type="checkbox" id="sortedActive" onchange="sortedActive = !sortedActive">
                         Sorting </label>
                 </div>
+                <div class="fovslider">
+                    <label class="fovslider" id="showFov" for="sliderFov"> 0 </label>
+                    <input class="fovslider" id="sliderFov" type="range" min="1" max="180" value="120" oninput="sliderFOV(this.value)">
+                    <button onclick="sliderFOV(recommendedFOV)"> Reset to recommended FOV </button>
+                </div>
             </div>
             <div class="sceneSettings">
                 <button onclick="undoWall = true">Undo new Wall</button>
-                <button onclick="
-                                renderWalls.splice(0, renderWalls.length);
-                                walls.splice(0, walls.length);
-                                wallCount = 0;
-                                ">Reset all Walls</button>
-                <button onclick="exampleScene()">Generate example scene</button>
+                <button onclick="clearWalls()">Reset all Walls</button>
                 <button onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
+            </div>
+            <div class="sceneSelection">
+                SET SCENE
+                <button onclick='copyWalls()'> Copy current selection to clipboard !!!!!!</button>
+                <button onclick='loadScene("example")'> Simple example</button>
+                <button onclick='loadScene("colors")'> Colors !!! </button>
+                <button onclick='loadScene("penis")'> penis lol </button>
             </div>
         </div>
     </div>
@@ -64,6 +71,7 @@
     <script src="scripts/vecFuncs.js"></script>
     <script src="scripts/graph.js"></script>
     <script src="scripts/topoSorting.js"></script>
+    <script src="scripts/scenes.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 </html>
