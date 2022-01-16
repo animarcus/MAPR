@@ -111,6 +111,27 @@ function fourWalls() {
     walls.push(new Boundary(0, canvas2D.height, 0, 0));
 }
 
+function collidingWalls() {
+    walls.push(new Boundary(0 * (canvas2D.width/886), 0 * (canvas2D.width/886), 886 * (canvas2D.width/886), 0 * (canvas2D.width/886), 100, 1, 0, 300));
+    walls.push(new Boundary(886 * (canvas2D.width/886), 0 * (canvas2D.width/886), 886 * (canvas2D.width/886), 886 * (canvas2D.width/886), 100, 1, 0, 300));
+    walls.push(new Boundary(886 * (canvas2D.width/886), 886 * (canvas2D.width/886), 0 * (canvas2D.width/886), 886 * (canvas2D.width/886), 100, 1, 0, 300));
+    walls.push(new Boundary(0 * (canvas2D.width/886), 886 * (canvas2D.width/886), 0 * (canvas2D.width/886), 0 * (canvas2D.width/886), 100, 1, 0, 300));
+    walls.push(new Boundary(314 * (canvas2D.width/886), 448 * (canvas2D.width/886), 516 * (canvas2D.width/886), 450 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(518 * (canvas2D.width/886), 650 * (canvas2D.width/886), 516 * (canvas2D.width/886), 450 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(309 * (canvas2D.width/886), 642 * (canvas2D.width/886), 314 * (canvas2D.width/886), 448 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(405 * (canvas2D.width/886), 592 * (canvas2D.width/886), 367 * (canvas2D.width/886), 508 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(445 * (canvas2D.width/886), 508 * (canvas2D.width/886), 367 * (canvas2D.width/886), 508 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(444 * (canvas2D.width/886), 581 * (canvas2D.width/886), 445 * (canvas2D.width/886), 508 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(560 * (canvas2D.width/886), 251 * (canvas2D.width/886), 725 * (canvas2D.width/886), 344 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(747 * (canvas2D.width/886), 444 * (canvas2D.width/886), 725 * (canvas2D.width/886), 344 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(788 * (canvas2D.width/886), 321 * (canvas2D.width/886), 747 * (canvas2D.width/886), 444 * (canvas2D.width/886), 0, 1, 0, 300));
+    walls.push(new Boundary(750 * (canvas2D.width/886), 373 * (canvas2D.width/886), 788 * (canvas2D.width/886), 321 * (canvas2D.width/886), 0, 1, 0, 300));
+    player.pos.x = 439.3858452298107 * (canvas2D.width/886);
+    player.pos.y = 803.732465172733 * (canvas2D.width/886);
+    player.rotation = -1.2915436464758032;
+    player.setAngle(degrees(player.rotation))
+}
+
 function clearWalls() {
     renderWalls.splice(0, renderWalls.length);
     wallCount = 0;
@@ -129,7 +150,7 @@ function copyWalls() {
     });
     tmp = tmp + "player.pos.x = " + player.pos.x + " * (canvas2D.width/" + canvas2D.width + ");\n" +
                 "player.pos.y = " + player.pos.y + " * (canvas2D.width/" + canvas2D.width + ");\n" +
-                "player.rotation = " + player.rotation + " * (canvas2D.width/" + canvas2D.width + ");\n" +
+                "player.rotation = " + player.rotation + ";\n" +
                 "player.setAngle(degrees(player.rotation))"
     console.log(tmp);
     
@@ -153,6 +174,9 @@ function loadScene(sceneName) {
             break
         case "fourWalls":
             fourWalls()
+            break
+        case "collidingWalls":
+            collidingWalls()
             break
     }
     sliderFOVx(recommendedFOVx)

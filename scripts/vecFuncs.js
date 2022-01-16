@@ -48,7 +48,7 @@ function isIntersectionVectors(v1, v2) {
     const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
     
     // if t and u are between 0 and 1 then the intersection falls between v1 and v2
-    return u >= 0 && u <= 1 && t >= 0 && t <= 1;  
+    return u > 0 && u < 1 && t > 0 && t < 1;  
 }
 
 function intersectionVectors(v1, v2) {

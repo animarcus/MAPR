@@ -74,13 +74,32 @@ const drawing = {
             }
         }
         if (this.isDrawing && (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0)) {
+            if (keysPressed["Shift"]) {
+                this.snapping();
+            }
             set2Dctx();
             line(this.startpos.x, this.startpos.y, mouse.x, mouse.y);
             set3Dctx();
         }
     },
+    snappingThreshold : 10,
+    snapping() {
+        for (let wall of walls) {
+            if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
+                mouse.x = wall.pos.x;
+                mouse.y = wall.pos.y;
+            }
+            if (Math.abs(mouse.x - (wall.pos.x + wall.header.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.header.y)) < this.snappingThreshold) {
+                mouse.x = wall.pos.x + wall.header.x;
+                mouse.y = wall.pos.y + wall.header.y;
+            }
+        }
+    },
     stop() {
         if (this.isDrawing && (Math.abs(this.startpos.x - mouse.x) > 10 || Math.abs(this.startpos.y - mouse.y) > 10)) {
+            // if (keysPressed["Shift"]) {
+                
+            // }
             newWall = { "pos":      {   "x": this.startpos.x,
                                         "y": this.startpos.y },
                         "header":   {   "x": mouse.x - this.startpos.x,

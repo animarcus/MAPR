@@ -28,7 +28,7 @@ document.getElementById("sliderFovy").value = player.fov.yamount
 
 player.setFOV();
 
-loadScene("fourWalls")
+loadScene("collidingWalls")
 
 // walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270, 100, 1, 0, 300));
 
