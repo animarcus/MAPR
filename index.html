@@ -22,6 +22,7 @@
                 If using a touch screen, tap the
                 colored boxes for controls
             </p>
+            <button onclick="resetPlayer()">Reset player view/position</button>
             <div class="toggles">
                 <button onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
                 <button onclick="rainbowMode = !rainbowMode">Toggle Rainbow mode</button>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="slider">
                     <label id="showH1" for="sliderH1"> 300 </label>
-                    <input id="sliderH1" type="range" min="0" max="500" value="300" oninput="changeSlider(this.id)">
+                    <input id="sliderH1" type="range" min="0" max="1000" value="300" oninput="changeSlider(this.id)">
                     <label>
                         <input type="checkbox" id="changeAll" onchange="changeAll = !changeAll; changeSlider(this.id)">
                         Change All </label>
@@ -43,9 +44,14 @@
                         Sorting </label>
                 </div>
                 <div class="fovslider">
-                    <label class="fovslider" id="showFov" for="sliderFov"> 0 </label>
-                    <input class="fovslider" id="sliderFov" type="range" min="1" max="180" value="120" oninput="sliderFOV(this.value)">
-                    <button onclick="sliderFOV(recommendedFOV)"> Reset to recommended FOV </button>
+                    <label class="fovslider" id="showFovx" for="sliderFov"> 0 </label>
+                    <input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" oninput="sliderFOVx(this.value)">
+                    <button onclick="sliderFOVx(recommendedFOVx)"> Reset to recommended FOV x </button>
+                </div>
+                <div class="fovslider">
+                    <label class="fovslider" id="showFovy" for="sliderFov"> 0 </label>
+                    <input class="fovslider" id="sliderFovy" type="range" min="200" max="350" value="280" oninput="sliderFOVy(this.value)">
+                    <button onclick="sliderFOVy(recommendedFOVy)"> Reset to recommended FOV y </button>
                 </div>
             </div>
             <div class="sceneSettings">

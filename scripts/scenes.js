@@ -1,5 +1,5 @@
 function exampleScene() {
-    recommendedFOV = 70
+    recommendedFOVx = 70
     walls.push(new Boundary(456 * (canvas2D.width/886), 692 * (canvas2D.width/886), 645 * (canvas2D.width/886), 741 * (canvas2D.width/886), 0, 1, 0, 350));
     walls.push(new Boundary(366 * (canvas2D.width/886), 847 * (canvas2D.width/886), 199 * (canvas2D.width/886), 773 * (canvas2D.width/886), 0, 1, 0, 350));
     walls.push(new Boundary(360 * (canvas2D.width/886), 748 * (canvas2D.width/886), 492 * (canvas2D.width/886), 794 * (canvas2D.width/886), 214, 1, 0, 350));
@@ -27,7 +27,7 @@ function exampleScene() {
 }
 
 function colorsScene() {
-    recommendedFOV = 50
+    recommendedFOVx = 50
     walls.push(new Boundary(133 * (canvas2D.width/886), 848 * (canvas2D.width/886), 252 * (canvas2D.width/886), 842 * (canvas2D.width/886), 0, 1, 0, 350));
     walls.push(new Boundary(273 * (canvas2D.width/886), 718 * (canvas2D.width/886), 337 * (canvas2D.width/886), 747 * (canvas2D.width/886), 33, 1, 0, 350));
     walls.push(new Boundary(323 * (canvas2D.width/886), 809 * (canvas2D.width/886), 380 * (canvas2D.width/886), 869 * (canvas2D.width/886), 57, 1, 0, 350));
@@ -55,7 +55,7 @@ function colorsScene() {
 }
 
 function penislol() {
-    recommendedFOV = 70
+    recommendedFOVx = 70
     walls.push(new Boundary(307 * (canvas2D.width/861), 594 * (canvas2D.width/861), 324 * (canvas2D.width/861), 607 * (canvas2D.width/861), 0, 1, 0, 35));
     walls.push(new Boundary(331 * (canvas2D.width/861), 613 * (canvas2D.width/861), 343 * (canvas2D.width/861), 618 * (canvas2D.width/861), 0, 1, 0, 35));
     walls.push(new Boundary(355 * (canvas2D.width/861), 620 * (canvas2D.width/861), 367 * (canvas2D.width/861), 622 * (canvas2D.width/861), 0, 1, 0, 35));
@@ -96,11 +96,27 @@ function penislol() {
 
 }
 
+function test() {
+    walls.push(new Boundary(471 * (canvas2D.width/886), 857 * (canvas2D.width/886), 459 * (canvas2D.width/886), 310 * (canvas2D.width/886), 0, 1, 0, 300));
+    player.pos.x = 466.7727691389232 * (canvas2D.width/886);
+    player.pos.y = 309.2430138742686 * (canvas2D.width/886);
+    player.rotation = 1.7453292519943298 * (canvas2D.width/886);
+    player.setAngle(degrees(player.rotation))
+
+}
+function fourWalls() {
+    walls.push(new Boundary(0, 0, canvas2D.width, 0));
+    walls.push(new Boundary(canvas2D.width, 0, canvas2D.width, canvas2D.height));
+    walls.push(new Boundary(canvas2D.width, canvas2D.height, 0, canvas2D.height));
+    walls.push(new Boundary(0, canvas2D.height, 0, 0));
+}
+
 function clearWalls() {
     renderWalls.splice(0, renderWalls.length);
     wallCount = 0;
     walls.splice(0, walls.length);
 }
+
 
 function copyWalls() {
     tmp = ""
@@ -111,7 +127,12 @@ function copyWalls() {
                                                     (w.pos.y + w.header.y) +    " * (canvas2D.width/" + canvas2D.width + "), " +
                                             w.hue + ", " + w.opacity + ", " + w.height0 + ", " + w.height1 + "));\n"
     });
+    tmp = tmp + "player.pos.x = " + player.pos.x + " * (canvas2D.width/" + canvas2D.width + ");\n" +
+                "player.pos.y = " + player.pos.y + " * (canvas2D.width/" + canvas2D.width + ");\n" +
+                "player.rotation = " + player.rotation + " * (canvas2D.width/" + canvas2D.width + ");\n" +
+                "player.setAngle(degrees(player.rotation))"
     console.log(tmp);
+    
     navigator.clipboard.writeText(tmp)
 }
 
@@ -127,8 +148,14 @@ function loadScene(sceneName) {
         case "penis":
             penislol()
             break;
+        case "test":
+            test()
+            break
+        case "fourWalls":
+            fourWalls()
+            break
     }
-    sliderFOV(recommendedFOV)
+    sliderFOVx(recommendedFOVx)
     return true
 }
 
@@ -138,3 +165,13 @@ function loadScene(sceneName) {
 // different sizes 2
 // performance
 // normal room
+
+
+function resetPlayer() {
+    player.rotation = 0;
+    player.setAngle(0);
+    player.pos.x = canvas2D.width/2;
+    player.pos.y = canvas2D.height/2;
+    player.fov.xamount = recommendedFOVx;
+    
+}

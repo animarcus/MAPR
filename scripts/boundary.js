@@ -116,13 +116,13 @@ class Boundary {
         if (!isClockwiseOrder(this.p, this.h)) v2xangle = -v2xangle;
 
         v2xangle = v2xangle + v1xangle; // make v2 relative to v1
-        // console.log(degrees(v1xangle), degrees(v2xangle))
+        // console.log(Math.floor(degrees(v1xangle)), Math.floor(degrees(v2xangle)))
 
-        this.p.projectedDist = this.p.dist * Math.cos(radians(v1xangle));
+        this.p.dist *= Math.cos(v1xangle);
         this.x1 = degrees(v1xangle) * canvas.width / fovamount;
         this.h1 = this.calculateHeight(this.p);
 
-        this.h.projectedDist = this.h.dist * Math.cos(radians(v2xangle));
+        this.h.dist *= Math.cos(v2xangle);
         this.x2 = degrees(v2xangle) * canvas.width / fovamount;
         this.h2 = this.calculateHeight(this.h);
 
@@ -145,10 +145,10 @@ class Boundary {
         
 
         return {
-            'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount/2)) * v.dist),
-            'h0':    (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount/2)) * v.dist),
-            'h1':    (h1.y * canvas.height) / (-Math.tan(radians(player.fov.yamount/2)) * v.dist),
-            'sat': 1,
+            'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+            'h0':    (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+            'h1':    (h1.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+            'sat': 1, 
             'dist': v.dist
         };
     }
@@ -157,8 +157,8 @@ class Boundary {
 
 
     display3D() {
-        const minh = 25;
-        const maxh = 50;
+        const minh = 20;
+        const maxh = 55;
         const ver = maxh - minh;
         const hor = 450;
         const a = -ver/hor;
