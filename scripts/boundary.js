@@ -130,7 +130,6 @@ class Boundary {
         if (this.h2 > 10000) this.h2 = 10000;
     }
 
-    //works by supposing a 2d side view of the player looking at the wall and using trigonometry to find the angle of the top and bottom of the wall
     calculateHeight(v) {
         const header = vectorCreate(v.dist, 0);
         const h0 = vectorCreate(v.dist, this.height0 - player.height);
