@@ -14,10 +14,10 @@ function wallsToGraph(w) {
             }
         }
     }
-
+    // debugger;
     // g.printGraph();
     let final = g.topologicalSort().reverse()
-    
+    g.printGraph()
     return final;
 }
 
@@ -32,14 +32,27 @@ function v1HigherThanv2(w1, w2) {
                     "y": player.pos.y + w2.p.dist * w2.p.y}
     const W2h = {   "x": player.pos.x + w2.h.dist * w2.h.x,
                     "y": player.pos.y + w2.h.dist * w2.h.y}
+    
+    // V1 Just the wall vector (v1header - v1pos)
+    // Creating the vector is different so that we can check for intersections
+    const W1ptoW1h = {  "pos": {    "x": player.pos.x + w1.p.x * w1.p.dist,
+                                    "y": player.pos.y + w1.p.y * w1.p.dist },
+                        "header": { "x": w1.h.x * w1.h.dist - w1.p.x * w1.p.dist,
+                                    "y": w1.h.y * w1.h.dist - w1.p.y * w1.p.dist }};
 
-    // V2 Just the wall vector (v1header - v1pos)
+    // V2 Just the wall vector (v2header - v2pos)
     // Creating the vector is different so that we can check for intersections
     const W2ptoW2h = {  "pos": {    "x": player.pos.x + w2.p.x * w2.p.dist,
                                     "y": player.pos.y + w2.p.y * w2.p.dist },
                         "header": { "x": w2.h.x * w2.h.dist - w2.p.x * w2.p.dist,
                                     "y": w2.h.y * w2.h.dist - w2.p.y * w2.p.dist }};
-    
+
+
+    W1HtoW1P = vectorCreate(w1.p.x * w1.p.dist - w1.h.x * w1.h.dist,
+                            w1.p.y * w1.p.dist - w1.h.y * w1.h.dist)
+    W2HtoW2P = vectorCreate(w2.p.x * w2.p.dist - w2.h.x * w2.h.dist,
+                            w2.p.y * w2.p.dist - w2.h.y * w2.h.dist)
+
     const PltoW1P = {   "pos": {    "x": player.pos.x,
                                     "y": player.pos.y },
                         "header": { "x": w1.p.x * w1.p.dist,
@@ -49,15 +62,81 @@ function v1HigherThanv2(w1, w2) {
                         "header": { "x": w1.h.x * w1.h.dist,
                                     "y": w1.h.y * w1.h.dist }};
 
-    return  isIntersectionVectors(PltoW1P, W2ptoW2h) || isIntersectionVectors(PltoW1H, W2ptoW2h) ||
-            ptInTriangle(W2p, player.pos, W1p, W1h) || ptInTriangle(W2h, player.pos, W1p, W1h)
+    
+    if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.h, w2.h.dist)) ||
+        isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.p, w2.p.dist))) {
+        return false
+    }
+    let alpha, beta
+    if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.p, w2.p.dist))) {
+        alpha = vectorAngleBetween(vectorMult(w1.p, w1.p.dist), W1ptoW1h.header)
+        beta = vectorAngleBetween(vectorMult(w1.p, w1.p.dist), W2ptoW2h.header)
+        // console.log("aaaaa", w1.index, w2.index, degrees(alpha), degrees(beta))
+    }
+    if (isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.h, w2.h.dist))) {
+        alpha = vectorAngleBetween(vectorMult(w1.h, w1.h.dist), W1HtoW1P)
+        beta = vectorAngleBetween(vectorMult(w1.h, w1.h.dist), W2HtoW2P)
+        
+        // console.log("bbbbb", w1.index, w2.index, degrees(alpha), degrees(beta))
+    }
+    if ((alpha > 0 && beta > 0) || (alpha < 0 && beta < 0)) {
+        // console.log("ccc")
+        return Math.abs(alpha) < Math.abs(beta)
+    }
+    
+    return  isIntersectionVectors(PltoW1P, W2ptoW2h, [[w1.index, w2.index], "isint1"]) ||
+            isIntersectionVectors(PltoW1H, W2ptoW2h, [[w1.index, w2.index], "isint2"]) ||
+            ptInTriangle(W2p, player.pos, W1p, W1h, [[w1.index, w2.index], "istri1"]) ||
+            ptInTriangle(W2h, player.pos, W1p, W1h, [[w1.index, w2.index], "istri2"])
+            //(isSame(w1.h, w2.h) && isClockwiseOrder(W1HtoW2P, W2HtoW2P)) ||
+            //(isSame(w1.p, w2.p) && !isClockwiseOrder(W2ptoW2h.header, W1ptoW1h.header)) ||
+
 }
 
-function ptInTriangle(p, p0, p1, p2) {
-    var A = 1/2 * (-p1.y * p2.x + p0.y * (-p1.x + p2.x) + p0.x * (p1.y - p2.y) + p1.x * p2.y);
-    var sign = A < 0 ? -1 : 1;
-    var s = (p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y) * sign;
-    var t = (p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y) * sign;
-    
-    return s >= 0.0 && t >= 0.0 && (s + t) <= 2.0 * A * sign;
+
+const EPSILON = 0.01
+function isSame(v1, v2) {
+    return  Math.abs(v1.x - v2.x) < EPSILON &&
+            Math.abs(v1.y - v2.y) < EPSILON
+}
+
+function ptInTriangle(P, A, B, C, indices = []) {
+    const w1 = (A.x*(C.y - A.y) + (P.y - A.y)*(C.x - A.x) - P.x*(C.y - A.y)) / ((B.y - A.y)*(C.x - A.x) - (B.x - A.x)*(C.y - A.y))
+    const w2 = (P.y - A.y - w1*(B.y - A.y)) / (C.y - A.y)
+    // console.log(w1, w2, isSame(P, A) || isSame(P, B) || isSame(P, C))
+    if (isSame(P, A) || isSame(P, B) || isSame(P, C)) return false
+    return w1 > 0 && w2 > 0 && w1 + w2 < 1
+}
+
+function isIntersectionVectors(v1, v2, indices = []) {
+    const x1 = v1.pos.x;
+    const y1 = v1.pos.y;
+    const x2 = x1 + v1.header.x;
+    const y2 = y1 + v1.header.y;
+
+    const x3 = v2.pos.x;
+    const y3 = v2.pos.y;
+    const x4 = x3 + v2.header.x;
+    const y4 = y3 + v2.header.y;
+
+    // const header1 = {
+    //     'x': x2,
+    //     'y': y2
+    // }
+    // const header2 = {
+    //     'x': x4,
+    //     'y': y4
+    // }
+
+
+    const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    if (den == 0) return false;
+    const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
+    const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
+    // if (indices[0][0] == 0 && indices[0][1] == 1) {
+    //     console.log(indices[0][0], indices[0][1], u, t, u > 0 && u + EPSILON <= 1 && t > 0 && t + EPSILON <= 1)
+    // }
+    // console.log("INTERSECTION", indices.join(','), u > 0.0 && u < 1.0 && t > 0.0 && t < 1.0, !(isSame(v1.pos, header2) ,isSame(v2.pos, header1)))
+    // if t and u are between 0 and 1 then the intersection falls between v1 and v2
+    return u > 0.0 && u < 1.0 && t > 0.0 && t < 1.0; // && !(isSame(v1.pos, header2) || isSame(v2.pos, header1))
 }

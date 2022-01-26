@@ -105,17 +105,17 @@ const drawing = {
                         "header":   {   "x": mouse.x - this.startpos.x,
                                         "y": mouse.y - this.startpos.y }
             }
-            let intCount = 0;
-            walls.forEach(wall => {
-                if (isIntersectionVectors(wall, newWall)) {
-                    intCount ++;
-                };
-            });
-            if (intCount == 0) {
+            // let intCount = 0;
+            // walls.forEach(wall => {
+            //     if (isIntersectionVectors(wall, newWall)) {
+            //         intCount ++;
+            //     };
+            // });
+            // if (intCount == 0) {
                 walls.push(new Boundary(this.startpos.x, this.startpos.y,
                                         mouse.x, mouse.y,
                                         HEXtoHSL(document.getElementById("colorpick").value).h));
-            }
+            // }
         }
         this.isDrawing = false;
     }

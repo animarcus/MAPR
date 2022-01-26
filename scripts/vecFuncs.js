@@ -31,51 +31,64 @@ function vectorAdd(A, B) {
         "y": A.y + B.y
     }
 }
-function isIntersectionVectors(v1, v2) {   
-    const x1 = v1.pos.x;
-    const y1 = v1.pos.y;
-    const x2 = x1 + v1.header.x;
-    const y2 = y1 + v1.header.y;
 
-    const x3 = v2.pos.x;
-    const y3 = v2.pos.y;
-    const x4 = x3 + v2.header.x;
-    const y4 = y3 + v2.header.y;
-
-    const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-    if (den == 0) return false;
-    const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
-    const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
-    
-    // if t and u are between 0 and 1 then the intersection falls between v1 and v2
-    return u > 0 && u < 1 && t > 0 && t < 1;  
+function vectorSubtract(B, A) {
+    return {
+        "x": B.x - A.x,
+        "y": B.y - A.y
+    }
 }
 
-function intersectionVectors(v1, v2) {
-    if (!isIntersectionVectors(v1, v2)) return;
-    
-    const x1 = v1.pos.x;
-    const y1 = v1.pos.y;
-    const x2 = x1 + v1.header.x;
-    const y2 = y1 + v1.header.y;
-
-    const x3 = v2.pos.x;
-    const y3 = v2.pos.y;
-    const x4 = x3 + v2.header.x;
-    const y4 = y3 + v2.header.y;
-
-    const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-    const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;
-
-    const xint = x3 + u * (x4 - x3);
-    const yint = y3 + u * (y4 - y3);
-    const intersection = {
-        'x': xint,
-        'y': yint,
-        'dist': Math.sqrt((y1 - yint) ** 2 + (x1 - xint) ** 2)
-    };
-    return intersection;
+function vectorMult(A, lamda) {
+    return {
+        "x": A.x * lamda,
+        "y": A.y * lamda
+    }
 }
+
+function vectorOpposite(vector) {
+    return {
+        "x": -vector.x,
+        "y": -vector.y
+    }
+}
+
+function vectorAngleBetween(a, b) {
+    const v1 = vectorNormalize(a, vectorDist(a.x, a.y))
+    const v2 = vectorNormalize(b, vectorDist(b.x, b.y))
+
+
+    let angle = Math.acos(vectorDotProduct(v1, v2))
+    if (!isClockwiseOrder(a, b)) angle = -angle
+    return angle
+}
+
+
+// function intersectionVectors(v1, v2) {
+//     if (!isIntersectionVectors(v1, v2)) return;
+    
+//     const x1 = v1.pos.x;
+//     const y1 = v1.pos.y;
+//     const x2 = x1 + v1.header.x;
+//     const y2 = y1 + v1.header.y;
+
+//     const x3 = v2.pos.x;
+//     const y3 = v2.pos.y;
+//     const x4 = x3 + v2.header.x;
+//     const y4 = y3 + v2.header.y;
+
+//     const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+//     const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;
+
+//     const xint = x3 + u * (x4 - x3);
+//     const yint = y3 + u * (y4 - y3);
+//     const intersection = {
+//         'x': xint,
+//         'y': yint,
+//         'dist': Math.sqrt((y1 - yint) ** 2 + (x1 - xint) ** 2)
+//     };
+//     return intersection;
+// }
 
 // condensed version of intersection() but only the conditional
 function isIntersectionFovW(w1, w2) {   

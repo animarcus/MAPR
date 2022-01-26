@@ -28,7 +28,7 @@ document.getElementById("sliderFovy").value = player.fov.yamount
 
 player.setFOV();
 
-loadScene("collidingWalls")
+loadScene("test")
 
 // walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270, 100, 1, 0, 300));
 
@@ -39,8 +39,8 @@ loadScene("collidingWalls")
 
 
 let show2D = true;
-let show2D2 = false;
-let showWallNums = false;
+let show2D2 = true;
+let showWallNums = true;
 let rainbowMode = false;
 let changeAll = true;
 document.getElementById("changeAll").checked = true;
