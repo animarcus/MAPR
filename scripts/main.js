@@ -1,5 +1,6 @@
 // Canvas declared in interface.js
 handlers.updateCanvasSize();
+
 ctx.translate(0,canvas.height);
 ctx.scale(1,-1);
 
@@ -9,6 +10,7 @@ ctx2D.scale(1, -1);
 
 let wallCount = 0;
 const walls = [];
+const wallsTemp = [];
 let renderWalls = [];
 
 let showGraph = false;
@@ -30,17 +32,11 @@ player.setFOV();
 
 loadScene("test")
 
-// walls.push(new Boundary(430, canvas2D.height - 270,   530,    canvas2D.height - 270, 100, 1, 0, 300));
-
-
-// walls.push(new Boundary(1957201 / canvas2D.width, 0 / canvas2D.width, 1957201 / canvas2D.width, 1957201 / canvas2D.width, 100, 1, 0, 350));
-
-// var canvas = document.getElementById("canvas2D");
 
 
 let show2D = true;
-let show2D2 = true;
-let showWallNums = true;
+let show2D2 = false;
+let showWallNums = false;
 let rainbowMode = false;
 let changeAll = true;
 document.getElementById("changeAll").checked = true;
@@ -49,38 +45,14 @@ document.getElementById("sliderH0").value = 0;
 document.getElementById("sliderH1").value = 300;
 let sortedActive = true;
 
-function changeSlider() {
-    let sliderH0 = document.getElementById("sliderH0");
-    let sliderH1 = document.getElementById("sliderH1");
-    let showH0 = document.getElementById("showH0");
-    let showH1 = document.getElementById("showH1");
-    showH0.innerHTML = sliderH0.value;
-    showH1.innerHTML = sliderH1.value;
-    if (changeAll) {
-        for (w of walls) {
-            w.height0 = sliderH0.value;
-            w.height1 = sliderH1.value;
-        }
-    } else {
-        walls[walls.length - 1].height0 = sliderH0.value;
-        walls[walls.length-1].height1 = sliderH1.value;
-    }
-}
 
-function sliderFOVx(value) {
-    player.fov.xamount = value;
-    player.setFOV();
-    document.getElementById("showFovx").innerHTML = value
-    document.getElementById("sliderFovx").value = value
-}
-function sliderFOVy(value) {
-    player.fov.yamount = value;
-    // player.setFOV();
-    document.getElementById("showFovy").innerHTML = value
-    document.getElementById("sliderFovy").value = value
-}
+
+
 
 gameLoop();
+
+
+
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx2D.clearRect(0, 0, canvas2D.width, canvas2D.height);
@@ -131,7 +103,6 @@ function gameLoop() {
 
 // background terrain
 function background() {
-    // ctx.fillStyle = '#00d2ff';
     ctx.fillStyle = "#64a7ff"; // blue
     ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height*35);
     ctx.fillStyle = "#969696"; // gray
@@ -143,3 +114,33 @@ function background() {
 }
 
 
+function sliderFOVx(value) {
+    player.fov.xamount = value;
+    player.setFOV();
+    document.getElementById("showFovx").innerHTML = value
+    document.getElementById("sliderFovx").value = value
+}
+function sliderFOVy(value) {
+    player.fov.yamount = value;
+    // player.setFOV();
+    document.getElementById("showFovy").innerHTML = value
+    document.getElementById("sliderFovy").value = value
+}
+
+function changeSlider() {
+    let sliderH0 = document.getElementById("sliderH0");
+    let sliderH1 = document.getElementById("sliderH1");
+    let showH0 = document.getElementById("showH0");
+    let showH1 = document.getElementById("showH1");
+    showH0.innerHTML = sliderH0.value;
+    showH1.innerHTML = sliderH1.value;
+    if (changeAll) {
+        for (w of walls) {
+            w.height0 = sliderH0.value;
+            w.height1 = sliderH1.value;
+        }
+    } else {
+        walls[walls.length - 1].height0 = sliderH0.value;
+        walls[walls.length - 1].height1 = sliderH1.value;
+    }
+}

@@ -2,11 +2,6 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    touch-action: none;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
 }
 body {
     position: fixed;
@@ -14,6 +9,14 @@ body {
     justify-content: center; */
     background: rgb(2,0,36);
     background: linear-gradient(140deg, rgb(202, 246, 223) 10%, rgba(0,212,255,1) 100%) fixed;
+}
+
+.no-touch {
+    touch-action: none;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 .container {

@@ -5,7 +5,7 @@ class Player {
 
         this.height = 180; // height is in cm
 
-        this.farSight = 3000
+        this.farSight = 1000
         this.moveStep = 1;
         this.lookStepH = 1;
         this.lookStepV = 1;
@@ -13,7 +13,7 @@ class Player {
             'x': x,
             'y': y
         };
-        this.header = {
+        this.dir = {
             'x': Math.cos(this.rotation),
             'y': Math.sin(this.rotation),
             'length': this.moveStep
@@ -35,7 +35,7 @@ class Player {
         ellipse(this.pos.x, this.pos.y, 7, 7, "orange");
 
 
-        // line(this.pos.x, this.pos.y, this.pos.x + (this.header.x) * 100, this.pos.y + (this.header.y) * 100, 'white', 1);
+        // line(this.pos.x, this.pos.y, this.pos.x + (this.dir.x) * 100, this.pos.y + (this.dir.y) * 100, 'white', 1);
 
         this.fov.v1.draw('orange', 3); // green
 
@@ -49,8 +49,8 @@ class Player {
         if (this.rotation > 2 * Math.PI) this.rotation -= 2 * Math.PI;
         if (this.rotation < -2 * Math.PI) this.rotation += 2 * Math.PI;
         this.setFOV();
-        this.header.x = Math.cos(this.rotation);
-        this.header.y = Math.sin(this.rotation);
+        this.dir.x = Math.cos(this.rotation);
+        this.dir.y = Math.sin(this.rotation);
     }
     sideLook(angle) { //input is in degrees but handled in radians
         this.setAngle(degrees(this.rotation) + angle);
@@ -79,13 +79,13 @@ class Player {
         // }
     }
     sideMove(step) {
-        this.pos.x += -step * this.header.y;
-        this.pos.y += step * this.header.x;
+        this.pos.x += -step * this.dir.y;
+        this.pos.y += step * this.dir.x;
         this.setFOV();
     }
     straightMove(step) {
-        this.pos.x += step * this.header.x;
-        this.pos.y += step * this.header.y;
+        this.pos.x += step * this.dir.x;
+        this.pos.y += step * this.dir.y;
         this.setFOV();
     }
 
@@ -101,7 +101,7 @@ let timer1, timer2
 const playerHandler = {
     movement() {
         if (keysPressed[" "]) {
-            player.moveStep = .2;
+            player.moveStep = 2.5;
         }
         if (keysPressed.w) {
             player.straightMove(player.moveStep);

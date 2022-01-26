@@ -107,35 +107,6 @@ function test() {
     player.rotation = 1.5882496193148643;
     player.setAngle(degrees(player.rotation))
 
-    // walls.push(new Boundary(369 * (canvas2D.width / 886), 543 * (canvas2D.width / 886), 501 * (canvas2D.width / 886), 544 * (canvas2D.width / 886), 0, 1, 0, 300));
-    // walls.push(new Boundary(622 * (canvas2D.width / 886), 608 * (canvas2D.width / 886), 501 * (canvas2D.width / 886), 544 * (canvas2D.width / 886), 0, 1, 0, 300));
-    // player.pos.x = 450.6580285038463 * (canvas2D.width / 886);
-    // player.pos.y = 259.9783991975275 * (canvas2D.width / 886);
-    // player.rotation = 1.5184364492350937;
-    // player.setAngle(degrees(player.rotation))
-    
-    
-    // walls.push(new Boundary(405 * (canvas2D.width / 886), 592 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), 0, 1, 0, 300));
-    // walls.push(new Boundary(445 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), 0, 1, 0, 300));
-    // player.pos.x = 246.097298883726 * (canvas2D.width / 886);
-    // player.pos.y = 539.4921852990136 * (canvas2D.width / 886);
-    // player.rotation = -0.034906585039861396;
-    // player.setAngle(degrees(player.rotation))
-    
-    // walls.push(new Boundary(471 * (canvas2D.width/886), 857 * (canvas2D.width/886), 459 * (canvas2D.width/886), 310 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(280 * (canvas2D.width/886), 775 * (canvas2D.width/886), 259 * (canvas2D.width/886), 647 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(417 * (canvas2D.width/886), 719 * (canvas2D.width/886), 447 * (canvas2D.width/886), 748 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(590 * (canvas2D.width/886), 463 * (canvas2D.width/886), 598 * (canvas2D.width/886), 530 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(598 * (canvas2D.width/886), 530 * (canvas2D.width/886), 630 * (canvas2D.width/886), 535 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(630 * (canvas2D.width/886), 535 * (canvas2D.width/886), 606 * (canvas2D.width/886), 606 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(606 * (canvas2D.width/886), 606 * (canvas2D.width/886), 587 * (canvas2D.width/886), 588 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(587 * (canvas2D.width/886), 588 * (canvas2D.width/886), 556 * (canvas2D.width/886), 563 * (canvas2D.width/886), 0, 1, 0, 300));
-    // walls.push(new Boundary(556 * (canvas2D.width/886), 563 * (canvas2D.width/886), 590 * (canvas2D.width/886), 463 * (canvas2D.width/886), 0, 1, 0, 300));
-    // player.pos.x = 718.6947092641693 * (canvas2D.width/886);
-    // player.pos.y = 212.1463648228501 * (canvas2D.width/886);
-    // player.rotation = 2.1467549799530294;
-    // player.setAngle(degrees(player.rotation))
-
 }
 function fourWalls() {
     walls.push(new Boundary(0, 0, canvas2D.width, 0));
@@ -177,8 +148,8 @@ function copyWalls() {
     walls.forEach(w => {
         tmp = tmp + "walls.push(new Boundary(" +    w.pos.x +                   " * (canvas2D.width/" + canvas2D.width + "), " +
                                                     w.pos.y  +                  " * (canvas2D.width/" + canvas2D.width + "), " +
-                                                    (w.pos.x + w.header.x) +    " * (canvas2D.width/" + canvas2D.width + "), " +
-                                                    (w.pos.y + w.header.y) +    " * (canvas2D.width/" + canvas2D.width + "), " +
+                                                    (w.pos.x + w.dir.x) +    " * (canvas2D.width/" + canvas2D.width + "), " +
+                                                    (w.pos.y + w.dir.y) +    " * (canvas2D.width/" + canvas2D.width + "), " +
                                             w.hue + ", " + w.opacity + ", " + w.height0 + ", " + w.height1 + "));\n"
     });
     tmp = tmp + "player.pos.x = " + player.pos.x + " * (canvas2D.width/" + canvas2D.width + ");\n" +
@@ -222,7 +193,6 @@ function loadScene(sceneName) {
 // different sizes 2
 // performance
 // normal room
-
 
 function resetPlayer() {
     player.rotation = 0;

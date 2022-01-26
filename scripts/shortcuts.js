@@ -57,12 +57,12 @@ function polygon(coords, fill = "white", lineWidth = 1, lineColor = fill) {
 }
 
 
-function getRotation(pos, header) {
-    let rotation = Math.abs(Math.atan(header.y/header.x));
+function getRotation(pos, dir) {
+    let rotation = Math.abs(Math.atan(dir.y/dir.x));
     const x = pos.x;
     const y = pos.y;
-    const x2 = pos.x + header.x;
-    const y2 = pos.y + header.y;
+    const x2 = pos.x + dir.x;
+    const y2 = pos.y + dir.y;
     if (x2 > x && y2 >= y) rotation = rotation; //Q1  no change
     if (x2 <= x && y2 > y) rotation = Math.PI - rotation; //Q2  add 90 degrees
     if (x2 < x && y2 <= y) rotation += Math.PI;

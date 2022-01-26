@@ -15,7 +15,7 @@ function set3Dctx() {
 
 const cooldown = 15
 let currentCooldown = cooldown;
-let undoWall = false;
+
 
 const keysPressed = {};
 
@@ -28,8 +28,8 @@ const handlers = {
     click(e) {
         mouse.x = e.offsetX;
         mouse.y = canvas2D.height - e.offsetY;
-        drawing.startpos.x = mouse.x;
-        drawing.startpos.y = mouse.y;
+        // drawing.startpos.x = mouse.x;
+        // drawing.startpos.y = mouse.y;
         e.preventDefault();
         drawing.isDrawing = true;
     },
@@ -52,23 +52,47 @@ const handlers = {
 const drawing = {
     isDrawing : false,
     startpos : {
+        'fixed': false,
         'x' : undefined,
         'y' : undefined
     },
     start() {
+        set2Dctx();
+        circle(this.startpos.x, this.startpos.y, 5)
+        if (this.isDrawing) circle(mouse.x, mouse.y, 5)
+        set3Dctx();
         if (currentCooldown <= 0) currentCooldown = cooldown;
-        if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown --;
+        if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown--;
+        
         if (!this.isDrawing) {
-            if ((undoWall || (keysPressed.Control && keysPressed.z)) && currentCooldown == cooldown && walls.length > 0) {  // Remove latest wall
-                console.log("undioing") // TEST
+            if ((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) && currentCooldown == cooldown && walls.length > 0) { //control-Z
                 currentCooldown = cooldown - 1;
+                console.log("undioing") // TEST
                 wallCount --;
-                walls.pop();
+                wallsTemp.push(walls.pop());
             }
-            undoWall = false;
+            if ((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
+                currentCooldown = cooldown - 1;
+                console.log("REDO") // TEST
+                walls.push(wallsTemp.pop())
+            }
+            
             if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
-                this.startpos.x = mouse.x;
-                this.startpos.y = mouse.y;
+                if (keysPressed["Shift"]) {
+                    for (let wall of walls) {
+                        if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
+                            this.startpos.x = wall.pos.x;
+                            this.startpos.y = wall.pos.y;
+                        }
+                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
+                            this.startpos.x = wall.pos.x + wall.dir.x;
+                            this.startpos.y = wall.pos.y + wall.dir.y;
+                        }
+                    }
+                } else {
+                    this.startpos.x = mouse.x;
+                    this.startpos.y = mouse.y;
+                }
             } else {
                 return;
             }
@@ -78,44 +102,42 @@ const drawing = {
                 this.snapping();
             }
             set2Dctx();
-            line(this.startpos.x, this.startpos.y, mouse.x, mouse.y);
+            line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, 'pink', 3);
             set3Dctx();
         }
     },
-    snappingThreshold : 10,
+    snappingThreshold : 15,
     snapping() {
         for (let wall of walls) {
+            if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
             if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
                 mouse.x = wall.pos.x;
                 mouse.y = wall.pos.y;
             }
-            if (Math.abs(mouse.x - (wall.pos.x + wall.header.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.header.y)) < this.snappingThreshold) {
-                mouse.x = wall.pos.x + wall.header.x;
-                mouse.y = wall.pos.y + wall.header.y;
+            if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
+                mouse.x = wall.pos.x + wall.dir.x;
+                mouse.y = wall.pos.y + wall.dir.y;
             }
         }
     },
     stop() {
         if (this.isDrawing && (Math.abs(this.startpos.x - mouse.x) > 10 || Math.abs(this.startpos.y - mouse.y) > 10)) {
-            // if (keysPressed["Shift"]) {
-                
-            // }
-            newWall = { "pos":      {   "x": this.startpos.x,
-                                        "y": this.startpos.y },
-                        "header":   {   "x": mouse.x - this.startpos.x,
-                                        "y": mouse.y - this.startpos.y }
+            newWall = { "pos": {"x": this.startpos.x,
+                                "y": this.startpos.y },
+                        "dir": {"x": mouse.x - this.startpos.x,
+                                "y": mouse.y - this.startpos.y }
             }
-            // let intCount = 0;
-            // walls.forEach(wall => {
-            //     if (isIntersectionVectors(wall, newWall)) {
-            //         intCount ++;
-            //     };
-            // });
-            // if (intCount == 0) {
+            let intCount = 0;
+            walls.forEach(wall => {
+                if (isIntersectionVectors(wall, newWall)) {
+                    intCount ++;
+                };
+            });
+            if (intCount == 0) {
                 walls.push(new Boundary(this.startpos.x, this.startpos.y,
                                         mouse.x, mouse.y,
                                         HEXtoHSL(document.getElementById("colorpick").value).h));
-            // }
+            }
         }
         this.isDrawing = false;
     }

@@ -1,23 +1,18 @@
 class Boundary {
     constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
-        // console.log(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
-        // this.currCanvas = {
-        //     "width": canvas2D.width,
-        //     "height": canvas2D.width
-        // }
         this.pos = {
             'x': x1,
             'y': y1
         };
-        this.header = {
+        this.dir = {
             'x': x2 - x1,
             'y': y2 - y1,
         };
         wallCount++;
         this.index = wallCount -1;
-        this.length = Math.sqrt((this.header.x) * (this.header.x) + (this.header.y) * (this.header.y));
+        this.length = Math.sqrt((this.dir.x) * (this.dir.x) + (this.dir.y) * (this.dir.y));
 
-        this.rotation = getRotation(this.pos, this.header);
+        this.rotation = getRotation(this.pos, this.dir);
         this.hue = hue; //colorpicker element in main.js
         this.opacity = opacity;
 
@@ -29,17 +24,17 @@ class Boundary {
 
     draw() {
         set2Dctx();
-        line(this.pos.x, this.pos.y, this.pos.x + this.header.x, this.pos.y + this.header.y, "hsl(" + this.hue + ", 100%, 50%)", 3);
+        line(this.pos.x, this.pos.y, this.pos.x + this.dir.x, this.pos.y + this.dir.y, "hsl(" + this.hue + ", 100%, 50%)", 3);
         ellipse(this.pos.x, this.pos.y, 5, 5, 'green');
-        ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 5, 5, 'red');
+        ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, 5, 5, 'red');
         // ellipse(this.pos.x, this.pos.y, 2, 2, 'white');  // green
-        // ellipse(this.pos.x + this.header.x, this.pos.y + this.header.y, 2, 2, 'white'); // red
+        // ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, 2, 2, 'white'); // red
         if (showWallNums) {
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.font = "30px Arial";
             ctx.fillStyle = 'white';
-            ctx.fillText(this.index, (this.pos.x*2 + this.header.x)/2 - 10, canvas2D.height - (this.pos.y*2 + this.header.y)/2 - 10);
+            ctx.fillText(this.index, (this.pos.x*2 + this.dir.x)/2 - 10, canvas2D.height - (this.pos.y*2 + this.dir.y)/2 - 10);
             ctx.restore();
         }
         set3Dctx();
@@ -52,13 +47,13 @@ class Boundary {
         };
 
         this.h = {  // Creating vector going from player to wall's first vertex
-            'x': (this.pos.x + this.header.x) - player.pos.x,
-            'y': (this.pos.y + this.header.y) - player.pos.y
+            'x': (this.pos.x + this.dir.x) - player.pos.x,
+            'y': (this.pos.y + this.dir.y) - player.pos.y
         };
 
         if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
-            (isClockwiseOrder(player.fov.v1.header, this.p) && !isClockwiseOrder(player.fov.v2.header, this.p) &&
-            isClockwiseOrder(player.fov.v1.header, this.h) && !isClockwiseOrder(player.fov.v2.header, this.h))
+            (isClockwiseOrder(player.fov.v1.dir, this.p) && !isClockwiseOrder(player.fov.v2.dir, this.p) &&
+            isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h))
         ) return true;
     }
 
@@ -71,14 +66,14 @@ class Boundary {
         }
 
         //  redefine wall if it intersects with LEFT fov ray
-        if (!isClockwiseOrder(player.fov.v1.header, this.p) && isClockwiseOrder(player.fov.v1.header, this.h)) {
+        if (!isClockwiseOrder(player.fov.v1.dir, this.p) && isClockwiseOrder(player.fov.v1.dir, this.h)) {
             this.p = intersectionFovW(player.fov.v1, this);
             this.p.x -= player.pos.x;
             this.p.y -= player.pos.y;
         }
 
         //  redefine wall if it intersects with RIGHT fov ray
-        if (!isClockwiseOrder(player.fov.v2.header, this.p) && isClockwiseOrder(player.fov.v2.header, this.h)) {
+        if (!isClockwiseOrder(player.fov.v2.dir, this.p) && isClockwiseOrder(player.fov.v2.dir, this.h)) {
             this.h = intersectionFovW(player.fov.v2, this);
             this.h.x -= player.pos.x;
             this.h.y -= player.pos.y;
@@ -104,19 +99,18 @@ class Boundary {
 
         this.p = vectorNormalize(this.p);
         this.h = vectorNormalize(this.h);
-        const header = vectorNormalize(player.header, Math.sqrt((player.header.y) ** 2 + (player.header.x) ** 2));
+        const dir = vectorNormalize(player.dir, Math.sqrt((player.dir.y) ** 2 + (player.dir.x) ** 2));
 
-        let v1xangle = Math.acos(vectorDotProduct(this.p, header));        // get angle between header and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
-        let v2xangle = Math.acos(vectorDotProduct(this.h, this.p));       // get angle between v1 and v2
-                                                                            // angles are calculated using | adjacent / hypothenuse
-                                                                            // hypothenuse is 1 because v1/v1 was normalized (no denominator)
-                                                                            // adjacent is v1/v1 projected onto the header for the adjacent side of the triangle (or relative to the other v1/v2)
+        let v1xangle = Math.acos(vectorDotProduct(this.p, dir));        // get angle between dir and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
+        let v2xangle = Math.acos(vectorDotProduct(this.h, this.p));     // get angle between v1 and v2
+                                                                        // angles are calculated using | adjacent / hypothenuse
+                                                                        // hypothenuse is 1 because v1/v1 was normalized (no denominator)
+                                                                        // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
 
-        if (!isClockwiseOrder(header, this.p)) v1xangle = -v1xangle;  // correct sign depending on side of v1/v2
+        if (!isClockwiseOrder(dir, this.p)) v1xangle = -v1xangle;  // correct sign depending on side of v1/v2
         if (!isClockwiseOrder(this.p, this.h)) v2xangle = -v2xangle;
 
         v2xangle = v2xangle + v1xangle; // make v2 relative to v1
-        // console.log(Math.floor(degrees(v1xangle)), Math.floor(degrees(v2xangle)))
 
         this.p.dist *= Math.cos(v1xangle);
         this.x1 = degrees(v1xangle) * canvas.width / fovamount;
@@ -130,18 +124,12 @@ class Boundary {
         if (this.h2 > 10000) this.h2 = 10000;
     }
 
-    calculateHeight(v) {
-        const header = vectorCreate(v.dist, 0);
+    calculateHeight(v) { // simple proportion calculations
+        const dir = vectorCreate(v.dist, 0);
         const h0 = vectorCreate(v.dist, this.height0 - player.height);
         const h1 = vectorCreate(v.dist, this.height1 - player.height);
         
         const floor = vectorCreate(v.dist, -player.height);
-
-        // console.log(canvas.height, Math.tan(radians(player.fov.yamount/2)) * v.dist)
-        // console.log((floor.y * canvas.height) / (Math.tan(radians(player.fov.yamount/2) * v.dist))
-        // (h0.y * canvas.height) / (Math.tan(radians(player.fov.yamount/2)) * v.dist)
-        // (h1.y * canvas.height) / (Math.tan(radians(player.fov.yamount/2)) * v.dist)
-        
 
         return {
             'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
@@ -151,9 +139,6 @@ class Boundary {
             'dist': v.dist
         };
     }
-
-
-
 
     display3D() {
         const minh = 20;
@@ -170,7 +155,6 @@ class Boundary {
         if (L2 < minh) L2 = minh;
         if (L2 > maxh) L2 = maxh;
 
-        // if (!this.x1 || !this.x2) {console.log("aha"); return; }
         const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
                     this.x2 + canvas.width / 2, canvas.height / 2);
 
@@ -180,26 +164,26 @@ class Boundary {
         
         let tmpalpha = ctx.globalAlpha;
         ctx.globalAlpha = this.opacity;
-        if (sortedActive) {
+        if (sortedActive) {  // adds color under the wall to hide any overlap
             polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
                     this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
                     this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
                     this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
-            ], "#969696", 0); // `hsla(1, 50%, 50%, 0.5)`s
+            ], "#969696", 0);
         }
         polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
         this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
         this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,
         this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2
-        ], `grd`, 2); // `hsla(1, 50%, 50%, 0.5)`
+        ], `grd`, 2);
 
         
         ctx.globalAlpha = tmpalpha;
     }
 
     setAngle(angle) {
-        this.header.x = Math.cos(angle) * this.length;
-        this.header.y = Math.sin(angle) * this.length;
-        this.rotation = getRotation(this.pos, this.header);
+        this.dir.x = Math.cos(angle) * this.length;
+        this.dir.y = Math.sin(angle) * this.length;
+        this.rotation = getRotation(this.pos, this.dir);
     }
 }
