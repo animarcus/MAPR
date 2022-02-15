@@ -13,17 +13,16 @@ function set3Dctx() {
     ctx = canvas.getContext('2d', { alpha: false });
 }
 
+
+
+
 const cooldown = 15
 let currentCooldown = cooldown;
-
-
 const keysPressed = {};
-
 const mouse = {
     'x': undefined,
     'y': undefined
 };
-
 const handlers = {
     click(e) {
         mouse.x = e.offsetX;
@@ -46,6 +45,22 @@ const handlers = {
         // console.log(canvas.height, canvas.width);
     }
 };
+document.addEventListener('resize', handlers.updateCanvasSize());
+document.onkeyup = (e) => delete keysPressed[e.key];
+document.onkeydown = (e) => {
+    keysPressed[e.key] = true;
+    e.preventDefault()
+}
+
+document.ondblclick = (e) => e.preventDefault();
+
+canvas2D.addEventListener("pointermove", (e) => {
+    e.preventDefault();
+    mouse.x = e.offsetX;
+    mouse.y = canvas2D.height - e.offsetY;
+});
+canvas2D.addEventListener("pointerdown", (e) => handlers.click(e));
+document.addEventListener('pointerup', (e) => handlers.unclick(e));
 
 
 
@@ -102,7 +117,7 @@ const drawing = {
                 this.snapping();
             }
             set2Dctx();
-            line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, 'pink', 3);
+            line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, color.pink, 3);
             set3Dctx();
         }
     },
@@ -143,19 +158,4 @@ const drawing = {
     }
 };
 
-document.addEventListener('resize', handlers.updateCanvasSize());
-document.onkeyup = (e) => delete keysPressed[e.key];
-document.onkeydown = (e) => {
-    keysPressed[e.key] = true;
-    e.preventDefault()
-}
 
-document.ondblclick = (e) => e.preventDefault();
-
-canvas2D.addEventListener("pointermove", (e) => {
-    e.preventDefault();
-    mouse.x = e.offsetX;
-    mouse.y = canvas2D.height - e.offsetY;
-});
-canvas2D.addEventListener("pointerdown", (e) => handlers.click(e));
-document.addEventListener('pointerup', (e) => handlers.unclick(e));

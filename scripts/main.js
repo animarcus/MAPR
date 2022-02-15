@@ -14,10 +14,17 @@ const wallsTemp = [];
 let renderWalls = [];
 
 let showGraph = false;
+const color = {
+    "light-gray": getComputedStyle(document.documentElement).getPropertyValue('--light-gray'),
+    "dark-gray": getComputedStyle(document.documentElement).getPropertyValue('--dark-gray'),
+    "yellow": getComputedStyle(document.documentElement).getPropertyValue('--yellow'),
+    "dark-blue": getComputedStyle(document.documentElement).getPropertyValue('--dark-blue'),
+    "sky-blue": getComputedStyle(document.documentElement).getPropertyValue('--sky-blue'),
+    "mid-blue": getComputedStyle(document.documentElement).getPropertyValue('--mid-blue'),
+    "pink": getComputedStyle(document.documentElement).getPropertyValue('--pink')
+}
 
-
-
-
+console.log(color)
 const player = new Player(canvas2D.width/2 - 50, canvas2D.height/5, 90);
 player.fov.xamount = 70;
 let recommendedFOVx = player.fov.xamount
@@ -103,12 +110,12 @@ function gameLoop() {
 
 // background terrain
 function background() {
-    ctx.fillStyle = "#64a7ff"; // blue
+    ctx.fillStyle = color["sky-blue"]; // blue
     ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height*35);
-    ctx.fillStyle = "#969696"; // gray
+    ctx.fillStyle = color["dark-gray"]; // gray
     ctx.fillRect(0, canvas.height/2, canvas.width, -canvas.height*35);
 
-    ctx2D.fillStyle = 'gray';
+    ctx2D.fillStyle = color["dark-gray"];
     ctx2D.fillRect(0, 0, canvas2D.width, canvas2D.height);
 
 }

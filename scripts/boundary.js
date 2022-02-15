@@ -169,7 +169,7 @@ class Boundary {
                     this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
                     this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
                     this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
-            ], "#969696", 0);
+            ], color["dark-gray"], 0);
         }
         polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
         this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,

@@ -1,0 +1,177 @@
+:root {
+    --light-gray: #B1AFAF;
+    --dark-gray: #605F5E;
+    --yellow: #F0A202;
+    --dark-blue: #0A2463;
+    --sky-blue: #51CBFF;
+    --mid-blue: #247BA0;
+    --pink: #FDCFF3;
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body {
+    position: fixed;
+    /* display: flex;
+    justify-content: center; */
+    /* background: rgb(2,0,36); */
+    /* background: linear-gradient(140deg, var(--mid-blue) 10%, var(--sky-blue) 100%) fixed; */
+}
+
+.no-touch {
+    touch-action: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 65% auto;
+    grid-template-rows: 75% auto;
+    grid-template-areas:
+        "perspective flatview"
+        "controls controls";
+    width: 100vw;
+    height: 100vh;
+    background: var(--pink); /*linear-gradient(140deg, var(--dark-blue) 10%, var(--sky-blue) 100%) fixed;*/
+}
+.controls {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display:flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    justify-content:baseline;
+    align-items: center;
+    padding-top: 30px;
+
+    background-color: rgb(202, 202, 202);
+    grid-area: controls;
+}
+.perspective {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    /* background-color: rgb(0, 110, 255); */
+    grid-area: perspective;
+}
+.flatview { 
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+
+    /* background-color: rgb(0, 110, 255); */
+    grid-area: flatview;
+}
+#canvas3D {
+    width: 100%;
+    height: 99%;
+    background:rgb(56, 56, 56);
+}
+#canvas2D {
+    width: 100%;
+    height: auto;
+    background:rgb(56, 56, 56);
+}
+
+.instructions {
+    /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    font-family:sans-serif;
+    font-size:larger;
+    font-weight:bold;
+    text-align:center;
+    color:#000000;
+    border-width:1px;
+    border-color:#000000;
+    border-style:solid;
+    border-radius:5px;
+    background-color:#ffffff;
+    padding:20px;
+}
+.sceneSettings {
+    display: flex;
+    
+    justify-content: center;
+    flex-direction: row;
+    row-gap: 10px;
+    padding: 20px 20px 20px 20px;
+}
+
+.scene {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 0px 20px 0px 20px;
+}
+.walls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    padding: 0px 20px 0px 20px;
+}
+.general {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 0px 20px 0px 20px;
+}
+
+.noice-buton,button {
+    font-family:sans-serif;
+    font-size:larger;
+    font-weight:bold;
+    text-align:center;
+    color:#000000;
+    border-width:4px;
+    border-color:#000000;
+    border-style:solid;
+    border-radius:15px;
+    background-color:#ffffff;
+    padding:20px;
+}
+
+
+
+.divTable{
+	display: table;
+	width: 100%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+    text-align: right;
+    vertical-align: middle;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
