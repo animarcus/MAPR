@@ -13,10 +13,19 @@ function set3Dctx() {
     ctx = canvas.getContext('2d', { alpha: false });
 }
 
+let expansion = false;
+function expand() {
+    expansion = !expansion;
+    if (expansion) {
+        document.getElementsByClassName("container")[0].style.gridTemplateRows = "15%";
+    } else {
+        document.getElementsByClassName("container")[0].style.gridTemplateRows = "75%";
+    }
+}
 
-
-
-const cooldown = 15
+let undoWall = false;
+let redoWall = false;
+const cooldown = 15;
 let currentCooldown = cooldown;
 const keysPressed = {};
 const mouse = {
@@ -59,8 +68,35 @@ canvas2D.addEventListener("pointermove", (e) => {
     mouse.x = e.offsetX;
     mouse.y = canvas2D.height - e.offsetY;
 });
-canvas2D.addEventListener("pointerdown", (e) => handlers.click(e));
-document.addEventListener('pointerup', (e) => handlers.unclick(e));
+canvas2D.addEventListener("pointerdown", (e) => {
+    handlers.click(e)
+    document.querySelector(":root").style.setProperty('--pink', 'lightblue') //////////////////
+    if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
+        drawing.startpos.x = mouse.x;
+        drawing.startpos.y = mouse.y;
+        if (keysPressed["Shift"]) {
+            for (let wall of walls) {
+                if (Math.abs(mouse.x - wall.pos.x) < drawing.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < drawing.snappingThreshold) {
+                    drawing.startpos.x = wall.pos.x;
+                    drawing.startpos.y = wall.pos.y;
+                    return;
+                }
+                if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < drawing.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < drawing.snappingThreshold) {
+                    drawing.startpos.x = wall.pos.x + wall.dir.x;
+                    drawing.startpos.y = wall.pos.y + wall.dir.y;
+                    return;
+                }
+            }
+            drawing.isDrawing = false;
+        }
+    }
+});
+
+document.addEventListener('pointerup', (e) => {
+    handlers.unclick(e)
+    e.preventDefault(e)
+    document.querySelector(":root").style.setProperty('--pink', '#FDCFF3') //////////////////
+});
 
 
 
@@ -72,6 +108,7 @@ const drawing = {
         'y' : undefined
     },
     start() {
+
         set2Dctx();
         circle(this.startpos.x, this.startpos.y, 5)
         if (this.isDrawing) circle(mouse.x, mouse.y, 5)
@@ -80,39 +117,21 @@ const drawing = {
         if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown--;
         
         if (!this.isDrawing) {
-            if ((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) && currentCooldown == cooldown && walls.length > 0) { //control-Z
+            if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
+                undoWall = false;
                 currentCooldown = cooldown - 1;
                 console.log("undioing") // TEST
                 wallCount --;
                 wallsTemp.push(walls.pop());
             }
-            if ((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
+            if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
+                redoWall = false;
                 currentCooldown = cooldown - 1;
                 console.log("REDO") // TEST
                 walls.push(wallsTemp.pop())
             }
-            
-            if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
-                if (keysPressed["Shift"]) {
-                    for (let wall of walls) {
-                        if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
-                            this.startpos.x = wall.pos.x;
-                            this.startpos.y = wall.pos.y;
-                        }
-                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
-                            this.startpos.x = wall.pos.x + wall.dir.x;
-                            this.startpos.y = wall.pos.y + wall.dir.y;
-                        }
-                    }
-                } else {
-                    this.startpos.x = mouse.x;
-                    this.startpos.y = mouse.y;
-                }
-            } else {
-                return;
-            }
         }
-        if (this.isDrawing && (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0)) {
+        if (this.isDrawing) {
             if (keysPressed["Shift"]) {
                 this.snapping();
             }
@@ -123,15 +142,18 @@ const drawing = {
     },
     snappingThreshold : 15,
     snapping() {
-        for (let wall of walls) {
-            if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
-            if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
-                mouse.x = wall.pos.x;
-                mouse.y = wall.pos.y;
-            }
-            if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
-                mouse.x = wall.pos.x + wall.dir.x;
-                mouse.y = wall.pos.y + wall.dir.y;
+
+        if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
+            for (let wall of walls) {
+                if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
+                if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
+                    mouse.x = wall.pos.x;
+                    mouse.y = wall.pos.y;
+                }
+                if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
+                    mouse.x = wall.pos.x + wall.dir.x;
+                    mouse.y = wall.pos.y + wall.dir.y;
+                }
             }
         }
     },
@@ -147,15 +169,129 @@ const drawing = {
                 if (isIntersectionVectors(wall, newWall)) {
                     intCount ++;
                 };
+                if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold/3 && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold/3) {
+                    mouse.x = wall.pos.x;
+                    mouse.y = wall.pos.y;
+                    intCount = 0;
+                    
+                }
+                if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold/3 && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold/3) {
+                    mouse.x = wall.pos.x + wall.dir.x;
+                    mouse.y = wall.pos.y + wall.dir.y;
+                    intCount = 0;
+                    
+                }
             });
             if (intCount == 0) {
+                // console.log(parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100))
                 walls.push(new Boundary(this.startpos.x, this.startpos.y,
                                         mouse.x, mouse.y,
-                                        HEXtoHSL(document.getElementById("colorpick").value).h));
+                                        HEXtoHSL(document.getElementById("colorpick").value).h,
+                                        parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
+                                        document.getElementById("sliderH0").value,
+                                        document.getElementById("sliderH1").value));
             }
         }
+        this.startpos.x = undefined;
+        this.startpos.y = undefined;
         this.isDrawing = false;
     }
 };
 
 
+
+function changeSetting(sliderId, sliderValue = -1) {
+    let sliderH0 = document.getElementById("sliderH0");
+    let sliderH1 = document.getElementById("sliderH1");
+    switch (sliderId) {
+        case "changeAll":
+            if (defaults["changeAll"]) {
+                document.getElementById("changeAll").checked = defaults["changeAll"]
+                changeAll = !changeAll;
+            }
+            break;
+        case "colorpick":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId])
+                break;
+            }
+            document.getElementById("colorpick").value = sliderValue;
+            sliderValue = HEXtoHSL(sliderValue)
+            if (changeAll) {
+                for (w of walls) {
+                    w.hue = sliderValue.h;
+                }
+            }
+            break;
+        case "sliderH0":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId])
+                break;
+            }
+            let showH0 = document.getElementById("showH0");
+            showH0.innerHTML = sliderValue;
+            sliderH0.value = sliderValue;
+            if (changeAll) {
+                for (w of walls) {
+                    w.height0 = sliderValue;
+                }
+            }
+            break;
+        case "sliderH1":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId])
+                break;
+            }
+            let showH1 = document.getElementById("showH1");
+            showH1.innerHTML = sliderValue;
+            sliderH1.value = sliderValue;
+            if (changeAll) {
+                for (w of walls) {
+                    w.height1 = sliderValue;
+                }
+            }
+            break;
+        case "sliderFovx":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId])
+                break;
+            }
+            player.fov.xamount = sliderValue;
+            player.setFOV();
+            document.getElementById("showFovx").innerHTML = sliderValue;
+            document.getElementById("sliderFovx").value = sliderValue;
+            break;
+        case "sliderFovy":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId])
+                break;
+            }
+            player.fov.yamount = sliderValue;
+            document.getElementById("showFovy").innerHTML = sliderValue;
+            document.getElementById("sliderFovy").value = sliderValue;
+            break;
+        case "sliderOpacity":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId])
+                break;
+            }
+            document.getElementById("showOpacity").innerHTML = parseInt(sliderValue);
+            document.getElementById("sliderOpacity").value = parseInt(sliderValue);
+            if (changeAll) {
+                for (w of walls) {
+                    w.opacity = parseFloat(parseInt(sliderValue) / 100);
+                }
+            }
+            break;
+    }
+}
+
+function loadDefaults() {
+    changeSetting("colorpick", defaults["colorpick"]);
+    changeSetting("sliderH0", defaults["sliderH0"]);
+    changeSetting("sliderH1", defaults["sliderH1"]);
+    changeSetting("sliderFovx", defaults["sliderFovx"]);
+    changeSetting("sliderFovy", defaults["sliderFovy"]);
+    changeSetting("sliderOpacity", defaults["sliderOpacity"]);
+    changeSetting("changeAll", defaults["changeAll"]);
+}

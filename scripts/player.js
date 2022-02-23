@@ -68,15 +68,20 @@ class Player {
             ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
             this.fov.currentTranslate = newTranslate
         }
-        
-        
-        
-        // this.vertRotation += angle;
+    }
+    setVerticalLook(angle) {
+        // angle = radians(angle)
+        let vertLimit = {};
+        vertLimit.max = 4 * Math.PI / 9;    // 80
+        vertLimit.min = -Math.PI / 3;     // -60
+        if (this.vertRotation >= vertLimit.min && this.vertRotation <= vertLimit.max) {
+            this.vertRotation = angle
 
-        // ctx.translate(0, -1000); // up: -1000 // down: 1000
-        // when looking up: maximum is -1000 translation at around 80 degree angle
-        // when looking up: maximum is  1000 translation at around -60 degree angle
-        // }
+            let newTranslate = (100 / 7) * (degrees(this.vertRotation) + 10) - 1000 / 7
+            // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
+            ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
+            this.fov.currentTranslate = newTranslate
+        }
     }
     sideMove(step) {
         this.pos.x += -step * this.dir.y;
@@ -94,6 +99,12 @@ class Player {
         this.fov.v2.setAngle(degrees(this.rotation) - this.fov.xamount / 2);
         this.fov.v1.pos = this.pos;
         this.fov.v2.pos = this.pos;
+    }
+
+    setFarSight(value) {
+        this.farSight = value;
+        this.fov.v1 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) + this.fov.xamount / 2, this.farSight);
+        this.fov.v2 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) - this.fov.xamount / 2, this.farSight);
     }
 }
 let timer = 0

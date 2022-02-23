@@ -1,5 +1,5 @@
 class Boundary {
-    constructor(x1, y1, x2, y2, hue="100", opacity=1, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
+    constructor(x1, y1, x2, y2, hue="100", opacity=0.5, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
         this.pos = {
             'x': x1,
             'y': y1

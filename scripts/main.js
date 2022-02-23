@@ -24,11 +24,10 @@ const color = {
     "pink": getComputedStyle(document.documentElement).getPropertyValue('--pink')
 }
 
-console.log(color)
 const player = new Player(canvas2D.width/2 - 50, canvas2D.height/5, 90);
 player.fov.xamount = 70;
-let recommendedFOVx = player.fov.xamount
-let recommendedFOVy = player.fov.yamount
+// let recommendedFOVx = player.fov.xamount
+// let recommendedFOVy = player.fov.yamount
 
 document.getElementById("showFovx").innerHTML = player.fov.xamount
 document.getElementById("sliderFovx").value = player.fov.xamount
@@ -37,7 +36,6 @@ document.getElementById("sliderFovy").value = player.fov.yamount
 
 player.setFOV();
 
-loadScene("test")
 
 
 
@@ -46,13 +44,20 @@ let show2D2 = false;
 let showWallNums = false;
 let rainbowMode = false;
 let changeAll = true;
-document.getElementById("changeAll").checked = true;
-document.getElementById("sortedActive").checked = true;
-document.getElementById("sliderH0").value = 0;
-document.getElementById("sliderH1").value = 300;
 let sortedActive = true;
 
+const defaults = {
+    "changeAll": false,
+    "colorpick": "#ff0000",
+    "sliderOpacity": 100,
+    "sliderH1": 300,
+    "sliderH0": 0,
+    "sliderFovx": player.fov.xamount,
+    "sliderFovy": player.fov.yamount
+}
 
+loadDefaults()
+loadScene("colors")
 
 
 
@@ -121,33 +126,4 @@ function background() {
 }
 
 
-function sliderFOVx(value) {
-    player.fov.xamount = value;
-    player.setFOV();
-    document.getElementById("showFovx").innerHTML = value
-    document.getElementById("sliderFovx").value = value
-}
-function sliderFOVy(value) {
-    player.fov.yamount = value;
-    // player.setFOV();
-    document.getElementById("showFovy").innerHTML = value
-    document.getElementById("sliderFovy").value = value
-}
 
-function changeSlider() {
-    let sliderH0 = document.getElementById("sliderH0");
-    let sliderH1 = document.getElementById("sliderH1");
-    let showH0 = document.getElementById("showH0");
-    let showH1 = document.getElementById("showH1");
-    showH0.innerHTML = sliderH0.value;
-    showH1.innerHTML = sliderH1.value;
-    if (changeAll) {
-        for (w of walls) {
-            w.height0 = sliderH0.value;
-            w.height1 = sliderH1.value;
-        }
-    } else {
-        walls[walls.length - 1].height0 = sliderH0.value;
-        walls[walls.length - 1].height1 = sliderH1.value;
-    }
-}

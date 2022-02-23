@@ -19,113 +19,97 @@
             <canvas id="canvas2D"></canvas>
         </div>
         <div class="controls" id="booger">
-            <div class="instructions">Use W A S D to move <br>
+            <div class="instructions" onclick="expand()">Use W A S D to move <br> 
                 Use the arrow keys to look around <br>
                 If using a touch screen, tap the
                 colored boxes for controls
             </div>
 
-
             <div class="sceneSettings">
                 <div class="general">
                     GENERAL
-                    <button onclick="resetPlayer()">Reset player view/position</button>
-                    <button onclick="undoWall = true">Undo new Wall (or Control Z)</button>
-                    <button onclick="clearWalls()">Clear all Walls</button>
-                    <button onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
-                    <button onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
+                    <button class="normalButton" onclick="resetPlayer()">Reset player view/position</button>
+                    <button class="normalButton" onclick="clearWalls()">Clear all Walls</button>
+                    <button class="normalButton" onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
+                    <button class="normalButton" onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
                     <br>
-                    <button onclick="rainbowMode = !rainbowMode">Toggle Rainbow mode</button>
+                    <button class="normalButton" onclick="rainbowMode = !rainbowMode">Toggle Rainbow mode</button>
                     <label>
                         <input type="checkbox" id="sortedActive" onchange="sortedActive = !sortedActive">
                         Sorting
                     </label>
+                    <button class="normalButton" onclick="undoWall = true">Undo new Wall (or Control Z)</button>
+                    <button class="normalButton" onclick="redoWall = true">Redo Wall (or Control Shift Z)</button>
                 </div>
-                
-                <div class="scene">
-                    SET SCENE
-                    <button onclick='copyWalls()'> Copy current selection to clipboard !!!!!!</button>
-                    <button onclick='loadScene("example")'> Simple example</button>
-                    <button onclick='loadScene("colors")'> Colors !!! </button>
-                    <button onclick='loadScene("penis")'> penis lol </button>
-                    <button onclick='loadScene("test")'> Test </button>
-                    <button onclick='loadScene("fourWalls")'> Four Walls </button>
-                    <button onclick='loadScene("collidingWalls")'> Colliding Walls </button>
-                </div>
-                
                 
                 <div class="walls">
-                    SETTIGNS
+                    SETTINGS
                     <div class="divTable">
                         <div class="divTableBody">
                             <div class="divTableRow">
+                                <div class="divTableCell">Only modify last placed wall</div>
+                                <div class="divTableCell"></div>
+                                <div class="divTableCell"><input type="checkbox" id="changeAll" onchange="changeAll = !changeAll"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('changeAll', 0)"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
                                 <div class="divTableCell">Wall color</div>
                                 <div class="divTableCell"></div>
-                                <div class="divTableCell"><input type="color" value="#ff0000" id="colorpick"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
+                                <div class="divTableCell"><input type="color" value="#ff0000" id="colorpick" onload="changeSetting(this.id)" oninput="changeSetting('colorpick', this.value)"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('colorpick')"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell">Wall opacity</div>
-                                <div class="divTableCell"><label id="sliderOp" for="sliderOpacity"> 100 </label></div>
-                                <div class="divTableCell"><input id="sliderOpacity" type="range" min="0" max="100" value="100"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
+                                <div class="divTableCell"><label id="showOpacity" for="sliderOpacity"> 100 </label></div>
+                                <div class="divTableCell"><input id="sliderOpacity" type="range" min="10" max="100" value="100" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderOpacity')"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell">Wall top height</div>
                                 <div class="divTableCell"><label id="showH1" for="sliderH1"> 300 </label></div>
-                                <div class="divTableCell"><input id="sliderH1" type="range" min="0" max="1000" value="300" oninput="changeSlider(this.id)"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
+                                <div class="divTableCell"><input id="sliderH1" type="range" min="0" max="999" value="300" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderH1')"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell">Wall bottom height</div>
                                 <div class="divTableCell"><label id="showH0" for="sliderH0"> 0 </label></div>
-                                <div class="divTableCell"><input id="sliderH0" type="range" min="0" max="500" value="0" oninput="changeSlider(this.id)"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
-                            </div>
-                            <div class="divTableRow">
-                                <div class="divTableCell">Only modify last placed wall</div>
-                                <div class="divTableCell"></div>
-                                <div class="divTableCell"><input type="checkbox" id="changeAll" onchange="changeAll = !changeAll; changeSlider(this.id)"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
+                                <div class="divTableCell"><input id="sliderH0" type="range" min="0" max="999" value="0" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderH0')"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell">Horizontal FOV</div>
                                 <div class="divTableCell"><label class="fovslider" id="showFovx" for="sliderFov"> 0 </label>
                                 </div>
-                                <div class="divTableCell"><input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" oninput="sliderFOVx(this.value)"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
+                                <div class="divTableCell"><input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderFovx')"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell">Vertical FOV</div>
                                 <div class="divTableCell"><label class="fovslider" id="showFovy" for="sliderFov"></label></div>
-                                <div class="divTableCell"><input class="fovslider" id="sliderFovy" type="range" min="271" max="350" value="280" oninput="sliderFOVy(this.value)"></div>
-                                <div class="divTableCell"><button> Reset option </button></div>
+                                <div class="divTableCell"><input class="fovslider" id="sliderFovy" type="range" min="271" max="350" value="280" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderFovy')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell"></div>
+                                <div class="divTableCell"></div>
+                                <div class="divTableCell"> Reset all</div>
+                                <div class="divTableCell"><button class="normalButton" onclick="loadDefaults()"> Reset option </button></div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="wallAttribute">
-                    <div>Wall color</div>
-                    <div>Wall opacity</div>
-                    <div>Wall top height <label id="showH1" for="sliderH1"> 300 </label> </div>
-                    <div>Wall bottom height <label id="showH0" for="sliderH0"> 0 </label> </div>
-                    <div>Only modify last placed wall</div>
-                    <div>Horizontal FOV <label class="fovslider" id="showFovx" for="sliderFov"> 0 </label> </div>
-                    <div>Vertical FOV <label class="fovslider" id="showFovy" for="sliderFov"></label> </div>
-                    </div>
-                    <div class="wallSetting">
-                        <input type="color" value="#ff0000" id="colorpick">
-                        <input id="sliderOpacity" type="range" min="0" max="100" value="100">
-                        <input id="sliderH1" type="range" min="0" max="1000" value="300" oninput="changeSlider(this.id)">
-                        <input id="sliderH0" type="range" min="0" max="500" value="0" oninput="changeSlider(this.id)">
-                        <input type="checkbox" id="changeAll" onchange="changeAll = !changeAll; changeSlider(this.id)">
-                        <input class="fovslider" id="sliderFovy" type="range" min="200" max="350" value="280" oninput="sliderFOVy(this.value)">
-                        <input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" oninput="sliderFOVx(this.value)">
-                    </div>
-                    <button onclick="sliderFOVx(recommendedFOVx)"> Reset to recommended FOV x </button>
-                    <button onclick="sliderFOVy(recommendedFOVy)"> Reset to recommended FOV y </button> -->
+                </div>
+
+                <div class="scene">
+                    SET SCENE
+                    <button class="normalButton" onclick='copyWalls()'> Copy current selection to clipboard !!!!!!</button>
+                    <button class="normalButton" onclick='loadScene("example")'> Simple example</button>
+                    <button class="normalButton" onclick='loadScene("colors")'> Colors !!! </button>
+                    <!-- <button onclick='loadScene("penis")'> penis lol </button> -->
+                    <button class="normalButton" onclick='loadScene("test")'> Test </button>
+                    <button class="normalButton" onclick='loadScene("fourWalls")'> Four Walls </button>
+                    <button class="normalButton" onclick='loadScene("collidingWalls")'> Colliding Walls </button>
                 </div>
             </div>
-            
         </div>
     </div>
     <script src="scripts/shortcuts.js"></script>
