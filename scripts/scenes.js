@@ -258,32 +258,121 @@ function clearWalls() {
     walls.splice(0, walls.length);
 }
 
-
-function copyWalls() {
-    tmp =   "defaults['sliderH0'] = " + document.getElementById("sliderH0").value + ";\n" +
-            "defaults['sliderH1'] = " + document.getElementById("sliderH1").value + ";\n" +
-            "defaults['sliderFovx'] = " + document.getElementById("sliderFovx").value + ";\n" +
-            "defaults['sliderFovy'] = " + document.getElementById("sliderFovy").value + ";\n" +
-            "defaults['sliderOpacity'] = " + document.getElementById("sliderOpacity").value + ";\n" +
-            "defaults['changeAll'] = " + document.getElementById("changeAll").checked + ";\n" +
-            "loadDefaults();"
+function importWalls(imported) {
+    clearWalls();
+    defaults['sliderH0'] = parseInt(imported['sliderH0'])
+    defaults['sliderH1'] = parseInt(imported['sliderH1'])
+    defaults['sliderFovx'] = parseInt(imported['sliderFovx'])
+    defaults['sliderFovy'] = parseInt(imported['sliderFovy'])
+    defaults['sliderOpacity'] = parseInt(imported['sliderOpacity'])
+    defaults['changeAll'] = imported['changeAll']
+    loadDefaults();
+    imported["walls"].forEach(w => {
+        walls.push(new Boundary(w["posx"] * (canvas2D.width / imported["width"]),
+                                w["posy"] * (canvas2D.width / imported["width"]),
+                                w["dirx"] * (canvas2D.width / imported["width"]),
+                                w["diry"] * (canvas2D.width / imported["width"]),
+                                w["hue"],
+                                w["opacity"],
+                                w["height0"],
+                                w["height1"]
+                                ))
+    })
+    player.pos.x = imported.player.posx * (canvas2D.width / imported["width"]);
+    player.pos.y = imported.player.posy * (canvas2D.width / imported["width"]);
+    player.rotation = imported.player.rotation
+    player.setAngle(degrees(player.rotation))
+    player.setFarSight(imported.player.farSight)
+    player.setVerticalLook(imported.player.vertRotation)
+}
+function exportWalls() {
+    tmp = {
+        "sliderH0": document.getElementById("sliderH0").value,
+        "sliderH1": document.getElementById("sliderH1").value,
+        "sliderFovx": document.getElementById("sliderFovx").value,
+        "sliderFovy": document.getElementById("sliderFovy").value,
+        "sliderOpacity": document.getElementById("sliderOpacity").value,
+        "changeAll": document.getElementById("changeAll").checked,
+        "width": canvas2D.width,
+        "walls": [],
+        "player": {
+            "posx": player.pos.x,
+            "posy": player.pos.y,
+            "rotation": player.rotation,
+            "farSight": player.farSight,
+            "vertRotation": player.vertRotation
+        }
+    }
     walls.forEach(w => {
-        tmp = tmp + "walls.push(new Boundary(" +    w.pos.x +                   " * (canvas2D.width/" + canvas2D.width + "), " +
-                                                    w.pos.y  +                  " * (canvas2D.width/" + canvas2D.width + "), " +
-                                                    (w.pos.x + w.dir.x) +    " * (canvas2D.width/" + canvas2D.width + "), " +
-                                                    (w.pos.y + w.dir.y) +    " * (canvas2D.width/" + canvas2D.width + "), " +
-                                            w.hue + ", " + w.opacity + ", " + w.height0 + ", " + w.height1 + "));\n"
+        tmp.walls.push({
+                        "posx": w.pos.x,
+                        "posy": w.pos.y,
+                        "dirx": w.pos.x + w.dir.x,
+                        "diry": w.pos.y + w.dir.y,
+                        "hue": w.hue,
+                        "opacity": w.opacity,
+                        "height0": w.height0,
+                        "height1": w.height1,
+                        })
+    })
+    console.log(tmp)
+    return tmp;
+}
+
+function copyWallsCode() {
+    tmp = "defaults['sliderH0'] = " + document.getElementById("sliderH0").value + ";\n" +
+        "defaults['sliderH1'] = " + document.getElementById("sliderH1").value + ";\n" +
+        "defaults['sliderFovx'] = " + document.getElementById("sliderFovx").value + ";\n" +
+        "defaults['sliderFovy'] = " + document.getElementById("sliderFovy").value + ";\n" +
+        "defaults['sliderOpacity'] = " + document.getElementById("sliderOpacity").value + ";\n" +
+        "defaults['changeAll'] = " + document.getElementById("changeAll").checked + ";\n" +
+        "loadDefaults();"
+    walls.forEach(w => {
+        tmp = tmp + "walls.push(new Boundary(" + w.pos.x + " * (canvas2D.width/" + canvas2D.width + "), " +
+            w.pos.y + " * (canvas2D.width/" + canvas2D.width + "), " +
+            (w.pos.x + w.dir.x) + " * (canvas2D.width/" + canvas2D.width + "), " +
+            (w.pos.y + w.dir.y) + " * (canvas2D.width/" + canvas2D.width + "), " +
+            w.hue + ", " + w.opacity + ", " + w.height0 + ", " + w.height1 + "));\n"
     });
     tmp = tmp + "player.pos.x = " + player.pos.x + " * (canvas2D.width/" + canvas2D.width + ");\n" +
-                "player.pos.y = " + player.pos.y + " * (canvas2D.width/" + canvas2D.width + ");\n" +
-                "player.rotation = " + player.rotation + ";\n" +
-                "player.setAngle(degrees(player.rotation))" + ";\n" +
-                "player.setFarSight(" + player.farSight + ")" + ";\n" +
-                "player.setVerticalLook(" + player.vertRotation + ")" + ";\n"
+        "player.pos.y = " + player.pos.y + " * (canvas2D.width/" + canvas2D.width + ");\n" +
+        "player.rotation = " + player.rotation + ";\n" +
+        "player.setAngle(degrees(player.rotation))" + ";\n" +
+        "player.setFarSight(" + player.farSight + ")" + ";\n" +
+        "player.setVerticalLook(" + player.vertRotation + ")" + ";\n"
     console.log(tmp);
-    
+    // navigator.clipboard.writeText(JSON.stringify(copyWalls()))
     navigator.clipboard.writeText(tmp)
 }
+
+// const wall = {
+//     "sliderH0": document.getElementById("sliderH0").value,
+//     "sliderH1": document.getElementById("sliderH1").value,
+//     "sliderFovx": document.getElementById("sliderFovx").value,
+//     "sliderFovy": document.getElementById("sliderFovy").value,
+//     "sliderOpacity": document.getElementById("sliderOpacity").value,
+//     "changeAll": document.getElementById("changeAll").checked,
+//     "width": canvas2D.width,
+//     "walls": [
+//         {
+//             "posx": w.pos.x,
+//             "posy": w.pos.y,
+//             "dirx": w.pos.x + w.dir.x,
+//             "diry": w.pos.y + w.dir.y,
+//             "hue": w.hue,
+//             "opacity": w.opacity,
+//             "height0": w.height0,
+//             "height1": w.height1,
+//         }
+//     ],
+//     "player": {
+//         "posx": player.pos.x,
+//         "posy": player.pos.y,
+//         "rotation": player.rotation,
+//         "farSight": player.farSight,
+//         "vertRotation": player.vertRotation
+//     }
+// }
 
 function loadScene(sceneName) {
     clearWalls();
