@@ -64,6 +64,7 @@ const handlers = {
     reloadCanvas() {
         localStorage.setItem("prevScene", JSON.stringify(exportWalls()));
         window.location = window.location;
+        localStorage.removeItem("prevScene");
     }
 };
 document.addEventListener('resize', handlers.updateCanvasSize());

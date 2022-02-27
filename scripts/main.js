@@ -55,7 +55,7 @@ const defaults = {
 }
 
 loadDefaults()
-loadScene("exampleScene")
+loadScene("example")
 
 
 const prevScene = localStorage.getItem("prevScene")
