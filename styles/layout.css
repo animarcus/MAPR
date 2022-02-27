@@ -8,14 +8,22 @@
     --pink: #FDCFF3;
 }
 
-*{
+/* /*{
+    
+} */
+html, body {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+
+    background-color: var(--pink);
+    height: 100%;
+    position: fixed;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-}
-html, body {
-    height: 100%;
-    position: fixed;
+    overflow: hidden;
     /* display: flex;
     justify-content: center; */
     /* background: rgb(2,0,36); */
@@ -44,11 +52,10 @@ html, body {
 
 
 .controls {
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: auto;
     display:flex;
     flex-direction: column;
-    /* flex-wrap: wrap; */
+    flex-wrap: nowrap;
     justify-content:baseline;
     align-items: center;
     padding-top: 30px;
@@ -77,9 +84,12 @@ html, body {
     /* background-color: rgb(0, 110, 255); */
     grid-area: flatview;
 }
+
 #canvas3D {
     width: 100%;
     height: 99%;
+    /* max-height: min-content;
+    max-height: width; */
     background:rgb(56, 56, 56);
 }
 #canvas2D {
@@ -87,6 +97,7 @@ html, body {
     height: auto;
     background:rgb(56, 56, 56);
 }
+
 
 .instructions {
     /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
@@ -100,20 +111,22 @@ html, body {
     border-style:solid;
     border-radius:5px;
     background-color:#ffffff;
-    padding:20px;
+    padding: 10px;
+     /* 0px 10px 0px */
 }
 .sceneSettings {
     display: flex;
-    
-    justify-content:center;
+    justify-content: center;
     flex-direction: row;
+    flex-wrap: wrap;
     row-gap: 10px;
-    padding: 20px 20px 20px 20px;
+    padding: 20px 20px 300px 20px;
 }
 
 .scene {
     display: flex;
     flex-direction: column;
+    text-align: center;
     row-gap: 10px;
     padding: 0px 20px 0px 20px;
 }
@@ -131,9 +144,12 @@ html, body {
     padding: 0px 20px 0px 20px;
 }
 
-/* .expandButton {
+.expand {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
     font-family:sans-serif;
-    font-size:larger;
+    font-size:small;
     font-weight:bold;
     text-align:center;
     color:#000000;
@@ -142,9 +158,8 @@ html, body {
     border-style:solid;
     border-radius:5px;
     background-color:#ffffff;
-    padding:20px;
 }
-.expandButton:active {
+/* .expandButton:active {
 	position:relative;
 	top:1px;
 } */
@@ -194,4 +209,54 @@ html, body {
 }
 .divTableBody {
 	display: table-row-group;
+}
+
+
+/* @media only screen and (max-width: 480px) {
+    .divTableCell, .divTableHead {
+        font-size: 20px;
+    }
+} */
+
+@media (orientation: portrait) and (max-width: 580px) {
+    .controls {
+        overflow-x: hidden;
+    }
+    .container {
+        display: grid;
+        grid-template-columns: 65% auto;
+        grid-template-rows: 55% auto;
+        grid-template-areas:
+            "perspective flatview"
+            "controls controls";
+        width: 100vw;
+        height: 100vh;
+        background: var(--pink); /*linear-gradient(140deg, var(--dark-blue) 10%, var(--sky-blue) 100%) fixed;*/
+    }
+    .sceneSettings {
+        /* width: 100%; */
+        /* margin-left: auto; */
+        /* margin-right: auto; */
+        padding-bottom: 150px;
+    }
+    .divTableCell, .divTableHead {
+        border-top: 1px solid #999999;
+        border-bottom: 1px solid #999999;
+        display: table-cell;
+        padding: 3px 10px;
+        text-align: right;
+        vertical-align: middle;
+        
+
+        font-family:Arial;
+        font-size:15px;
+        font-weight:bold;
+        /* font-style:italic; */
+        /* padding:12px 24px; */
+        text-decoration:none;
+        text-shadow:-2px 3px 4px #bdbdbd;
+        box-shadow:inset -6px 1px 0px -18px #ffffff;
+        background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+        background-color:#ffffff;
+    }
 }

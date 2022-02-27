@@ -345,34 +345,6 @@ function copyWallsCode() {
     navigator.clipboard.writeText(tmp)
 }
 
-// const wall = {
-//     "sliderH0": document.getElementById("sliderH0").value,
-//     "sliderH1": document.getElementById("sliderH1").value,
-//     "sliderFovx": document.getElementById("sliderFovx").value,
-//     "sliderFovy": document.getElementById("sliderFovy").value,
-//     "sliderOpacity": document.getElementById("sliderOpacity").value,
-//     "changeAll": document.getElementById("changeAll").checked,
-//     "width": canvas2D.width,
-//     "walls": [
-//         {
-//             "posx": w.pos.x,
-//             "posy": w.pos.y,
-//             "dirx": w.pos.x + w.dir.x,
-//             "diry": w.pos.y + w.dir.y,
-//             "hue": w.hue,
-//             "opacity": w.opacity,
-//             "height0": w.height0,
-//             "height1": w.height1,
-//         }
-//     ],
-//     "player": {
-//         "posx": player.pos.x,
-//         "posy": player.pos.y,
-//         "rotation": player.rotation,
-//         "farSight": player.farSight,
-//         "vertRotation": player.vertRotation
-//     }
-// }
 
 function loadScene(sceneName) {
     clearWalls();

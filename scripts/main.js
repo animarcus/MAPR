@@ -1,11 +1,11 @@
 // Canvas declared in interface.js
 handlers.updateCanvasSize();
 
-ctx.translate(0,canvas.height);
-ctx.scale(1,-1);
+// ctx.translate(0,canvas.height);
+// ctx.scale(1,-1);
 
-ctx2D.translate(0, canvas2D.height);
-ctx2D.scale(1, -1);
+// ctx2D.translate(0, canvas2D.height);
+// ctx2D.scale(1, -1);
 
 
 let wallCount = 0;
@@ -26,17 +26,15 @@ const color = {
 
 const player = new Player(canvas2D.width/2 - 50, canvas2D.height/5, 90);
 player.fov.xamount = 70;
-// let recommendedFOVx = player.fov.xamount
-// let recommendedFOVy = player.fov.yamount
 
-document.getElementById("showFovx").innerHTML = player.fov.xamount
-document.getElementById("sliderFovx").value = player.fov.xamount
-document.getElementById("showFovy").innerHTML = player.fov.yamount
-document.getElementById("sliderFovy").value = player.fov.yamount
 
 player.setFOV();
 
-
+window.addEventListener("orientationchange", function () {
+    // Announce the new orientation number
+    // alert(window.orientation);
+    handlers.reloadCanvas();
+}, false);
 
 
 let show2D = true;
@@ -47,7 +45,7 @@ let changeAll = true;
 let sortedActive = true;
 
 const defaults = {
-    "changeAll": false,
+    "changeAll": true,
     "colorpick": "#ff0000",
     "sliderOpacity": 100,
     "sliderH1": 300,
@@ -57,11 +55,19 @@ const defaults = {
 }
 
 loadDefaults()
-loadScene("colors")
+loadScene("exampleScene")
+
+
+const prevScene = localStorage.getItem("prevScene")
+// console.log(JSON.parse(prevScene))
+if (prevScene) {
+    importWalls(JSON.parse(prevScene))
+    localStorage.removeItem("prevScene");
+}
 
 
 
-gameLoop();
+window.requestAnimationFrame(gameLoop);
 
 
 

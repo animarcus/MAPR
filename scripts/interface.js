@@ -47,11 +47,23 @@ const handlers = {
         drawing.stop();
     },
     updateCanvasSize() {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx2D.setTransform(1, 0, 0, 1, 0, 0);
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
         canvas2D.height = canvas2D.offsetWidth;
         canvas2D.width = canvas2D.offsetWidth;
+        // set3Dctx()
+        ctx.translate(0, canvas.height);
+        ctx.scale(1, -1);
+
+        ctx2D.translate(0, canvas2D.height);
+        ctx2D.scale(1, -1);
         // console.log(canvas.height, canvas.width);
+    },
+    reloadCanvas() {
+        localStorage.setItem("prevScene", JSON.stringify(exportWalls()));
+        window.location = window.location;
     }
 };
 document.addEventListener('resize', handlers.updateCanvasSize());
@@ -207,7 +219,7 @@ function changeSetting(sliderId, sliderValue = -1) {
         case "changeAll":
             if (defaults["changeAll"]) {
                 document.getElementById("changeAll").checked = defaults["changeAll"]
-                changeAll = !changeAll;
+                changeAll = defaults["changeAll"];
             }
             break;
         case "colorpick":

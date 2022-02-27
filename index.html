@@ -15,16 +15,20 @@
             <canvas id="canvas3D"></canvas>
         </div>
         <div class="flatview no-touch">
-            <p class="instructions">Click and drag to draw walls</p>
+            <!-- <p class="instructions">Click and drag to draw walls</p> -->
             <canvas id="canvas2D"></canvas>
         </div>
+        <div class="expand" onclick="expand()">
+            CLICK HERE <br>
+            TO EXPAND CONTROLS
+        </div>
         <div class="controls" id="booger">
-            <div class="instructions" onclick="expand()">Use W A S D to move <br> 
+            <div class="instructions">
+                Use W A S D to move <br>
                 Use the arrow keys to look around <br>
                 If using a touch screen, tap the
                 colored boxes for controls
             </div>
-
             <div class="sceneSettings">
                 <div class="general">
                     GENERAL
@@ -44,12 +48,12 @@
                 
                 <div class="walls">
                     SETTINGS
-                    <div class="divTable">
+                    <div class="tablemobile divTable">
                         <div class="divTableBody">
                             <div class="divTableRow">
-                                <div class="divTableCell">Only modify last placed wall</div>
+                                <div class="divTableCell">Apply setting to all walls</div>
                                 <div class="divTableCell"></div>
-                                <div class="divTableCell"><input type="checkbox" id="changeAll" onchange="changeAll = !changeAll"></div>
+                                <div class="divTableCell"><input type="checkbox" id="changeAll" checked="checked" onchange="changeAll = !changeAll"></div>
                                 <div class="divTableCell"><button class="normalButton" onclick="changeSetting('changeAll', 0)"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
@@ -101,7 +105,7 @@
 
                 <div class="scene">
                     SET SCENE
-                    <button class="normalButton" onclick='copyWalls()'> Copy current selection to clipboard !!!!!!</button>
+                    <button class="normalButton" onclick='copyWallsCode()'> Copy current selection to clipboard !!!!!!</button>
                     <button class="normalButton" onclick='loadScene("example")'> Simple example</button>
                     <button class="normalButton" onclick='loadScene("colors")'> Colors !!! </button>
                     <!-- <button onclick='loadScene("penis")'> penis lol </button> -->
