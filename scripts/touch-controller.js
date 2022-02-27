@@ -21,7 +21,7 @@ class Button {
                             this.x, canvas.height - (this.y + this.height),
                             this.x + this.width, canvas.height - (this.y + this.height),
                             this.x + this.width, canvas.height - this.y], this.color)
-                ctx.font = "bolder 30px Arial";
+                ctx.font = "bolder 15px Arial";
                 ctx.textAlign = "center";
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = "black";
@@ -100,14 +100,14 @@ if (isTouchScreen) {
 let W = canvas.width/6
 let H = canvas.height/4
 let buttons = [
-    new Button(0, 0, W, H, "yellow", "A"),
-    new Button(2*W, 0, W, H, "green", "D"),
-    new Button(W, 0, W, H, "cyan", "S"),
-    new Button(W, H, W, H, "orange", "W"),
-    new Button(3 * W, 0, W, H, "yellow", "⇦"),
-    new Button(5 * W, 0, W, H, "green", "⇨"),
-    new Button(4 * W, 0, W, H, "cyan", "⇩"),
-    new Button(4 * W, H, W, H, "orange", "⇧")
+    new Button(0, 0, W, H, "yellow", "Left"),
+    new Button(2*W, 0, W, H, "green", "Right"),
+    new Button(W, 0, W, H, "cyan", "Back"),
+    new Button(W, H, W, H, "orange", "Forward"),
+    new Button(3 * W, 0, W, H, "yellow", "Look left"),
+    new Button(5 * W, 0, W, H, "green", "Look Right"),
+    new Button(4 * W, 0, W, H, "cyan", "Look Down"),
+    new Button(4 * W, H, W, H, "orange", "Look Up")
 ]
 
 function touchControls() {

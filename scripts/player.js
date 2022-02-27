@@ -84,8 +84,8 @@ class Player {
         }
     }
     sideMove(step) {
-        this.pos.x += -step * this.dir.y;
-        this.pos.y += step * this.dir.x;
+        this.pos.x += -step * this.dir.y/2;
+        this.pos.y += step * this.dir.x/2;
         this.setFOV();
     }
     straightMove(step) {

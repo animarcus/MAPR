@@ -30,11 +30,8 @@ player.fov.xamount = 70;
 
 player.setFOV();
 
-window.addEventListener("orientationchange", function () {
-    // Announce the new orientation number
-    // alert(window.orientation);
-    handlers.reloadCanvas();
-}, false);
+window.addEventListener("orientationchange", handlers.reloadCanvas, false);
+window.addEventListener("resize", handlers.reloadCanvas, false);
 
 
 let show2D = true;

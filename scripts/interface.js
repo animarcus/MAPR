@@ -18,8 +18,10 @@ function expand() {
     expansion = !expansion;
     if (expansion) {
         document.getElementsByClassName("container")[0].style.gridTemplateRows = "15%";
+        document.getElementById("expandtext").innerHTML = "REDUCE"
     } else {
         document.getElementsByClassName("container")[0].style.gridTemplateRows = "75%";
+        document.getElementById("expandtext").innerHTML = "EXPAND"
     }
 }
 
@@ -64,7 +66,7 @@ const handlers = {
     reloadCanvas() {
         localStorage.setItem("prevScene", JSON.stringify(exportWalls()));
         window.location = window.location;
-        localStorage.removeItem("prevScene");
+        // localStorage.removeItem("prevScene");
     }
 };
 document.addEventListener('resize', handlers.updateCanvasSize());

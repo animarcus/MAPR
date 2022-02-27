@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="./styles/layout.css">
     <link rel="stylesheet" href="./styles/button.css">
     <link rel="stylesheet" href="./styles/input.css">
-    <title>Raycasting</title>
+    <title>Marcus' Algorithm for Pseudo3D Rendering</title>
 </head>
 <body>
+    <div id="title"> MAPR <br>
+    Marcus' Algorithm for Pseudo-3D Rendering</div>
     <div class="container">
         <div class="perspective no-touch">
             <canvas id="canvas3D"></canvas>
@@ -20,7 +22,7 @@
         </div>
         <div class="expand" onclick="expand()">
             CLICK HERE <br>
-            TO EXPAND CONTROLS
+            TO <span id="expandtext">EXPAND</span> CONTROLS
         </div>
         <div class="controls" id="booger">
             <div class="instructions">

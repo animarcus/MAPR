@@ -50,10 +50,15 @@ class Boundary {
             'x': (this.pos.x + this.dir.x) - player.pos.x,
             'y': (this.pos.y + this.dir.y) - player.pos.y
         };
+        
+        this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
+        this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
 
         if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
             (isClockwiseOrder(player.fov.v1.dir, this.p) && !isClockwiseOrder(player.fov.v2.dir, this.p) &&
-            isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h))
+            isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h) &&
+            (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
+            (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2))
         ) return true;
     }
 
@@ -79,8 +84,7 @@ class Boundary {
             this.h.y -= player.pos.y;
         }
         
-        this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
-        this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
+        
 
         // debugging  2D Representation
         if (show2D2) {
