@@ -20,7 +20,7 @@ function expand() {
         document.getElementsByClassName("container")[0].style.gridTemplateRows = "15%";
         document.getElementById("expandtext").innerHTML = "REDUCE"
     } else {
-        document.getElementsByClassName("container")[0].style.gridTemplateRows = "75%";
+        document.getElementsByClassName("container")[0].style.gridTemplateRows = "auto";
         document.getElementById("expandtext").innerHTML = "EXPAND"
     }
 }
@@ -85,7 +85,7 @@ canvas2D.addEventListener("pointermove", (e) => {
 });
 canvas2D.addEventListener("pointerdown", (e) => {
     handlers.click(e)
-    document.querySelector(":root").style.setProperty('--pink', 'lightblue') //////////////////
+    // document.querySelector(":root").style.setProperty('--pink', 'lightblue') //////////////////
     if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
         drawing.startpos.x = mouse.x;
         drawing.startpos.y = mouse.y;
@@ -110,7 +110,7 @@ canvas2D.addEventListener("pointerdown", (e) => {
 document.addEventListener('pointerup', (e) => {
     handlers.unclick(e)
     e.preventDefault(e)
-    document.querySelector(":root").style.setProperty('--pink', '#FDCFF3') //////////////////
+    // document.querySelector(":root").style.setProperty('--pink', '#FDCFF3') //////////////////
 });
 
 

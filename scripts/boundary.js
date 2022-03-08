@@ -56,9 +56,10 @@ class Boundary {
 
         if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
             (isClockwiseOrder(player.fov.v1.dir, this.p) && !isClockwiseOrder(player.fov.v2.dir, this.p) &&
-            isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h) &&
-            (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
-            (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2))
+            isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h) 
+            // && (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
+            // (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2)
+            )
         ) return true;
     }
 
@@ -129,12 +130,9 @@ class Boundary {
     }
 
     calculateHeight(v) { // simple proportion calculations
-        const dir = vectorCreate(v.dist, 0);
         const h0 = vectorCreate(v.dist, this.height0 - player.height);
         const h1 = vectorCreate(v.dist, this.height1 - player.height);
-        
         const floor = vectorCreate(v.dist, -player.height);
-
         return {
             'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
             'h0':    (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),

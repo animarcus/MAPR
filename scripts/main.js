@@ -52,7 +52,10 @@ const defaults = {
 }
 
 loadDefaults()
-loadScene("example")
+// loadScene("example")
+
+walls.push(new Boundary(460 * (canvas2D.width / 886), 572 * (canvas2D.width / 886), 283 * (canvas2D.width / 886), 568 * (canvas2D.width / 886), 0, 1, 0, 300));
+
 
 
 const prevScene = localStorage.getItem("prevScene")
