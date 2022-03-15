@@ -231,7 +231,7 @@ html, body {
     .container {
         display: grid;
         grid-template-columns: 65% auto;
-        grid-template-rows: 55% auto;
+        grid-template-rows: 75% auto;
         grid-template-areas:
             "perspective flatview"
             "controls controls";
