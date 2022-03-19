@@ -1,12 +1,13 @@
 class Button {
-    constructor(x, y, width, height, color, char = "boop") {
+    constructor(x, y, width, height, color, key, text = "boop") {
         this.active = false;
         this.color = color;
         this.height = height;
         this.width = width;
         this.x = x;
         this.y = y;
-        this.char = char
+        this.key = key;
+        this.text = text;
     }
 
     draw() {
@@ -15,7 +16,7 @@ class Button {
         
         ctx.save();
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
-
+                
 
                 polygon([   this.x, canvas.height - this.y,
                             this.x, canvas.height - (this.y + this.height),
@@ -25,19 +26,13 @@ class Button {
                 ctx.textAlign = "center";
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = "black";
-                ctx.fillText(this.char, this.x + this.width/2, canvas.height - this.y - this.height/2);
+                ctx.fillText(this.text, this.x + this.width/2, canvas.height - this.y - this.height/2);
         ctx.restore();
         ctx.globalAlpha = tmpalpha;
     }
-
-    containsPoint(x, y) {
-        // if the point is outside of the rectangle return false:
-        return (x < this.x ||
-                x > this.x + this.width ||
-                y < this.y ||
-                y > this.y + this.width);
-    }
 }
+
+const currentPointers = new Map();
 
 const pointer = {
     "x": undefined,
@@ -46,129 +41,79 @@ const pointer = {
 
 let isPointing = false;
 const isTouchScreen = window.matchMedia("(pointer: coarse)").matches
+
 if (isTouchScreen) {
     const pointerdown = (e) => {
-        console.log(e)
         isPointing = true;
         pointer.x = e.offsetX;
         pointer.y = canvas.height - e.offsetY;
         e.preventDefault();
     }
+
     const pointermove = (e) => {
         e.preventDefault();
         pointer.x = e.offsetX;
         pointer.y = canvas.height - e.offsetY;
     }
+
     const pointerup = (e) => {
         isPointing = false;
         e.preventDefault();
         for (let button of buttons) {
-            button.active = false;
+            if (
+                pointer.x > button.x && pointer.x < button.x + button.width &&
+                pointer.y > button.y && pointer.y < button.y + button.height) {
+                keysPressed[button.key] = false
+            }
         }
     }
 
-    canvas3D.onpointerdown = pointerdown;
-    canvas3D.onpointermove = pointermove;
+    canvas.onpointerdown = pointerdown;
+    canvas.onpointermove = pointermove;
 
-    canvas3D.onpointerup = pointerup;
-    canvas3D.onpointercancel = pointerup;
-    canvas3D.onpointerout = pointerup;
-    canvas3D.onpointerleave = pointerup;
-    // canvas3D.addEventListener("pointerdown", (e) => {
-    //     isPointing = true;
-    //     pointer.x = e.offsetX;
-    //     pointer.y = canvas.height - e.offsetY;
-    //     e.preventDefault();
-    // });
-
-    // canvas3D.addEventListener("pointermove", (e) => {
-    //     e.preventDefault();
-    //     pointer.x = e.offsetX;
-    //     pointer.y = canvas.height - e.offsetY;
-    // });
-    // canvas3D.addEventListener("pointerup", (e) => {
-    //     isPointing = false;
-    //     e.preventDefault();
-    //     for (let button of buttons) {
-    //         button.active = false;
-    //     }
-    // });
+    canvas.onpointerup = pointerup;
+    canvas.onpointercancel = pointerup;
+    canvas.onpointerout = pointerup;
+    canvas.onpointerleave = pointerup;
 }
 
 
 
-let W = canvas.width/6
-let H = canvas.height/4
+
+let W = canvas.width/6;
+let H = canvas.width/6;
+if (H < 50) H = 100;
 let buttons = [
-    new Button(0, 0, W, H, "yellow", "Left"),
-    new Button(2*W, 0, W, H, "green", "Right"),
-    new Button(W, 0, W, H, "cyan", "Back"),
-    new Button(W, H, W, H, "orange", "Forward"),
-    new Button(3 * W, 0, W, H, "yellow", "Look left"),
-    new Button(5 * W, 0, W, H, "green", "Look Right"),
-    new Button(4 * W, 0, W, H, "cyan", "Look Down"),
-    new Button(4 * W, H, W, H, "orange", "Look Up")
+    new Button(0    , 0, W, H, "yellow" ,"a", "Left"),
+    new Button(2 * W, 0, W, H, "green"  ,"d", "Right"),
+    new Button(W    , 0, W, H, "cyan"   ,"s", "Back"),
+    new Button(W    , H, W, H, "orange" ,"w", "Forward"),
+    new Button(3 * W, 0, W, H, "yellow" ,"ArrowLeft", "Look left"),
+    new Button(5 * W, 0, W, H, "green"  ,"ArrowRight", "Look Right"),
+    new Button(4 * W, 0, W, H, "cyan"   ,"ArrowDown", "Look Down"),
+    new Button(4 * W, H, W, H, "orange" ,"ArrowUp", "Look Up")
 ]
 
 function touchControls() {
     if (isTouchScreen) {
         renderButtons();
         if (isPointing) detectButtons();
-        handleButtons();
     }
 }
-
-
 
 function renderButtons() {
     for (let button of buttons) {
         button.draw();
     }
 }
+
 function detectButtons() {
     for (let button of buttons) {
-        button.active = false;
+        keysPressed[button.key] = false
         if (
             pointer.x > button.x && pointer.x < button.x + button.width &&
             pointer.y > button.y && pointer.y < button.y + button.height) {
-            button.active = true;
-            break;
+            keysPressed[button.key] = true
         }
-    }
-}
-
-function handleButtons() {
-    keysPressed.a = false;
-    keysPressed.s = false;
-    keysPressed.d = false;
-    keysPressed.w = false;
-    keysPressed.ArrowLeft = false;
-    keysPressed.ArrowRight = false;
-    keysPressed.ArrowDown = false;
-    keysPressed.ArrowUp = false;
-    if (buttons[0].active) {
-        keysPressed.a = true;
-    }
-    if (buttons[2].active) {
-        keysPressed.s = true;
-    }
-    if (buttons[1].active) {
-        keysPressed.d = true;
-    }
-    if (buttons[3].active) {
-        keysPressed.w = true;
-    }
-
-    if (buttons[4].active) {
-        keysPressed.ArrowLeft = true;
-    }
-    if (buttons[5].active) {
-        keysPressed.ArrowRight = true;
-    }
-    if (buttons[6].active) {
-        keysPressed.ArrowDown = true;
-    }
-    if (buttons[7].active) {
-        keysPressed.ArrowUp = true;
     }
 }

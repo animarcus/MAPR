@@ -1,11 +1,12 @@
 // const canvas3D = document.getElementById('canvas3D');
 // const canvas2D = document.getElementById("canvas2D");
-let canvas = document.getElementById('canvas3D');
+const canvas = document.getElementById('canvas3D');
 let ctx = canvas.getContext('2d', { alpha: false });
 
 const canvas2D = document.getElementById("canvas2D");
 const ctx2D = canvas2D.getContext("2d", { alpha: false });
 
+const dotSize = 10 * canvas2D.width / 800;
 function set2Dctx() {
     ctx = canvas2D.getContext("2d", { alpha: false });
 }
@@ -64,9 +65,10 @@ const handlers = {
         // console.log(canvas.height, canvas.width);
     },
     reloadCanvas() {
-        localStorage.setItem("prevScene", JSON.stringify(exportWalls()));
+        const prevSceneStore = JSON.stringify(exportWalls())
+        localStorage.setItem("prevScene", prevSceneStore);
+
         window.location = window.location;
-        // localStorage.removeItem("prevScene");
     }
 };
 document.addEventListener('resize', handlers.updateCanvasSize());
@@ -220,10 +222,21 @@ function changeSetting(sliderId, sliderValue = -1) {
     let sliderH1 = document.getElementById("sliderH1");
     switch (sliderId) {
         case "changeAll":
-            if (defaults["changeAll"]) {
-                document.getElementById("changeAll").checked = defaults["changeAll"]
-                changeAll = defaults["changeAll"];
+            const changeText = (val) => {
+                if (val) {
+                    document.getElementById("changeAllState").innerHTML = "All";
+                } else {
+                    document.getElementById("changeAllState").innerHTML = "New";
+                }
             }
+            if (sliderValue == -1) {
+                document.getElementById("changeAll").checked = defaults["changeAll"];
+                changeAll = defaults["changeAll"];
+                changeText(defaults["changeAll"]);
+                break;
+            }
+            changeAll = sliderValue
+            changeText(document.getElementById("changeAll").checked)
             break;
         case "colorpick":
             if (sliderValue == -1) {
@@ -302,11 +315,12 @@ function changeSetting(sliderId, sliderValue = -1) {
 }
 
 function loadDefaults() {
+    document.getElementById("sortedActive").checked = true;
     changeSetting("colorpick", defaults["colorpick"]);
     changeSetting("sliderH0", defaults["sliderH0"]);
     changeSetting("sliderH1", defaults["sliderH1"]);
     changeSetting("sliderFovx", defaults["sliderFovx"]);
     changeSetting("sliderFovy", defaults["sliderFovy"]);
     changeSetting("sliderOpacity", defaults["sliderOpacity"]);
-    changeSetting("changeAll", defaults["changeAll"]);
+    changeSetting("changeAll", -1);
 }

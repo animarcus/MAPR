@@ -24,8 +24,8 @@ const color = {
     "pink": getComputedStyle(document.documentElement).getPropertyValue('--pink')
 }
 
-const player = new Player(canvas2D.width/2 - 50, canvas2D.height/5, 90);
-player.fov.xamount = 70;
+const player = new Player(canvas2D.width/2, canvas2D.height/5, 90);
+player.fov.xamount =  55;
 
 
 player.setFOV();
@@ -51,25 +51,19 @@ const defaults = {
     "sliderFovy": player.fov.yamount
 }
 
-loadDefaults()
-// loadScene("example")
+loadDefaults();
 
-walls.push(new Boundary(460 * (canvas2D.width / 886), 572 * (canvas2D.width / 886), 283 * (canvas2D.width / 886), 568 * (canvas2D.width / 886), 0, 1, 0, 300));
-
-
-
-const prevScene = localStorage.getItem("prevScene")
-// console.log(JSON.parse(prevScene))
+let prevScene = localStorage.getItem("prevScene");
 if (prevScene) {
-    importWalls(JSON.parse(prevScene))
+    prevScene = JSON.parse(prevScene);
+    if (prevScene["expansion"]) expand();
+    importWalls(prevScene);
     localStorage.removeItem("prevScene");
+} else {
+    loadScene("mainPic");
 }
 
-
-
 window.requestAnimationFrame(gameLoop);
-
-
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -90,6 +84,7 @@ function gameLoop() {
         if (show2D) {
             set2Dctx();
             wall.draw();
+            set3Dctx();
         }
         if (wall.isInsideFOV()) {
             wall.processFOV();

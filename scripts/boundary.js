@@ -18,17 +18,15 @@ class Boundary {
 
         this.height0 = height0;
         this.height1 = height1;
-
-        
     }
 
     draw() {
         set2Dctx();
-        line(this.pos.x, this.pos.y, this.pos.x + this.dir.x, this.pos.y + this.dir.y, "hsl(" + this.hue + ", 100%, 50%)", 3);
-        ellipse(this.pos.x, this.pos.y, 5, 5, 'green');
-        ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, 5, 5, 'red');
-        // ellipse(this.pos.x, this.pos.y, 2, 2, 'white');  // green
-        // ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, 2, 2, 'white'); // red
+        line(this.pos.x, this.pos.y, this.pos.x + this.dir.x, this.pos.y + this.dir.y, `hsl(${this.hue}, 100%, 50%)`, 3);
+        // ellipse(this.pos.x, this.pos.y, dotSize, dotSize, 'green');
+        // ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, dotSize, dotSize, 'red');
+        ellipse(this.pos.x, this.pos.y, dotSize, dotSize, `hsl(${this.hue}, 100%, 50%)`);
+        ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, dotSize, dotSize, `hsl(${this.hue}, 100%, 50%)`);
         if (showWallNums) {
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);

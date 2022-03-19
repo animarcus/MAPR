@@ -1,11 +1,12 @@
 function exampleScene() {
     defaults['sliderH0'] = 0;
     defaults['sliderH1'] = 300;
-    defaults['sliderFovx'] = 70;
+    defaults['sliderFovx'] = 55;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
     defaults['changeAll'] = false;
-    loadDefaults(); walls.push(new Boundary(418 * (canvas2D.width / 886), 788 * (canvas2D.width / 886), 333 * (canvas2D.width / 886), 730 * (canvas2D.width / 886), 90, 1, 0, 300));
+    loadDefaults();
+    walls.push(new Boundary(418 * (canvas2D.width / 886), 788 * (canvas2D.width / 886), 333 * (canvas2D.width / 886), 730 * (canvas2D.width / 886), 90, 1, 0, 300));
     walls.push(new Boundary(506 * (canvas2D.width / 886), 745 * (canvas2D.width / 886), 636 * (canvas2D.width / 886), 721 * (canvas2D.width / 886), 90, 1, 0, 300));
     walls.push(new Boundary(566 * (canvas2D.width / 886), 551 * (canvas2D.width / 886), 600 * (canvas2D.width / 886), 482 * (canvas2D.width / 886), 90, 1, 0, 300));
     walls.push(new Boundary(404 * (canvas2D.width / 886), 627 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), 591 * (canvas2D.width / 886), 90, 1, 0, 300));
@@ -78,14 +79,14 @@ function exampleScene() {
     player.rotation = 4.031710572106929;
     player.setAngle(degrees(player.rotation));
     player.setFarSight(1000);
-    player.setVerticalLook(0.0698131700797732);
+    player.setVerticalLook(0);
 
 }
 
 function colorsScene() {
     defaults['sliderH0'] = 0;
     defaults['sliderH1'] = 300;
-    defaults['sliderFovx'] = 86;
+    defaults['sliderFovx'] = 55;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
     defaults['changeAll'] = false;
@@ -123,7 +124,7 @@ function colorsScene() {
 }
 
 function penislol() {
-    defaults["sliderFovx"] = 70
+    defaults["sliderFovx"] = 55;
     walls.push(new Boundary(307 * (canvas2D.width/861), 594 * (canvas2D.width/861), 324 * (canvas2D.width/861), 607 * (canvas2D.width/861), 0, 1, 0, 35));
     walls.push(new Boundary(331 * (canvas2D.width/861), 613 * (canvas2D.width/861), 343 * (canvas2D.width/861), 618 * (canvas2D.width/861), 0, 1, 0, 35));
     walls.push(new Boundary(355 * (canvas2D.width/861), 620 * (canvas2D.width/861), 367 * (canvas2D.width/861), 622 * (canvas2D.width/861), 0, 1, 0, 35));
@@ -167,7 +168,7 @@ function penislol() {
 function test() {
     defaults.sliderH0 = 0;
     defaults.sliderH1 = 300;
-    defaults.sliderFovx = 70;
+    defaults.sliderFovx = 55;
     defaults.sliderFovy = 280;
     defaults.sliderOpacity = 100;
     defaults.changeAll = false;
@@ -202,7 +203,7 @@ function test() {
 function allExamples() {
     defaults['sliderH0'] = 265;
     defaults['sliderH1'] = 325;
-    defaults['sliderFovx'] = 70;
+    defaults['sliderFovx'] = 55;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 75;
     defaults['changeAll'] = true;
@@ -246,7 +247,7 @@ function allExamples() {
 function collidingWalls() {
     defaults['sliderH0'] = 0;
     defaults['sliderH1'] = 999;
-    defaults['sliderFovx'] = 70;
+    defaults['sliderFovx'] = 55;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
     defaults['changeAll'] = true;
@@ -270,7 +271,46 @@ function collidingWalls() {
     player.setAngle(degrees(player.rotation));
     player.setFarSight(2000);
     player.setVerticalLook(2.0816681711721685e-17);
+}
 
+function oneWall() {
+    defaults['sliderH0'] = 0;
+    defaults['sliderH1'] = 300;
+    defaults['sliderFovx'] = 55;
+    defaults['sliderFovy'] = 280;
+    defaults['sliderOpacity'] = 100;
+    defaults['changeAll'] = true;
+    loadDefaults(); walls.push(new Boundary(330.5 * (canvas2D.width / 861), 555.8600451467269 * (canvas2D.width / 861), 530.5 * (canvas2D.width / 861), 555.8600451467269 * (canvas2D.width / 861), 0, 1, 0, 300));
+    player.pos.x = 430.5 * (canvas2D.width / 861);
+    player.pos.y = 172.2 * (canvas2D.width / 861);
+    player.rotation = 1.5707963267948966;
+    player.setAngle(degrees(player.rotation));
+    player.setFarSight(1000);
+    player.setVerticalLook(0);
+}
+
+function mainPic() {
+    defaults['sliderH0'] = 0;
+    defaults['sliderH1'] = 300;
+    defaults['sliderFovx'] = 55;
+    defaults['sliderFovy'] = 280;
+    defaults['sliderOpacity'] = 100;
+    defaults['changeAll'] = false;
+    loadDefaults();
+    walls.push(new Boundary(323 * (canvas2D.width / 886), 395 * (canvas2D.width / 886), 369 * (canvas2D.width / 886), 371 * (canvas2D.width / 886), 240, 1, 0, 300));
+    walls.push(new Boundary(322 * (canvas2D.width / 886), 469 * (canvas2D.width / 886), 381 * (canvas2D.width / 886), 562 * (canvas2D.width / 886), 90, 1, 0, 300));
+    walls.push(new Boundary(416 * (canvas2D.width / 886), 303 * (canvas2D.width / 886), 435 * (canvas2D.width / 886), 287 * (canvas2D.width / 886), 304, 1, 0, 300));
+    walls.push(new Boundary(433 * (canvas2D.width / 886), 269 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), 36, 1, 0, 300));
+    walls.push(new Boundary(452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), 465 * (canvas2D.width / 886), 305 * (canvas2D.width / 886), 36, 1, 0, 300));
+    walls.push(new Boundary(464 * (canvas2D.width / 886), 373 * (canvas2D.width / 886), 533 * (canvas2D.width / 886), 485 * (canvas2D.width / 886), 0, 1, 0, 300));
+    walls.push(new Boundary(481 * (canvas2D.width / 886), 343 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), 53, 1, 0, 300));
+    walls.push(new Boundary(498 * (canvas2D.width / 886), 311 * (canvas2D.width / 886), 597 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), 182, 1, 0, 300));
+    player.pos.x = 443 * (canvas2D.width / 886);
+    player.pos.y = 177.2 * (canvas2D.width / 886);
+    player.rotation = 1.5707963267948966;
+    player.setAngle(degrees(player.rotation));
+    player.setFarSight(1000);
+    player.setVerticalLook(0);
 }
 
 function clearWalls() {
@@ -313,8 +353,9 @@ function exportWalls() {
         "sliderFovx": document.getElementById("sliderFovx").value,
         "sliderFovy": document.getElementById("sliderFovy").value,
         "sliderOpacity": document.getElementById("sliderOpacity").value,
-        "changeAll": document.getElementById("changeAll").checked,
+        "changeAll": document.getElementById("changeAll").checked,  
         "width": canvas2D.width,
+        "expansion": expansion,
         "walls": [],
         "player": {
             "posx": player.pos.x,
@@ -336,7 +377,7 @@ function exportWalls() {
                         "height1": w.height1,
                         })
     })
-    console.log(tmp)
+    // console.log(tmp)
     return tmp;
 }
 
@@ -347,7 +388,7 @@ function copyWallsCode() {
         "defaults['sliderFovy'] = " + document.getElementById("sliderFovy").value + ";\n" +
         "defaults['sliderOpacity'] = " + document.getElementById("sliderOpacity").value + ";\n" +
         "defaults['changeAll'] = " + document.getElementById("changeAll").checked + ";\n" +
-        "loadDefaults();"
+        "loadDefaults();\n"
     walls.forEach(w => {
         tmp = tmp + "walls.push(new Boundary(" + w.pos.x + " * (canvas2D.width/" + canvas2D.width + "), " +
             w.pos.y + " * (canvas2D.width/" + canvas2D.width + "), " +
@@ -372,22 +413,28 @@ function loadScene(sceneName) {
     player.setFarSight(1000);
     switch (sceneName) {
         case "example":
-            exampleScene()
+            exampleScene();
             break;
         case "colors":
-            colorsScene()
+            colorsScene();
             break;
         case "penis":
-            penislol()
+            penislol();
             break;
         case "test":
-            test()
+            test();
             break;
         case "allExamples":
-            allExamples()
+            allExamples();
             break;
         case "collidingWalls":
-            collidingWalls()
+            collidingWalls();
+            break;
+        case "oneWall":
+            oneWall();
+            break;
+        case "mainPic":
+            mainPic();
             break;
     }
     return true;

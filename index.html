@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="./styles/layout.css">
     <link rel="stylesheet" href="./styles/button.css">
+    <link rel="stylesheet" href="./styles/checkbox.css">
     <link rel="stylesheet" href="./styles/input.css">
     <title>Marcus' Algorithm for Pseudo3D Rendering</title>
 </head>
@@ -17,7 +18,6 @@
             <canvas id="canvas3D"></canvas>
         </div>
         <div class="flatview no-touch">
-            <!-- <p class="instructions">Click and drag to draw walls</p> -->
             <canvas id="canvas2D"></canvas>
         </div>
         <div class="expand" onclick="expand()">
@@ -29,92 +29,149 @@
                 Use W A S D to move <br>
                 Use the arrow keys to look around <br>
                 If using a touch screen, tap the
-                colored boxes for controls
+                colored boxes for controls <br> <br>
+                Wall customizations are at the bottom of this page <br>
+                Or select a ready-made scene right below
             </div>
             <div class="sceneSettings">
-                <div class="general">
-                    GENERAL
-                    <button class="normalButton" onclick="resetPlayer()">Reset player view/position</button>
-                    <button class="normalButton" onclick="clearWalls()">Clear all Walls</button>
-                    <button class="normalButton" onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
-                    <button class="normalButton" onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
-                    <br>
-                    <button class="normalButton" onclick="rainbowMode = !rainbowMode">Toggle Rainbow mode</button>
-                    <label>
-                        <input type="checkbox" id="sortedActive" onchange="sortedActive = !sortedActive">
-                        Sorting
-                    </label>
-                    <button class="normalButton" onclick="undoWall = true">Undo new Wall (or Control Z)</button>
-                    <button class="normalButton" onclick="redoWall = true">Redo Wall (or Control Shift Z)</button>
-                </div>
-                
-                <div class="walls">
-                    SETTINGS
+                <div class="scene">
+                    <span class="sectionText"> SET SCENE </span>
+                    <!-- <button class="normalButton" onclick='copyWallsCode()'> Copy current selection to clipboard !!!!!!</button>
+                    <button class="normalButton" onclick='loadScene("example")'> Simple example</button>
+                    <button class="normalButton" onclick='loadScene("colors")'> Colors !!! </button>
+                    <button onclick='loadScene("penis")'> penis lol </button>
+                    <button class="normalButton" onclick='loadScene("test")'> Test </button>
+                    <button class="normalButton" onclick='loadScene("allExamples")'> All Examples </button>
+                    <button class="normalButton" onclick='loadScene("collidingWalls")'> Colliding Walls </button> -->
                     <div class="tablemobile divTable">
                         <div class="divTableBody">
+                            <!-- <div class="divTableRow">
+                                <div class="divTableCell"><button class="normalButton" onclick='copyWallsCode()'> (temporary) Copy current selection to clipboard !!!!!!</button></div>
+                            </div> -->
                             <div class="divTableRow">
-                                <div class="divTableCell">Apply setting to all walls</div>
-                                <div class="divTableCell"></div>
-                                <div class="divTableCell"><input type="checkbox" id="changeAll" checked="checked" onchange="changeAll = !changeAll"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('changeAll', 0)"> Reset option </button></div>
-                            </div>
-                            <div class="divTableRow">
-                                <div class="divTableCell">Wall color</div>
-                                <div class="divTableCell"></div>
-                                <div class="divTableCell"><input type="color" value="#ff0000" id="colorpick" onload="changeSetting(this.id)" oninput="changeSetting('colorpick', this.value)"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('colorpick')"> Reset option </button></div>
-                            </div>
-                            <div class="divTableRow">
-                                <div class="divTableCell">Wall opacity</div>
-                                <div class="divTableCell"><label id="showOpacity" for="sliderOpacity"> 100 </label></div>
-                                <div class="divTableCell"><input id="sliderOpacity" type="range" min="10" max="100" value="100" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderOpacity')"> Reset option </button></div>
-                            </div>
-                            <div class="divTableRow">
-                                <div class="divTableCell">Wall top height</div>
-                                <div class="divTableCell"><label id="showH1" for="sliderH1"> 300 </label></div>
-                                <div class="divTableCell"><input id="sliderH1" type="range" min="0" max="999" value="300" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderH1')"> Reset option </button></div>
-                            </div>
-                            <div class="divTableRow">
-                                <div class="divTableCell">Wall bottom height</div>
-                                <div class="divTableCell"><label id="showH0" for="sliderH0"> 0 </label></div>
-                                <div class="divTableCell"><input id="sliderH0" type="range" min="0" max="999" value="0" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderH0')"> Reset option </button></div>
-                            </div>
-                            <div class="divTableRow">
-                                <div class="divTableCell">Horizontal FOV</div>
-                                <div class="divTableCell"><label class="fovslider" id="showFovx" for="sliderFov"> 0 </label>
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("example")'> Simple example</button>
+                                        <img class="miniImg" src="./img/minimap/example.png">
+                                    </div>
                                 </div>
-                                <div class="divTableCell"><input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderFovx')"> Reset option </button></div>
                             </div>
                             <div class="divTableRow">
-                                <div class="divTableCell">Vertical FOV</div>
-                                <div class="divTableCell"><label class="fovslider" id="showFovy" for="sliderFov"></label></div>
-                                <div class="divTableCell"><input class="fovslider" id="sliderFovy" type="range" min="271" max="350" value="280" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell"><button class="normalButton" onclick="changeSetting('sliderFovy')"> Reset option </button></div>
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("colors")'> Colors !!! </button>
+                                        <img class="miniImg" src="./img/minimap/colors.png"></img>
+                                    </div>
+                                </div>
                             </div>
                             <div class="divTableRow">
-                                <div class="divTableCell"></div>
-                                <div class="divTableCell"></div>
-                                <div class="divTableCell"> Reset all</div>
-                                <div class="divTableCell"><button class="normalButton" onclick="loadDefaults()"> Reset option </button></div>
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("test")'> Test </button>
+                                        <img class="miniImg" src="./img/minimap/test.png"></img>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("allExamples")'> All Examples </button>
+                                        <img class="miniImg" src="./img/minimap/allExamples.png"></img>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("collidingWalls")'> Colliding Walls </button>
+                                        <img class="miniImg" src="./img/minimap/collidingWalls.png"></img>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="scene">
-                    SET SCENE
-                    <button class="normalButton" onclick='copyWallsCode()'> Copy current selection to clipboard !!!!!!</button>
-                    <button class="normalButton" onclick='loadScene("example")'> Simple example</button>
-                    <button class="normalButton" onclick='loadScene("colors")'> Colors !!! </button>
-                    <!-- <button onclick='loadScene("penis")'> penis lol </button> -->
-                    <button class="normalButton" onclick='loadScene("test")'> Test </button>
-                    <button class="normalButton" onclick='loadScene("allExamples")'> All Examples </button>
-                    <button class="normalButton" onclick='loadScene("collidingWalls")'> Colliding Walls </button>
+                <div class="general">
+                    <span class="sectionText"> GENERAL </span>
+                    <button class="normalButton" onclick="resetPlayer()">Reset player view/position</button>
+                    <button class="normalButton" onclick="clearWalls()">Clear all Walls</button>
+                    <button class="normalButton" onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
+                    <button class="normalButton" onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
+                    <div id="sortingCheck">
+                        Sorting
+                        <input class="checkbox big-checkbox" type="checkbox" id="sortedActive" checked="checked" onchange="sortedActive = !sortedActive" onclick="this.blur();">
+                    </div>
+                    <button class="normalButton" onclick="undoWall = true">Undo new Wall (or Control Z)</button>
+                    <button class="normalButton" onclick="redoWall = true">Redo Wall (or Control Shift Z)</button>
+                    <br>
+                    <button class="normalButton" onclick="rainbowMode = !rainbowMode">Toggle Rainbow mode</button>
                 </div>
+                <br>
+                <div class="walls ">
+                    <span class="sectionText"> SETTINGS </span>
+                    <div class="tablemobile divTable">
+                        <div class="divTableBody">
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">
+                                    <div>
+                                        Currently: <br> <span id="changeAllState">All</span> walls modified
+                                    </div>
+                                </div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor">
+                                    <div id="sortingCheck">
+                                        <input class="checkbox big-checkbox" type="checkbox" id="changeAll" checked="checked" onchange="changeSetting('changeAll', this.checked)" onclick="this.blur();">
+                                    </div>
+                                </div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('changeAll')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall color</div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><input type="color" value="#ff0000" id="colorpick" onload="changeSetting(this.id)" oninput="changeSetting('colorpick', this.value)"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('colorpick')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall opacity</div>
+                                <div class="divTableCell divTableColor"><label id="showOpacity" for="sliderOpacity"> 100 </label></div>
+                                <div class="divTableCell divTableColor"><input id="sliderOpacity" type="range" min="10" max="100" value="100" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderOpacity')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall top height</div>
+                                <div class="divTableCell divTableColor"><label id="showH1" for="sliderH1"> 300 </label></div>
+                                <div class="divTableCell divTableColor"><input id="sliderH1" type="range" min="0" max="999" value="300" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderH1')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall bottom height</div>
+                                <div class="divTableCell divTableColor"><label id="showH0" for="sliderH0"> 0 </label></div>
+                                <div class="divTableCell divTableColor"><input id="sliderH0" type="range" min="0" max="999" value="0" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderH0')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Horizontal FOV</div>
+                                <div class="divTableCell divTableColor"><label class="fovslider" id="showFovx" for="sliderFov"> 0 </label>
+                                </div>
+                                <div class="divTableCell divTableColor"><input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderFovx')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Vertical FOV</div>
+                                <div class="divTableCell divTableColor"><label class="fovslider" id="showFovy" for="sliderFov"></label></div>
+                                <div class="divTableCell divTableColor"><input class="fovslider" id="sliderFovy" type="range" min="271" max="350" value="280" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderFovy')"> Reset option </button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="loadDefaults()"> Reset all </button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
             </div>
         </div>
     </div>
