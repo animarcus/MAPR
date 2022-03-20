@@ -123,50 +123,58 @@
                                         <input class="checkbox big-checkbox" type="checkbox" id="changeAll" checked="checked" onchange="changeSetting('changeAll', this.checked)" onclick="this.blur();">
                                     </div>
                                 </div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('changeAll')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('changeAll')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Wall color</div>
                                 <div class="divTableCell divTableColor"></div>
                                 <div class="divTableCell divTableColor"><input type="color" value="#ff0000" id="colorpick" onload="changeSetting(this.id)" oninput="changeSetting('colorpick', this.value)"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('colorpick')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('colorpick')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Wall opacity</div>
                                 <div class="divTableCell divTableColor"><label id="showOpacity" for="sliderOpacity"> 100 </label></div>
                                 <div class="divTableCell divTableColor"><input id="sliderOpacity" type="range" min="10" max="100" value="100" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderOpacity')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('sliderOpacity')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Wall top height</div>
                                 <div class="divTableCell divTableColor"><label id="showH1" for="sliderH1"> 300 </label></div>
                                 <div class="divTableCell divTableColor"><input id="sliderH1" type="range" min="0" max="999" value="300" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderH1')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('sliderH1')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Wall bottom height</div>
                                 <div class="divTableCell divTableColor"><label id="showH0" for="sliderH0"> 0 </label></div>
                                 <div class="divTableCell divTableColor"><input id="sliderH0" type="range" min="0" max="999" value="0" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderH0')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('sliderH0')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Horizontal FOV</div>
                                 <div class="divTableCell divTableColor"><label class="fovslider" id="showFovx" for="sliderFov"> 0 </label>
                                 </div>
                                 <div class="divTableCell divTableColor"><input class="fovslider" id="sliderFovx" type="range" min="1" max="180" value="120" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderFovx')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('sliderFovx')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Vertical FOV</div>
                                 <div class="divTableCell divTableColor"><label class="fovslider" id="showFovy" for="sliderFov"></label></div>
                                 <div class="divTableCell divTableColor"><input class="fovslider" id="sliderFovy" type="range" min="271" max="350" value="280" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="changeSetting('sliderFovy')"> Reset option </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('sliderFovy')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor"></div>
                                 <div class="divTableCell divTableColor"></div>
                                 <div class="divTableCell divTableColor"></div>
-                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="loadDefaults()"> Reset all </button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton resetAllButton" onclick="loadDefaults()">Reset all</button></div>
                             </div>
                         </div>
                     </div>

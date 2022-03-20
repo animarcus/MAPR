@@ -15,15 +15,40 @@
 	text-decoration:none;
 	text-shadow:-2px 3px 4px #bdbdbd;
 }
-.normalButton:hover {
+.normalButton:hover, .resetButton:hover {
 	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
 	background-color:#f6f6f6;
 }
-.normalButton:active {
+.normalButton:active, .resetButton:active {
 	position:relative;
 	top:1px;
 }
 
 .levelButton {
 	width: 100%;
+}
+
+.resetButton {
+	box-shadow:inset -6px 1px 0px -18px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:7px;
+	border:2px solid #666666;
+	display:inline-block;
+	cursor:pointer;
+	color:#615f61;
+	font-family:Arial;
+	/* font-family: Lucida Sans Unicode; */
+	font-size:15px;
+	font-weight:bold;
+	display: block;
+	padding: 5px 2px;
+	text-decoration:none;
+	text-shadow:-2px 3px 4px #bdbdbd;
+	/* text-overflow: ellipsis;
+	white-space: nowrap; */
+}
+
+.resetAllButton {
+	padding: 10px 10px;
 }

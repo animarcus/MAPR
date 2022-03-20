@@ -2,7 +2,7 @@
     --checked-background: rgb(82, 174, 255);
     --border : rgb(0, 0, 0);
     --checked-hover-focus: rgb(212, 236, 255);
-    --disabled-background : rgb(238, 247, 255);
+    --disabled-background : rgba(236, 236, 236, 0.5);
     --checkmark-enabled: rgba(255, 255, 255, 1);
     --hover-focus: rgba(231, 238, 243, 1);
 }
@@ -24,7 +24,7 @@
 	-webkit-appearance: none;
     cursor:pointer;
 	background-color: var(--disabled-background);
-	border: 1px solid var(--border);
+	border: 2px solid var(--border);
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
 	padding: 9px;
     margin: 15px;
@@ -41,7 +41,7 @@
 
 .checkbox:checked {
     background-color: var(--checked-background);
-	border: 1px solid var(--border);
+	border: 2px solid var(--border);
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
 }
 
