@@ -7,6 +7,7 @@ const canvas2D = document.getElementById("canvas2D");
 const ctx2D = canvas2D.getContext("2d", { alpha: false });
 
 const dotSize = 10 * canvas2D.width / 800;
+
 function set2Dctx() {
     ctx = canvas2D.getContext("2d", { alpha: false });
 }
@@ -62,7 +63,6 @@ const handlers = {
 
         ctx2D.translate(0, canvas2D.height);
         ctx2D.scale(1, -1);
-        // console.log(canvas.height, canvas.width);
     },
     reloadCanvas() {
         const prevSceneStore = JSON.stringify(exportWalls())
@@ -87,7 +87,6 @@ canvas2D.addEventListener("pointermove", (e) => {
 });
 canvas2D.addEventListener("pointerdown", (e) => {
     handlers.click(e)
-    // document.querySelector(":root").style.setProperty('--pink', 'lightblue') //////////////////
     if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
         drawing.startpos.x = mouse.x;
         drawing.startpos.y = mouse.y;
@@ -203,7 +202,7 @@ const drawing = {
                 // console.log(parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100))
                 walls.push(new Boundary(this.startpos.x, this.startpos.y,
                                         mouse.x, mouse.y,
-                                        HEXtoHSL(document.getElementById("colorpick").value).h,
+                                        document.getElementById("colorpick").value,
                                         parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
                                         document.getElementById("sliderH0").value,
                                         document.getElementById("sliderH1").value));
@@ -244,10 +243,9 @@ function changeSetting(sliderId, sliderValue = -1) {
                 break;
             }
             document.getElementById("colorpick").value = sliderValue;
-            sliderValue = HEXtoHSL(sliderValue)
             if (changeAll) {
                 for (w of walls) {
-                    w.hue = sliderValue.h;
+                    w.hex = sliderValue;
                 }
             }
             break;

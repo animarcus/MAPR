@@ -1,54 +1,52 @@
 :root {
-    --checked-background: rgb(82, 174, 255);
-    --border : rgb(0, 0, 0);
-    --checked-hover-focus: rgb(212, 236, 255);
-    --disabled-background : rgba(236, 236, 236, 0.5);
-    --checkmark-enabled: rgba(255, 255, 255, 1);
-    --hover-focus: rgba(231, 238, 243, 1);
+	--checked-background: rgb(0, 174, 255);
+	--border: rgb(0, 0, 0);
+	--checked-hover-focus: rgb(45, 223, 255);
+	--disabled-background: rgba(236, 236, 236, 0.5);
+	--checkmark-enabled: rgba(255, 255, 255, 1);
+	--hover-focus: rgba(231, 238, 243, 1);
 }
 
 #sortingCheck {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor:pointer;
-	color:#252525;
-	font-family:Arial;
-	font-size:20px;
-	font-weight:bold;
-	text-decoration:none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #252525;
+	font-family: Arial;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 .checkbox {
-    appearance: none;
+	appearance: none;
 	-webkit-appearance: none;
-    cursor:pointer;
 	background-color: var(--disabled-background);
 	border: 2px solid var(--border);
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
 	padding: 9px;
-    margin: 15px;
+	margin: 15px;
 	border-radius: 3px;
 	display: inline-block;
 	position: relative;
-    /* transform: scale(2); */
+	/* transform: scale(2); */
 }
 
 
 .checkbox:active, .checkbox:checked:active {
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .checkbox:checked {
-    background-color: var(--checked-background);
+	background-color: var(--checked-background);
 	border: 2px solid var(--border);
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
 }
 
 .checkbox:checked:after {
 	content: '\2713';
 	font-size: 17px;
-    font-weight: bold;
+	font-weight: bold;
 	position: absolute;
 	top: 0px;
 	left: 3px;
@@ -56,10 +54,20 @@
 }
 
 .big-checkbox {
-    padding: 18px;
+	padding: 18px;
 }
 
 .big-checkbox:checked:after {
-    font-size: 28px;
+	font-size: 28px;
 	left: 6px;
+}
+
+.checkbox:hover {
+	background-color: var(--hover-focus);
+	cursor: pointer;
+}
+
+.checkbox:checked:hover {
+	background-color: var(--checked-hover-focus);
+	cursor: pointer;
 }
