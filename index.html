@@ -127,6 +127,17 @@
                                 <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('colorpick')">Reset option</button></div>
                             </div>
                             <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Random Color</div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor">
+                                    <div id="sortingCheck">
+                                        <input class="checkbox big-checkbox" type="checkbox" id="randomColor" onchange="changeSetting('randomColor', this.checked)" onclick="this.blur();">
+                                    </div>
+                                </div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('randomColor')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Wall opacity</div>
                                 <div class="divTableCell divTableColor"><label id="showOpacity" for="sliderOpacity"> 100 </label></div>
                                 <div class="divTableCell divTableColor"><input id="sliderOpacity" type="range" min="10" max="100" value="100" onload="changeSetting(this.id)" oninput="changeSetting(this.id, this.value)"></div>

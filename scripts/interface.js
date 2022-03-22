@@ -206,6 +206,10 @@ const drawing = {
                                         parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
                                         document.getElementById("sliderH0").value,
                                         document.getElementById("sliderH1").value));
+                if (randomColor) {
+                    console.log("boop")
+                    walls[walls.length - 1].hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`
+                }
             }
         }
         this.startpos.x = undefined;
@@ -249,6 +253,16 @@ function changeSetting(sliderId, sliderValue = -1) {
                 }
             }
             break;
+        case "randomColor":
+            if (sliderValue == -1) {
+                document.getElementById("randomColor").checked = defaults["randomColor"];
+                randomColor = defaults["randomColor"];
+                changeSetting(sliderId, defaults[sliderId]);
+                break;
+            }
+            randomColor = sliderValue;
+            break;
+
         case "sliderH0":
             if (sliderValue == -1) {
                 changeSetting(sliderId, defaults[sliderId])
@@ -313,6 +327,7 @@ function changeSetting(sliderId, sliderValue = -1) {
 }
 
 function loadDefaults() {
+    document.getElementById("randomColor").checked = false;
     document.getElementById("sortedActive").checked = true;
     changeSetting("colorpick", defaults["colorpick"]);
     changeSetting("sliderH0", defaults["sliderH0"]);
@@ -321,4 +336,5 @@ function loadDefaults() {
     changeSetting("sliderFovy", defaults["sliderFovy"]);
     changeSetting("sliderOpacity", defaults["sliderOpacity"]);
     changeSetting("changeAll", -1);
+    changeSetting("randomColor", -1);
 }

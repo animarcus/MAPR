@@ -40,10 +40,12 @@ let showWallNums = false;
 let rainbowMode = false;
 let changeAll = true;
 let sortedActive = true;
+let randomColor = false;
 
 const defaults = {
     "changeAll": true,
     "colorpick": "#ff0000",
+    "randomColor": false,
     "sliderOpacity": 100,
     "sliderH1": 300,
     "sliderH0": 0,
