@@ -327,6 +327,7 @@ function importWalls(imported) {
     defaults['sliderFovy'] = parseInt(imported['sliderFovy'])
     defaults['sliderOpacity'] = parseInt(imported['sliderOpacity'])
     defaults['changeAll'] = imported['changeAll']
+    defaults['randomColor'] = imported['randomColor']
     loadDefaults();
     imported["walls"].forEach(w => {
         walls.push(new Boundary(w["posx"] * (canvas2D.width / imported["width"]),
@@ -353,7 +354,8 @@ function exportWalls() {
         "sliderFovx": document.getElementById("sliderFovx").value,
         "sliderFovy": document.getElementById("sliderFovy").value,
         "sliderOpacity": document.getElementById("sliderOpacity").value,
-        "changeAll": document.getElementById("changeAll").checked,  
+        "changeAll": document.getElementById("changeAll").checked,
+        "randomColor": document.getElementById("randomColor").checked,
         "width": canvas2D.width,
         "expansion": expansion,
         "walls": [],
