@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="./styles/layout.css">
+    <link rel="stylesheet" href="./styles/button.css">
+    <link rel="stylesheet" href="./styles/checkbox.css">
+    <link rel="stylesheet" href="./styles/input.css">
+    <title>Marcus' Algorithm for Pseudo3D Rendering</title>
+</head>
+
+<body>
+    <!-- <div id="title"> MAPR <br>
+    Marcus' Algorithm for Pseudo-3D Rendering</div> -->
+    <div class="container">
+        <div class="perspective no-touch">
+            <canvas id="canvas3D"></canvas>
+        </div>
+        <div class="flatview no-touch">
+            <canvas id="canvas2D"></canvas>
+        </div>
+        <div class="expand" onclick="expand()">
+            CLICK HERE <br>
+            TO <span id="expandtext">EXPAND</span> CONTROLS
+        </div>
+        <div class="controls" id="booger">
+            <div class="instructions">
+                Use W A S D to move <br>
+                Use the arrow keys to look around <br>
+                If using a touch screen, tap the
+                colored boxes for controls <br> <br>
+                Wall customizations are at the bottom of this page <br>
+                Or select a ready-made scene right below
+            </div>
+            <div class="sceneSettings">
+                <div class="scene">
+                    <span class="sectionText"> SET SCENE </span>
+                    <div class="tablemobile divTable">
+                        <div class="divTableBody">
+                            <!-- <div class="divTableRow">
+                                <div class="divTableCell"><button class="normalButton" onclick='copyWallsCode()'> (temporary) Copy current selection to clipboard !!!!!!</button></div>
+                            </div> -->
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("mainPic")'> Cover
+                                            Photo Scene </button>
+                                        <img class="miniImg" src="./img/Minimap/mainPic.png">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("example")'> Simple
+                                            Example </button>
+                                        <img class="miniImg" src="./img/Minimap/example.png">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("heightShowcase")'>
+                                            Different Wall Heights
+                                        </button>
+                                        <img class="miniImg" src="./img/Minimap/heightShowcase.png"></img>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("colors")'> Colors
+                                            !!! </button>
+                                        <img class="miniImg" src="./img/Minimap/colors.png"></img>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("roomShow")'>
+                                            Corridor with a Room </button>
+                                        <img class="miniImg" src="./img/Minimap/roomShow.png"></img>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="general">
+                    <span class="sectionText"> GENERAL </span>
+                    <button class="normalButton" onclick="resetPlayer()">Reset player view/position</button>
+                    <button class="normalButton" onclick="clearWalls()">Clear all Walls</button>
+                    <button class="normalButton" onclick="show2D2 = !show2D2">Toggle Advanced 2D view</button>
+                    <button class="normalButton" onclick="showWallNums = !showWallNums">Toggle Wall numbers</button>
+                    <div id="sortingCheck">
+                        Sorting
+                        <input class="checkbox big-checkbox" type="checkbox" id="sortedActive" checked="checked"
+                            onchange="sortedActive = !sortedActive" onclick="this.blur();">
+                    </div>
+                    <button class="normalButton" onclick="undoWall = true">Undo new Wall (or Control Z)</button>
+                    <button class="normalButton" onclick="redoWall = true">Redo Wall (or Control Shift Z)</button>
+                    <br>
+                    <button class="normalButton" onclick="rainbowMode = !rainbowMode">Toggle Rainbow mode</button>
+                </div>
+                <br>
+                <div class="walls ">
+                    <span class="sectionText"> SETTINGS </span>
+                    <div class="tablemobile divTable">
+                        <div class="divTableBody">
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">
+                                    <div>
+                                        Currently: <br> <span id="changeAllState">All</span> walls modified
+                                    </div>
+                                </div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor">
+                                    <div id="sortingCheck">
+                                        <input class="checkbox big-checkbox" type="checkbox" id="changeAll"
+                                            checked="checked" onchange="changeSetting('changeAll', this.checked)"
+                                            onclick="this.blur();">
+                                    </div>
+                                </div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('changeAll')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall color</div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><input type="color" value="#ff0000"
+                                        id="colorpick" onload="changeSetting(this.id)"
+                                        oninput="changeSetting('colorpick', this.value)"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('colorpick')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Random Color</div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor">
+                                    <div id="sortingCheck">
+                                        <input class="checkbox big-checkbox" type="checkbox" id="randomColor"
+                                            onchange="changeSetting('randomColor', this.checked)"
+                                            onclick="this.blur();">
+                                    </div>
+                                </div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('randomColor')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall opacity</div>
+                                <div class="divTableCell divTableColor"><label id="showOpacity" for="sliderOpacity"> 100
+                                    </label></div>
+                                <div class="divTableCell divTableColor"><input id="sliderOpacity" type="range" min="10"
+                                        max="100" value="100" onload="changeSetting(this.id)"
+                                        oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('sliderOpacity')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall top height</div>
+                                <div class="divTableCell divTableColor"><label id="showH1" for="sliderH1"> 300 </label>
+                                </div>
+                                <div class="divTableCell divTableColor"><input id="sliderH1" type="range" min="0"
+                                        max="999" value="300" onload="changeSetting(this.id)"
+                                        oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('sliderH1')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Wall bottom height</div>
+                                <div class="divTableCell divTableColor"><label id="showH0" for="sliderH0"> 0 </label>
+                                </div>
+                                <div class="divTableCell divTableColor"><input id="sliderH0" type="range" min="0"
+                                        max="999" value="0" onload="changeSetting(this.id)"
+                                        oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('sliderH0')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Horizontal FOV</div>
+                                <div class="divTableCell divTableColor"><label class="fovslider" id="showFovx"
+                                        for="sliderFov"> 0 </label>
+                                </div>
+                                <div class="divTableCell divTableColor"><input class="fovslider" id="sliderFovx"
+                                        type="range" min="1" max="180" value="120" onload="changeSetting(this.id)"
+                                        oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('sliderFovx')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Vertical FOV</div>
+                                <div class="divTableCell divTableColor"><label class="fovslider" id="showFovy"
+                                        for="sliderFov"></label></div>
+                                <div class="divTableCell divTableColor"><input class="fovslider" id="sliderFovy"
+                                        type="range" min="271" max="350" value="280" onload="changeSetting(this.id)"
+                                        oninput="changeSetting(this.id, this.value)"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="changeSetting('sliderFovy')">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton resetAllButton"
+                                        onclick="loadDefaults()">Reset all</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <script>
+        function radians(degreeValue) {
+            return degreeValue * (Math.PI/180);
+        }
+
+        function degrees(radianValue) {
+            return radianValue * (180/Math.PI);
+        }
+
+        function circle(x, y, r, fill = "white", lineWidth = 1, lineColor = fill) {
+            ctx.beginPath();
+            ctx.fillStyle = fill;
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = lineColor;
+            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+        }
+
+        function ellipse(x, y, r1, r2 = r1, fill = "white", lineWidth = 1, lineColor = fill) {
+            ctx.beginPath();
+            ctx.fillStyle = fill;
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = lineColor;
+            ctx.ellipse(x, y, r1, r2, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+        }
+
+        function line(x1, y1, x2, y2, lineColor = 'white', lineWidth = 1) {
+            ctx.beginPath();
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = lineColor;
+            ctx.moveTo(x1,y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+
+        function polygon(coords, fill = "white", lineWidth = 1, lineColor = fill) {
+            if (coords.length % 2 != 0) {
+                console.warn('undefined number of args when drawing polygon');
+                return;
+            }
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(coords[0], coords[1]);
+            for (let i = 2; i < coords.length; i += 2) {
+                ctx.lineTo(coords[i], coords[i+1]);
+            }
+            ctx.closePath();
+            ctx.fillStyle = fill;
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = lineColor;
+            ctx.stroke();
+            ctx.fill();
+            ctx.restore();
+            return coords;
+        }
+
+
+        function getRotation(pos, dir) {
+            let rotation = Math.abs(Math.atan(dir.y/dir.x));
+            const x = pos.x;
+            const y = pos.y;
+            const x2 = pos.x + dir.x;
+            const y2 = pos.y + dir.y;
+            if (x2 > x && y2 >= y) rotation = rotation; //Q1  no change
+            if (x2 <= x && y2 > y) rotation = Math.PI - rotation; //Q2  add 90 degrees
+            if (x2 < x && y2 <= y) rotation += Math.PI;
+            if (x2 >= x && y2 < y) rotation = Math.PI*2 - rotation;
+            return rotation;
+        }
+
+        const canvas = document.getElementById('canvas3D');
+        let ctx = canvas.getContext('2d', { alpha: false });
+
+        const canvas2D = document.getElementById("canvas2D");
+        const ctx2D = canvas2D.getContext("2d", { alpha: false });
+
+        const dotSize = 10 * canvas2D.width / 800;
+
+        function set2Dctx() {
+            ctx = canvas2D.getContext("2d", { alpha: false });
+        }
+        function set3Dctx() {
+            ctx = canvas.getContext('2d', { alpha: false });
+        }
+
+        let expansion = false;
+        function expand() {
+            expansion = !expansion;
+            if (expansion) {
+                document.getElementsByClassName("container")[0].style.gridTemplateRows = "15%";
+                document.getElementById("expandtext").innerHTML = "REDUCE"
+            } else {
+                document.getElementsByClassName("container")[0].style.gridTemplateRows = "auto";
+                document.getElementById("expandtext").innerHTML = "EXPAND"
+            }
+        }
+
+        let undoWall = false;
+        let redoWall = false;
+        const cooldown = 15;
+        let currentCooldown = cooldown;
+        const keysPressed = {};
+        const mouse = {
+            'x': undefined,
+            'y': undefined
+        };
+        const handlers = {
+            click(e) {
+                mouse.x = e.offsetX;
+                mouse.y = canvas2D.height - e.offsetY;
+                e.preventDefault();
+                drawing.isDrawing = true;
+            },
+            unclick(e) {
+                e.preventDefault();
+                document.activeElement.blur();
+                drawing.stop();
+            },
+            updateCanvasSize() {
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx2D.setTransform(1, 0, 0, 1, 0, 0);
+                canvas.height = canvas.offsetHeight;
+                canvas.width = canvas.offsetWidth;
+                canvas2D.height = canvas2D.offsetWidth;
+                canvas2D.width = canvas2D.offsetWidth;
+                // set3Dctx()
+                ctx.translate(0, canvas.height);
+                ctx.scale(1, -1);
+
+                ctx2D.translate(0, canvas2D.height);
+                ctx2D.scale(1, -1);
+            },
+            reloadCanvas() {
+                const prevSceneStore = JSON.stringify(exportWalls())
+                localStorage.setItem("prevScene", prevSceneStore);
+
+                window.location = window.location;
+            }
+        };
+
+        document.onkeyup = (e) => delete keysPressed[e.key];
+        document.onkeydown = (e) => {
+            keysPressed[e.key] = true;
+            e.preventDefault()
+        }
+
+        document.ondblclick = (e) => e.preventDefault();
+
+        canvas2D.addEventListener("pointermove", (e) => {
+            e.preventDefault();
+            mouse.x = e.offsetX;
+            mouse.y = canvas2D.height - e.offsetY;
+        });
+        canvas2D.addEventListener("pointerdown", (e) => {
+            handlers.click(e)
+            if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
+                drawing.startpos.x = mouse.x;
+                drawing.startpos.y = mouse.y;
+                if (keysPressed["Shift"]) {
+                    for (let wall of walls) {
+                        if (Math.abs(mouse.x - wall.pos.x) < drawing.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < drawing.snappingThreshold) {
+                            drawing.startpos.x = wall.pos.x;
+                            drawing.startpos.y = wall.pos.y;
+                            return;
+                        }
+                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < drawing.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < drawing.snappingThreshold) {
+                            drawing.startpos.x = wall.pos.x + wall.dir.x;
+                            drawing.startpos.y = wall.pos.y + wall.dir.y;
+                            return;
+                        }
+                    }
+                    drawing.isDrawing = false;
+                }
+            }
+        });
+
+        document.addEventListener('pointerup', (e) => {
+            handlers.unclick(e)
+            e.preventDefault(e)
+            // document.querySelector(":root").style.setProperty('--pink', '#FDCFF3') //////////////////
+        });
+
+
+
+        const drawing = {
+            isDrawing : false,
+            startpos : {
+                'fixed': false,
+                'x' : undefined,
+                'y' : undefined
+            },
+            start() {
+
+                set2Dctx();
+                circle(this.startpos.x, this.startpos.y, 5)
+                if (this.isDrawing) circle(mouse.x, mouse.y, 5)
+                set3Dctx();
+                if (currentCooldown <= 0) currentCooldown = cooldown;
+                if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown--;
+                
+                if (!this.isDrawing) {
+                    if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
+                        undoWall = false;
+                        currentCooldown = cooldown - 1;
+                        // console.log("undioing") // TEST
+                        wallCount --;
+                        wallsTemp.push(walls.pop());
+                    }
+                    if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
+                        redoWall = false;
+                        currentCooldown = cooldown - 1;
+                        // console.log("REDO") // TEST
+                        walls.push(wallsTemp.pop())
+                    }
+                }
+                if (this.isDrawing) {
+                    if (keysPressed["Shift"]) {
+                        this.snapping();
+                    }
+                    set2Dctx();
+                    line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, color.pink, 3);
+                    set3Dctx();
+                }
+            },
+            snappingThreshold : 15,
+            snapping() {
+
+                if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
+                    for (let wall of walls) {
+                        if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
+                        if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
+                            mouse.x = wall.pos.x;
+                            mouse.y = wall.pos.y;
+                        }
+                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
+                            mouse.x = wall.pos.x + wall.dir.x;
+                            mouse.y = wall.pos.y + wall.dir.y;
+                        }
+                    }
+                }
+            },
+            stop() {
+                if (this.isDrawing && (Math.abs(this.startpos.x - mouse.x) > 10 || Math.abs(this.startpos.y - mouse.y) > 10)) {
+                    newWall = { "pos": {"x": this.startpos.x,
+                                        "y": this.startpos.y },
+                                "dir": {"x": mouse.x - this.startpos.x,
+                                        "y": mouse.y - this.startpos.y }
+                    }
+                    let intCount = 0;
+                    walls.forEach(wall => {
+                        if (isIntersectionVectors(wall, newWall)) {
+                            intCount ++;
+                        };
+                        if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold/3 && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold/3) {
+                            mouse.x = wall.pos.x;
+                            mouse.y = wall.pos.y;
+                            intCount = 0;
+                            
+                        }
+                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold/3 && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold/3) {
+                            mouse.x = wall.pos.x + wall.dir.x;
+                            mouse.y = wall.pos.y + wall.dir.y;
+                            intCount = 0;
+                            
+                        }
+                    });
+                    if (intCount == 0) {
+                        walls.push(new Boundary(this.startpos.x, this.startpos.y,
+                                                mouse.x, mouse.y,
+                                                document.getElementById("colorpick").value,
+                                                parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
+                                                document.getElementById("sliderH0").value,
+                                                document.getElementById("sliderH1").value));
+                        if (randomColor) {
+                            walls[walls.length - 1].hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`
+                        }
+                    }
+                }
+                this.startpos.x = undefined;
+                this.startpos.y = undefined;
+                this.isDrawing = false;
+            }
+        };
+
+
+
+        function changeSetting(sliderId, sliderValue = -1) {
+            let sliderH0 = document.getElementById("sliderH0");
+            let sliderH1 = document.getElementById("sliderH1");
+            switch (sliderId) {
+                case "changeAll":
+                    const changeText = (val) => {
+                        if (val) {
+                            document.getElementById("changeAllState").innerHTML = "All";
+                        } else {
+                            document.getElementById("changeAllState").innerHTML = "New";
+                        }
+                    }
+                    if (sliderValue == -1) {
+                        document.getElementById("changeAll").checked = defaults["changeAll"];
+                        changeAll = defaults["changeAll"];
+                        changeText(defaults["changeAll"]);
+                        break;
+                    }
+                    changeAll = sliderValue
+                    changeText(document.getElementById("changeAll").checked)
+                    break;
+                case "colorpick":
+                    if (sliderValue == -1) {
+                        changeSetting(sliderId, defaults[sliderId])
+                        break;
+                    }
+                    document.getElementById("colorpick").value = sliderValue;
+                    if (changeAll) {
+                        for (w of walls) {
+                            w.hex = sliderValue;
+                        }
+                    }
+                    break;
+                case "randomColor":
+                    if (sliderValue == -1) {
+                        document.getElementById("randomColor").checked = defaults["randomColor"];
+                        randomColor = defaults["randomColor"];
+                        changeSetting(sliderId, defaults[sliderId]);
+                        break;
+                    }
+                    randomColor = sliderValue;
+                    break;
+
+                case "sliderH0":
+                    if (sliderValue == -1) {
+                        changeSetting(sliderId, defaults[sliderId])
+                        break;
+                    }
+                    let showH0 = document.getElementById("showH0");
+                    showH0.innerHTML = sliderValue;
+                    sliderH0.value = sliderValue;
+                    if (changeAll) {
+                        for (w of walls) {
+                            w.height0 = sliderValue;
+                        }
+                    }
+                    break;
+                case "sliderH1":
+                    if (sliderValue == -1) {
+                        changeSetting(sliderId, defaults[sliderId])
+                        break;
+                    }
+                    let showH1 = document.getElementById("showH1");
+                    showH1.innerHTML = sliderValue;
+                    sliderH1.value = sliderValue;
+                    if (changeAll) {
+                        for (w of walls) {
+                            w.height1 = sliderValue;
+                        }
+                    }
+                    break;
+                case "sliderFovx":
+                    if (sliderValue == -1) {
+                        changeSetting(sliderId, defaults[sliderId])
+                        break;
+                    }
+                    player.fov.xamount = sliderValue;
+                    player.setFOV();
+                    document.getElementById("showFovx").innerHTML = sliderValue;
+                    document.getElementById("sliderFovx").value = sliderValue;
+                    break;
+                case "sliderFovy":
+                    if (sliderValue == -1) {
+                        changeSetting(sliderId, defaults[sliderId])
+                        break;
+                    }
+                    player.fov.yamount = sliderValue;
+                    document.getElementById("showFovy").innerHTML = sliderValue;
+                    document.getElementById("sliderFovy").value = sliderValue;
+                    break;
+                case "sliderOpacity":
+                    if (sliderValue == -1) {
+                        changeSetting(sliderId, defaults[sliderId])
+                        break;
+                    }
+                    document.getElementById("showOpacity").innerHTML = parseInt(sliderValue);
+                    document.getElementById("sliderOpacity").value = parseInt(sliderValue);
+                    if (changeAll) {
+                        for (w of walls) {
+                            w.opacity = parseFloat(parseInt(sliderValue) / 100);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        function loadDefaults() {
+            document.getElementById("randomColor").checked = false;
+            document.getElementById("sortedActive").checked = true;
+            changeSetting("colorpick", defaults["colorpick"]);
+            changeSetting("sliderH0", defaults["sliderH0"]);
+            changeSetting("sliderH1", defaults["sliderH1"]);
+            changeSetting("sliderFovx", defaults["sliderFovx"]);
+            changeSetting("sliderFovy", defaults["sliderFovy"]);
+            changeSetting("sliderOpacity", defaults["sliderOpacity"]);
+            changeSetting("changeAll", -1);
+            changeSetting("randomColor", -1);
+        }
+
+        class Button {
+            constructor(x, y, width, height, color, key, text = "boop") {
+                this.active = false;
+                this.color = color;
+                this.height = height;
+                this.width = width;
+                this.x = x;
+                this.y = y;
+                this.key = key;
+                this.text = text;
+            }
+
+            draw() {
+                let tmpalpha = ctx.globalAlpha;
+                ctx.globalAlpha = 0.1;
+                
+                ctx.save();
+                        ctx.setTransform(1, 0, 0, 1, 0, 0);
+                        
+
+                        polygon([   this.x, canvas.height - this.y,
+                                    this.x, canvas.height - (this.y + this.height),
+                                    this.x + this.width, canvas.height - (this.y + this.height),
+                                    this.x + this.width, canvas.height - this.y], this.color)
+                        ctx.font = "bolder 15px Arial";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = 'middle';
+                        ctx.fillStyle = "black";
+                        ctx.fillText(this.text, this.x + this.width/2, canvas.height - this.y - this.height/2);
+                ctx.restore();
+                ctx.globalAlpha = tmpalpha;
+            }
+        }
+
+        const currentPointers = new Map();
+
+        const pointer = {
+            "x": undefined,
+            "y": undefined
+        };
+
+        let isPointing = false;
+        const isTouchScreen = window.matchMedia("(pointer: coarse)").matches
+
+        if (isTouchScreen) {
+            const pointerdown = (e) => {
+                isPointing = true;
+                pointer.x = e.offsetX;
+                pointer.y = canvas.height - e.offsetY;
+                e.preventDefault();
+            }
+
+            const pointermove = (e) => {
+                e.preventDefault();
+                pointer.x = e.offsetX;
+                pointer.y = canvas.height - e.offsetY;
+            }
+
+            const pointerup = (e) => {
+                isPointing = false;
+                e.preventDefault();
+                for (let button of buttons) {
+                    if (
+                        pointer.x > button.x && pointer.x < button.x + button.width &&
+                        pointer.y > button.y && pointer.y < button.y + button.height) {
+                        keysPressed[button.key] = false
+                    }
+                }
+            }
+
+            canvas.onpointerdown = pointerdown;
+            canvas.onpointermove = pointermove;
+
+            canvas.onpointerup = pointerup;
+            canvas.onpointercancel = pointerup;
+            canvas.onpointerout = pointerup;
+            canvas.onpointerleave = pointerup;
+        }
+
+
+
+
+        let W = canvas.width/6;
+        let H = canvas.width/6;
+        if (H < 50) H = 100;
+        let buttons = [
+            new Button(0    , 0, W, H, "yellow" ,"a", "Left"),
+            new Button(2 * W, 0, W, H, "green"  ,"d", "Right"),
+            new Button(W    , 0, W, H, "cyan"   ,"s", "Back"),
+            new Button(W    , H, W, H, "orange" ,"w", "Forward"),
+            new Button(3 * W, 0, W, H, "yellow" ,"ArrowLeft", "Look left"),
+            new Button(5 * W, 0, W, H, "green"  ,"ArrowRight", "Look Right"),
+            new Button(4 * W, 0, W, H, "cyan"   ,"ArrowDown", "Look Down"),
+            new Button(4 * W, H, W, H, "orange" ,"ArrowUp", "Look Up")
+        ]
+
+        function touchControls() {
+            if (isTouchScreen) {
+                renderButtons();
+                if (isPointing) detectButtons();
+            }
+        }
+
+        function renderButtons() {
+            for (let button of buttons) {
+                button.draw();
+            }
+        }
+
+        function detectButtons() {
+            for (let button of buttons) {
+                keysPressed[button.key] = false
+                if (
+                    pointer.x > button.x && pointer.x < button.x + button.width &&
+                    pointer.y > button.y && pointer.y < button.y + button.height) {
+                    keysPressed[button.key] = true
+                }
+            }
+        }
+
+        class Ray {
+            constructor(x, y, rotation, length = 200) {
+                this.pos = {'x': x,
+                            'y': y };
+                this.dir = { 'x': Math.cos(radians(rotation)),
+                                'y': Math.sin(radians(rotation)),
+                                'length': length };
+            }
+            draw(COLOR, lineWidth=1) { // 2D
+                line(this.pos.x, this.pos.y, this.pos.x + this.dir.x*this.dir.length, this.pos.y + this.dir.y*this.dir.length, COLOR, lineWidth);
+            }
+            setAngle(angle) { //input is in degrees but handled in radians
+                this.dir.x = Math.cos(radians(angle));
+                this.dir.y = Math.sin(radians(angle));
+            }
+        }
+
+        class Player {
+            constructor(x, y, rotation) {
+                this.rotation = radians(rotation); //input is in degrees but handled in radians
+                this.vertRotation = 0; // radians
+
+                this.height = 180; // height is in cm
+
+                this.farSight = 1000
+                this.moveStep = 1;
+                this.lookStepH = 1;
+                this.lookStepV = 1;
+                this.pos = {
+                    'x': x,
+                    'y': y
+                };
+                this.dir = {
+                    'x': Math.cos(this.rotation),
+                    'y': Math.sin(this.rotation),
+                    'length': this.moveStep
+                };
+
+                this.fov = {
+                    'xamount': 235,  //based on human eyes 235 degrees
+                    'yamount': 280,
+                    'currentTranslate': 0
+                };
+                this.fov.v1 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) + this.fov.xamount / 2, this.farSight);
+                this.fov.v2 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) - this.fov.xamount / 2, this.farSight);
+            }
+
+            draw() {
+                // ctx.fillStyle = 'white';
+                // ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
+
+                ellipse(this.pos.x, this.pos.y, 7, 7, "orange");
+
+
+                // line(this.pos.x, this.pos.y, this.pos.x + (this.dir.x) * 100, this.pos.y + (this.dir.y) * 100, 'white', 1);
+
+                this.fov.v1.draw('orange', 3); // green
+
+                this.fov.v2.draw("orange", 3); // green
+            }
+
+
+
+            setAngle(angle) { //input is in degrees but handled in radians
+                this.rotation = radians(angle);
+                if (this.rotation > 2 * Math.PI) this.rotation -= 2 * Math.PI;
+                if (this.rotation < -2 * Math.PI) this.rotation += 2 * Math.PI;
+                this.setFOV();
+                this.dir.x = Math.cos(this.rotation);
+                this.dir.y = Math.sin(this.rotation);
+            }
+            sideLook(angle) { //input is in degrees but handled in radians
+                this.setAngle(degrees(this.rotation) + angle);
+            }
+            verticalLook(angle) {
+                // angle = radians(angle)
+                let vertLimit = {};
+                vertLimit.max = 4*Math.PI/9;    // 80
+                vertLimit.min = -Math.PI/3;     // -60
+                if (this.vertRotation + radians(angle) >= vertLimit.min && this.vertRotation + radians(angle) <= vertLimit.max) {
+                    this.vertRotation += radians(angle)
+
+                    let newTranslate = (100/7)*(degrees(this.vertRotation) + 10) - 1000/7
+                    // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
+                    ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
+                    this.fov.currentTranslate = newTranslate
+                }
+            }
+            setVerticalLook(angle) {
+                // angle = radians(angle)
+                let vertLimit = {};
+                vertLimit.max = 4 * Math.PI / 9;    // 80
+                vertLimit.min = -Math.PI / 3;     // -60
+                if (this.vertRotation >= vertLimit.min && this.vertRotation <= vertLimit.max) {
+                    this.vertRotation = angle
+
+                    let newTranslate = (100 / 7) * (degrees(this.vertRotation) + 10) - 1000 / 7
+                    // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
+                    ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
+                    this.fov.currentTranslate = newTranslate
+                }
+            }
+            sideMove(step) {
+                this.pos.x += -step * this.dir.y/2;
+                this.pos.y += step * this.dir.x/2;
+                this.setFOV();
+            }
+            straightMove(step) {
+                this.pos.x += step * this.dir.x;
+                this.pos.y += step * this.dir.y;
+                this.setFOV();
+            }
+
+            setFOV() {
+                this.fov.v1.setAngle(degrees(this.rotation) + this.fov.xamount / 2);
+                this.fov.v2.setAngle(degrees(this.rotation) - this.fov.xamount / 2);
+                this.fov.v1.pos = this.pos;
+                this.fov.v2.pos = this.pos;
+            }
+
+            setFarSight(value) {
+                this.farSight = value;
+                this.fov.v1 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) + this.fov.xamount / 2, this.farSight);
+                this.fov.v2 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) - this.fov.xamount / 2, this.farSight);
+            }
+        }
+        let timer = 0
+        let timer1, timer2
+        const playerHandler = {
+            movement() {
+                if (keysPressed[" "]) {
+                    player.moveStep = 2.5;
+                }
+                if (keysPressed.w) {
+                    player.straightMove(player.moveStep);
+                }
+                if (keysPressed.s) {
+                    player.straightMove(-player.moveStep);
+                }
+                if (keysPressed.a) {
+                    player.sideMove(player.moveStep);
+                }
+                if (keysPressed.d) {
+                    player.sideMove(-player.moveStep);
+                }
+                if (keysPressed.ArrowUp) {
+                    player.verticalLook(player.lookStepV);
+                }
+                if (keysPressed.ArrowDown) {
+                    player.verticalLook(-player.lookStepV);
+                }
+                if (keysPressed.ArrowLeft) {
+                    player.sideLook(player.lookStepH);
+                }
+                if (keysPressed.ArrowRight) {
+                    player.sideLook(-player.lookStepH);
+                }
+                
+                player.moveStep = 1.4;
+            }
+        };
+
+        class Boundary {
+            constructor(x1, y1, x2, y2, hex="#FF0000", opacity=0.5, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
+                this.pos = {
+                    'x': x1,
+                    'y': y1
+                };
+                this.dir = {
+                    'x': x2 - x1,
+                    'y': y2 - y1,
+                };
+                wallCount++;
+                this.index = wallCount -1;
+                this.length = Math.sqrt((this.dir.x) * (this.dir.x) + (this.dir.y) * (this.dir.y));
+
+                this.rotation = getRotation(this.pos, this.dir);
+                this.opacity = opacity;
+                this.hex = hex
+
+                this.height0 = height0;
+                this.height1 = height1;
+            }
+
+            draw() {
+                set2Dctx();
+                line(this.pos.x, this.pos.y, this.pos.x + this.dir.x, this.pos.y + this.dir.y, this.hex, 3);
+                // ellipse(this.pos.x, this.pos.y, dotSize, dotSize, 'green');
+                // ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, dotSize, dotSize, 'red');
+                ellipse(this.pos.x, this.pos.y, dotSize, dotSize, this.hex);
+                ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, dotSize, dotSize, this.hex);
+                if (showWallNums) {
+                    ctx.save();
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.font = "30px Arial";
+                    ctx.fillStyle = 'white';
+                    ctx.fillText(this.index, (this.pos.x*2 + this.dir.x)/2 - 10, canvas2D.height - (this.pos.y*2 + this.dir.y)/2 - 10);
+                    ctx.restore();
+                }
+                set3Dctx();
+            }
+
+            isInsideFOV() {
+                this.p = {  // Creating vector going from player to wall's first vertex
+                    'x': this.pos.x - player.pos.x,
+                    'y': this.pos.y - player.pos.y
+                };
+
+                this.h = {  // Creating vector going from player to wall's first vertex
+                    'x': (this.pos.x + this.dir.x) - player.pos.x,
+                    'y': (this.pos.y + this.dir.y) - player.pos.y
+                };
+                
+                this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
+                this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
+
+                if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
+                    (isClockwiseOrder(player.fov.v1.dir, this.p) && !isClockwiseOrder(player.fov.v2.dir, this.p) &&
+                    isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h) 
+                    // && (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
+                    // (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2)
+                    )
+                ) return true;
+            }
+
+            processFOV() {
+                // make sure v1 is always to the left of v2
+                if (!isClockwiseOrder(this.p, this.h)) {
+                    let vtemp = this.p;
+                    this.p = this.h;
+                    this.h = vtemp;
+                }
+
+                //  redefine wall if it intersects with LEFT fov ray
+                if (!isClockwiseOrder(player.fov.v1.dir, this.p) && isClockwiseOrder(player.fov.v1.dir, this.h)) {
+                    this.p = intersectionFovW(player.fov.v1, this);
+                    this.p.x -= player.pos.x;
+                    this.p.y -= player.pos.y;
+                }
+
+                //  redefine wall if it intersects with RIGHT fov ray
+                if (!isClockwiseOrder(player.fov.v2.dir, this.p) && isClockwiseOrder(player.fov.v2.dir, this.h)) {
+                    this.h = intersectionFovW(player.fov.v2, this);
+                    this.h.x -= player.pos.x;
+                    this.h.y -= player.pos.y;
+                }
+
+                // debugging  2D Representation
+                if (show2D2) {
+                    set2Dctx();
+                    ellipse(player.pos.x + this.p.x, player.pos.y + this.p.y, 10, 10, 'yellow');
+                    line(player.pos.x, player.pos.y, player.pos.x + this.p.x, player.pos.y + this.p.y, 'purple', 5);
+                    ellipse(player.pos.x + this.h.x, player.pos.y + this.h.y, 10, 10, 'cyan');
+                    line(player.pos.x, player.pos.y, player.pos.x + this.h.x, player.pos.y + this.h.y, 'purple', 5);
+                    set3Dctx();
+                }
+                return true;
+            }
+
+            calculate3D() {
+                const fovamount = player.fov.xamount;
+
+                this.p = vectorNormalize(this.p);
+                this.h = vectorNormalize(this.h);
+                const dir = vectorNormalize(player.dir, Math.sqrt((player.dir.y) ** 2 + (player.dir.x) ** 2));
+
+                let v1xangle = Math.acos(vectorDotProduct(this.p, dir));        // get angle between dir and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
+                let v2xangle = Math.acos(vectorDotProduct(this.h, this.p));     // get angle between v1 and v2
+                                                                                // angles are calculated using | adjacent / hypothenuse
+                                                                                // hypothenuse is 1 because v1/v1 was normalized (no denominator)
+                                                                                // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
+
+                if (!isClockwiseOrder(dir, this.p)) v1xangle = -v1xangle;  // correct sign depending on side of v1/v2
+                if (!isClockwiseOrder(this.p, this.h)) v2xangle = -v2xangle;
+
+                v2xangle = v2xangle + v1xangle; // make v2 relative to v1
+
+                this.p.dist *= Math.cos(v1xangle);
+                this.x1 = degrees(v1xangle) * canvas.width / fovamount;
+                this.h1 = this.calculateHeight(this.p);
+
+                this.h.dist *= Math.cos(v2xangle);
+                this.x2 = degrees(v2xangle) * canvas.width / fovamount;
+                this.h2 = this.calculateHeight(this.h);
+
+                if (this.h1 > 10000) this.h1 = 10000;
+                if (this.h2 > 10000) this.h2 = 10000;
+            }
+
+            calculateHeight(v) { // simple proportion calculations
+                const h0 = vectorCreate(v.dist, this.height0 - player.height);
+                const h1 = vectorCreate(v.dist, this.height1 - player.height);
+                const floor = vectorCreate(v.dist, -player.height);
+                return {
+                    'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+                    'h0':    (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+                    'h1':    (h1.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+                    'sat': 1, 
+                    'dist': v.dist
+                };
+            }
+
+            display3D() {
+                const maxl = 0;
+                const minl = -0.75; // maximum darkness for color
+                const a = canvas2D.width/1.2; // distance until it gets completely darkened
+                const n = 2 // if pair, makes the curves more "square"
+
+                // function determined with https://math.stackexchange.com/questions/2170013/looking-for-a-decreasing-function-which-initially-decreases-slowly-and-then-decr
+                let L1 = -((this.p.dist / a) ** n); // decreasing exponential function
+                if (L1 < minl) L1 = minl;
+                if (L1 > maxl) L1 = maxl;
+
+                let L2 = -((this.h.dist / a) ** n);
+                if (L2 < minl) L2 = minl;
+                if (L2 > maxl) L2 = maxl;
+
+                const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
+                            this.x2 + canvas.width / 2, canvas.height / 2);
+
+                grd.addColorStop(0, shadeHexColor(this.hex, L1));
+                grd.addColorStop(1, shadeHexColor(this.hex, L2));
+                ctx.fillStyle = grd;
+                
+                let tmpalpha = ctx.globalAlpha;
+                ctx.globalAlpha = this.opacity;
+                if (sortedActive) {  // adds color under the wall to hide any overlap
+                    polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
+                            this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
+                            this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
+                            this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
+                    ], color["dark-gray"], 0);
+                }
+                polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
+                this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
+                this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,
+                this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2
+                ], `grd`, 2);
+
+                ctx.globalAlpha = tmpalpha;
+            }
+
+            setAngle(angle) {
+                this.dir.x = Math.cos(angle) * this.length;
+                this.dir.y = Math.sin(angle) * this.length;
+                this.rotation = getRotation(this.pos, this.dir);
+            }
+        }
+
+        // https://github.com/PimpTrizkit/PJs/wiki/12.-Shade,-Blend-and-Convert-a-Web-Color-(pSBC.js)#----update---version-2-with-blending---
+        function shadeHexColor(color, percent) {
+            var f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+            return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+        }
+
+        // https://stackoverflow.com/a/8027526
+        function isHexColor(hex) {
+            return typeof hex === 'string'
+                && hex.length === 6
+                && !isNaN(Number('0x' + hex))
+        }
+
+        // https://stackoverflow.com/a/44134328
+        function hslToHex(h, s, l) {
+            if (isHexColor(h)) return h
+            l /= 100;
+            const a = s * Math.min(l, 1 - l) / 100;
+            const f = n => {
+                const k = (n + h / 30) % 12;
+                const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+                return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+            };
+            return `#${f(0)}${f(8)}${f(4)}`;
+        }
+
+        function isClockwiseOrder(v1, v2) {  // Tests if the cross product with z=0, returns positive or negative (clockwise or anticlockwise)
+            // const crossProduct = v1.x*v2.y - v1.y*v2.x;
+            return v1.x*v2.y - v1.y*v2.x <= 0;
+        }
+
+        function vectorDist(x, y) { // returns distance of a vector
+            return Math.sqrt(x**2 + y**2);
+        }
+
+        function vectorDotProduct(v1, v2) {
+            // const dot = v1.x*v2.x + v1.y*v2.y;
+            return v1.x*v2.x + v1.y*v2.y;
+        }
+
+        function vectorCreate(dirx, diry) {
+            return {
+                'x': dirx,
+                'y': diry
+            };
+        }
+
+        function vectorNormalize(v, dist=v.dist) {
+            v.x = v.x/dist;
+            v.y = v.y/dist;
+            return v;
+        }
+
+        function vectorAdd(A, B) {
+            return {
+                "x": A.x + B.x,
+                "y": A.y + B.y
+            }
+        }
+
+        function vectorSubtract(B, A) {
+            return {
+                "x": B.x - A.x,
+                "y": B.y - A.y
+            }
+        }
+
+        function vectorMult(A, lamda) {
+            return {
+                "x": A.x * lamda,
+                "y": A.y * lamda
+            }
+        }
+
+        function vectorOpposite(vector) {
+            return {
+                "x": -vector.x,
+                "y": -vector.y
+            }
+        }
+
+        function vectorAngleBetween(a, b) {
+            const v1 = vectorNormalize(a, vectorDist(a.x, a.y))
+            const v2 = vectorNormalize(b, vectorDist(b.x, b.y))
+
+
+            let angle = Math.acos(vectorDotProduct(v1, v2))
+            if (!isClockwiseOrder(a, b)) angle = -angle
+            return angle
+        }
+
+
+        // condensed version of intersection() but only the conditional
+        function isIntersectionFovW(w1, w2) {   
+            const x1 = w1.pos.x; // meant for fov rays
+            const y1 = w1.pos.y;
+            const x2 = x1 + w1.dir.x * w1.dir.length;
+            const y2 = y1 + w1.dir.y * w1.dir.length;
+
+            const x3 = w2.pos.x; // meant for wall objects
+            const y3 = w2.pos.y;
+            const x4 = x3 + w2.dir.x;
+            const y4 = y3 + w2.dir.y;
+
+            const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+            if (den == 0) return false;
+            const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
+            const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
+            
+            // if t and u are between 0 and 1 then the intersection falls between v1 and v2
+            return u >= 0 && u <= 1 && t >= 0 && t <= 1;  
+        }
+
+        function intersectionFovW(w1, w2) {
+            if (!isIntersectionFovW(w1, w2)) return;
+
+            const x1 = w1.pos.x;
+            const y1 = w1.pos.y;
+            const x2 = x1 + w1.dir.x * w1.dir.length;
+            const y2 = y1 + w1.dir.y * w1.dir.length;
+
+            const x3 = w2.pos.x;
+            const y3 = w2.pos.y;
+            const x4 = x3 + w2.dir.x;
+            const y4 = y3 + w2.dir.y;
+
+            const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+            const u = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / den;
+
+            const xint = x3 + u * (x4 - x3);
+            const yint = y3 + u * (y4 - y3);
+            const intersection = {
+                'x': xint,
+                'y': yint,
+                'dist': Math.sqrt((y1 - yint) ** 2 + (x1 - xint) ** 2)
+            };
+            return intersection;
+        }
+
+        class Graph {
+            constructor() {
+                this.adjacencyList = new Map();
+                this.edges = []
+            }
+
+            // add vertex to the graph
+            addVertex(vertex) {
+                if (!this.adjacencyList.get(vertex)) {
+                    this.adjacencyList.set(vertex, []);
+                }
+            }
+
+            // add edge to the graph
+            addEdge(source, destination) {
+                if (!this.adjacencyList.get(source)) {
+                    this.addVertex(source);
+                }
+                if (!this.adjacencyList.get(destination)) {
+                    this.addVertex(destination);
+                }
+                this.edges.push([source, destination])
+                this.adjacencyList.get(source).push(destination);
+            }
+
+            // Prints the vertex and adjacency list
+            printGraph() {
+                // get all the vertices
+                var get_keys = this.adjacencyList.keys();
+                let final = "";
+                // iterate over the vertices
+                for (var i of get_keys) {
+                    // get the corresponding adjacency list for the vertex
+                    var get_values = this.adjacencyList.get(i);
+                    var conc = "";
+
+                    // iterate over the adjacency list and concatenate the values into a string
+                    for (var j of get_values) {
+                        conc += j + " ";
+                    }
+                    // print the vertex and its adjacency list
+                    final = final + i + " -> " + conc + "\n";
+                }
+                if (showGraph) {
+                    console.log(final);
+                    showGraph = false;
+                }
+            }
+
+
+            /*/ // // Recursive DFS // // /*/
+            // topologicalSort() {
+            //     let G = this.adjacencyList;
+            //     let distance = new Map();
+            //     for (let v of G.keys()) {
+            //         if (!distance.has(v)) {
+            //             distance.set(v, 0);
+            //             this.dfs(v, distance);
+            //         }
+            //     }
+            //     let vertices = []
+            //     let i = 0;
+            //     while (distance.size > 0) {
+            //         for (let v of G.keys()) {
+            //             if (distance.get(v) == i) {
+            //                 vertices.push(v)
+            //                 distance.delete(v)
+            //             }
+            //         }
+            //         i += 1
+            //     }
+            //     return vertices;
+            // }
+
+            // dfs(s, distance) {
+            //     // console.log(s);
+            //     let ds = distance.get(s);
+            //     for (let v of this.adjacencyList.get(s)) {
+                    
+            //         if (!distance.has(v) || distance.get(v) < ds + 1) {
+            //             distance.set(v, ds+1);
+            //             this.dfs(v, distance);
+            //         }
+            //     }
+            // }
+
+
+            /*/ // // Non-recursive DFS // // /*/
+            topologicalSort() {
+                let G = this.adjacencyList
+                let distance = new Map();
+                for (let v of G.keys()) {
+                    if (!distance.has(v)) {
+                        distance.set(v, 0);
+                        this.dfs(v, distance, G)
+                    }
+                }
+                // console.log(distance)
+                let vertices = []
+                let i = 0;
+                while (distance.size > 0) {
+                    for (let v of G.keys()) {
+                        if (distance.get(v) == i) {
+                            vertices.push(v)
+                            distance.delete(v)
+                        }
+                    }
+                    i += 1
+                }
+                return vertices;
+            }
+            dfs(s, distance, G) {
+                let counter = new Map();
+                let nodes_to_visit = [ s ]
+
+                while (nodes_to_visit.length > 0) {
+                    let currentnode = nodes_to_visit.shift();
+                    if (counter.has(currentnode)) {
+                        let curcount = counter.get(currentnode);
+                        counter.set(currentnode, curcount + 1)
+                        if (curcount > 1000) {
+                            console.log(currentnode);
+                            this.printGraph();
+                            break;
+                        }
+                    } else {
+                        counter.set(currentnode, 1)
+                    }
+                    let currentDepth = distance.get(currentnode);
+                    G.get(currentnode).forEach(node => {
+                        if (!distance.has(node) || distance.get(node) < currentDepth + 1) {
+                            distance.set(node, currentDepth + 1);
+                            nodes_to_visit.unshift(node);
+                        }
+                    })
+                    
+                }
+            }
+        }
+
+        function wallsToGraph(w) {
+            if (w.length < 2) return [];
+
+            const g = new Graph();
+            for (let i = 0; i < w.length - 1; i++) {
+                for (let j = i+1; j < w.length; j++) {
+                    if (v1HigherThanv2(w[i], w[j])) {
+                        g.addEdge(j, i);
+                    } else if (v1HigherThanv2(w[j], w[i])) {
+                        g.addEdge(i, j);
+                    } else {
+                        g.addVertex(i);
+                        g.addVertex(j);
+                    }
+                }
+            }
+            let final = g.topologicalSort().reverse()
+            return final;
+        }
+
+        // returns true if v1 is higher than v2
+        function v1HigherThanv2(w1, w2) {
+            if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.h, w2.h.dist)) ||
+                isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.p, w2.p.dist))) {
+                return false
+            }
+            W1HtoW1P = vectorCreate(w1.p.x * w1.p.dist - w1.h.x * w1.h.dist,
+                                    w1.p.y * w1.p.dist - w1.h.y * w1.h.dist)
+            W2HtoW2P = vectorCreate(w2.p.x * w2.p.dist - w2.h.x * w2.h.dist,
+                                    w2.p.y * w2.p.dist - w2.h.y * w2.h.dist)
+
+            // V1 Just the wall vector (v1dir - v1pos)
+            // Creating the vector is different so that we can check for intersections
+            const W1ptoW1h = {"pos": {  "x": player.pos.x + w1.p.x * w1.p.dist,
+                                        "y": player.pos.y + w1.p.y * w1.p.dist },
+                            "dir": {  "x": w1.h.x * w1.h.dist - w1.p.x * w1.p.dist,
+                                        "y": w1.h.y * w1.h.dist - w1.p.y * w1.p.dist }};
+
+            // V2 Just the wall vector (v2dir - v2pos)
+            // Creating the vector is different so that we can check for intersections
+            const W2ptoW2h = {"pos": {  "x": player.pos.x + w2.p.x * w2.p.dist,
+                                        "y": player.pos.y + w2.p.y * w2.p.dist },
+                            "dir": {  "x": w2.h.x * w2.h.dist - w2.p.x * w2.p.dist,
+                                        "y": w2.h.y * w2.h.dist - w2.p.y * w2.p.dist }};
+
+            let alpha, beta
+            if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.p, w2.p.dist))) {
+                alpha = vectorAngleBetween(vectorMult(w1.p, w1.p.dist), W1ptoW1h.dir)
+                beta = vectorAngleBetween(vectorMult(w1.p, w1.p.dist), W2ptoW2h.dir)
+            } else if (isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.h, w2.h.dist))) {
+                alpha = vectorAngleBetween(vectorMult(w1.h, w1.h.dist), W1HtoW1P)
+                beta = vectorAngleBetween(vectorMult(w1.h, w1.h.dist), W2HtoW2P)
+            }
+            if ((alpha > 0 && beta > 0) || (alpha < 0 && beta < 0)) {
+                return Math.abs(alpha) < Math.abs(beta)
+            }
+
+            const PltoW1P = { "pos": {  "x": player.pos.x,
+                                        "y": player.pos.y },
+                            "dir": {  "x": w1.p.x * w1.p.dist,
+                                        "y": w1.p.y * w1.p.dist }};
+            const PltoW1H = { "pos": {  "x": player.pos.x,
+                                        "y": player.pos.y },
+                            "dir": {  "x": w1.h.x * w1.h.dist,
+                                        "y": w1.h.y * w1.h.dist }};
+
+            const W1p = {   "x": player.pos.x + w1.p.dist * w1.p.x,
+                            "y": player.pos.y + w1.p.dist * w1.p.y}
+            const W1h = {   "x": player.pos.x + w1.h.dist * w1.h.x,
+                            "y": player.pos.y + w1.h.dist * w1.h.y}
+            const W2p = {   "x": player.pos.x + w2.p.dist * w2.p.x,
+                            "y": player.pos.y + w2.p.dist * w2.p.y}
+            const W2h = {   "x": player.pos.x + w2.h.dist * w2.h.x,
+                            "y": player.pos.y + w2.h.dist * w2.h.y}
+            
+            return  isIntersectionVectors(PltoW1P, W2ptoW2h, [[w1.index, w2.index], "isint1"]) ||
+                    isIntersectionVectors(PltoW1H, W2ptoW2h, [[w1.index, w2.index], "isint2"]) ||
+                    ptInTriangle(W2p, player.pos, W1p, W1h, [[w1.index, w2.index], "istri1"]) ||
+                    ptInTriangle(W2h, player.pos, W1p, W1h, [[w1.index, w2.index], "istri2"])
+
+        }
+
+
+        const EPSILON = 0.01
+        function isSame(v1, v2) {
+            return  Math.abs(v1.x - v2.x) < EPSILON &&
+                    Math.abs(v1.y - v2.y) < EPSILON
+        }
+
+        function ptInTriangle(P, A, B, C) {
+            if (isSame(P, A) || isSame(P, B) || isSame(P, C)) return false
+            const w1 = (A.x*(C.y - A.y) + (P.y - A.y)*(C.x - A.x) - P.x*(C.y - A.y)) / ((B.y - A.y)*(C.x - A.x) - (B.x - A.x)*(C.y - A.y))
+            const w2 = (P.y - A.y - w1*(B.y - A.y)) / (C.y - A.y)
+            return w1 >= 0 && w2 >= 0 && w1 + w2 <= 1
+        }
+
+        function isIntersectionVectors(v1, v2) {
+            const x1 = v1.pos.x;
+            const y1 = v1.pos.y;
+            const x2 = x1 + v1.dir.x;
+            const y2 = y1 + v1.dir.y;
+
+            const x3 = v2.pos.x;
+            const y3 = v2.pos.y;
+            const x4 = x3 + v2.dir.x;
+            const y4 = y3 + v2.dir.y;
+
+            const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+            if (den == 0) return false;
+            const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
+            const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
+            // if t and u are between 0 and 1 then the intersection falls between v1 and v2
+            return u > 0.0 && u < 1.0 && t > 0.0 && t < 1.0; 
+        }
+
+        function exampleScene() {
+            defaults['sliderH0'] = 0;
+            defaults['sliderH1'] = 300;
+            defaults['sliderFovx'] = 55;
+            defaults['sliderFovy'] = 280;
+            defaults['sliderOpacity'] = 100;
+            defaults['changeAll'] = false;
+            loadDefaults();
+            walls.push(new Boundary(418 * (canvas2D.width / 886), 788 * (canvas2D.width / 886), 333 * (canvas2D.width / 886), 730 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
+            walls.push(new Boundary(506 * (canvas2D.width / 886), 745 * (canvas2D.width / 886), 636 * (canvas2D.width / 886), 721 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
+            walls.push(new Boundary(566 * (canvas2D.width / 886), 551 * (canvas2D.width / 886), 600 * (canvas2D.width / 886), 482 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
+            walls.push(new Boundary(404 * (canvas2D.width / 886), 627 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), 591 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
+            walls.push(new Boundary(410 * (canvas2D.width / 886), 830 * (canvas2D.width / 886), 529 * (canvas2D.width / 886), 817 * (canvas2D.width / 886), "#007bff", 1, 0, 300));
+            walls.push(new Boundary(748 * (canvas2D.width / 886), 642 * (canvas2D.width / 886), 816 * (canvas2D.width / 886), 505 * (canvas2D.width / 886), "#007bff", 1, 0, 300));
+            walls.push(new Boundary(675 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), 533 * (canvas2D.width / 886), 205 * (canvas2D.width / 886), "#007bff", 1, 0, 300));
+            walls.push(new Boundary(351 * (canvas2D.width / 886), 179 * (canvas2D.width / 886), 206 * (canvas2D.width / 886), 169 * (canvas2D.width / 886), "#007bff", 1, 0, 300));
+            walls.push(new Boundary(106 * (canvas2D.width / 886), 657 * (canvas2D.width / 886), 130 * (canvas2D.width / 886), 769 * (canvas2D.width / 886), "#007bff", 1, 0, 300));
+            walls.push(new Boundary(455 * (canvas2D.width / 886), 523 * (canvas2D.width / 886), 453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 490 * (canvas2D.width / 886), 462 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 425 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 413 * (canvas2D.width / 886), 456 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 408 * (canvas2D.width / 886), 495 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 493 * (canvas2D.width / 886), 498 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 433 * (canvas2D.width / 886), 502 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 422 * (canvas2D.width / 886), 477 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 439 * (canvas2D.width / 886), 456 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 469 * (canvas2D.width / 886), 458 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 494 * (canvas2D.width / 886), 477 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(453 * (canvas2D.width / 886), 483 * (canvas2D.width / 886), 472 * (canvas2D.width / 886), 509 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(126 * (canvas2D.width / 886), 363 * (canvas2D.width / 886), 142 * (canvas2D.width / 886), 342 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(142 * (canvas2D.width / 886), 342 * (canvas2D.width / 886), 163 * (canvas2D.width / 886), 336 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(163 * (canvas2D.width / 886), 336 * (canvas2D.width / 886), 194 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(194 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), 227 * (canvas2D.width / 886), 353 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(227 * (canvas2D.width / 886), 353 * (canvas2D.width / 886), 239 * (canvas2D.width / 886), 366 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(165 * (canvas2D.width / 886), 484 * (canvas2D.width / 886), 163 * (canvas2D.width / 886), 432 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(214 * (canvas2D.width / 886), 477 * (canvas2D.width / 886), 216 * (canvas2D.width / 886), 421 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(420 * (canvas2D.width / 886), 303 * (canvas2D.width / 886), 435 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(435 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 327 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(452 * (canvas2D.width / 886), 327 * (canvas2D.width / 886), 466 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(466 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), 479 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(479 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), 497 * (canvas2D.width / 886), 314 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(497 * (canvas2D.width / 886), 314 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), 301 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(503 * (canvas2D.width / 886), 301 * (canvas2D.width / 886), 506 * (canvas2D.width / 886), 288 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(420 * (canvas2D.width / 886), 303 * (canvas2D.width / 886), 418 * (canvas2D.width / 886), 279 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(418 * (canvas2D.width / 886), 279 * (canvas2D.width / 886), 430 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(418 * (canvas2D.width / 886), 279 * (canvas2D.width / 886), 450 * (canvas2D.width / 886), 261 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(450 * (canvas2D.width / 886), 261 * (canvas2D.width / 886), 468 * (canvas2D.width / 886), 262 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(468 * (canvas2D.width / 886), 262 * (canvas2D.width / 886), 489 * (canvas2D.width / 886), 262 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(489 * (canvas2D.width / 886), 262 * (canvas2D.width / 886), 506 * (canvas2D.width / 886), 288 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(751 * (canvas2D.width / 886), 561 * (canvas2D.width / 886), 718 * (canvas2D.width / 886), 527 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(718 * (canvas2D.width / 886), 527 * (canvas2D.width / 886), 712 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(712 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), 721 * (canvas2D.width / 886), 458 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(721 * (canvas2D.width / 886), 458 * (canvas2D.width / 886), 749 * (canvas2D.width / 886), 427 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(749 * (canvas2D.width / 886), 427 * (canvas2D.width / 886), 771 * (canvas2D.width / 886), 411 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(771 * (canvas2D.width / 886), 411 * (canvas2D.width / 886), 783 * (canvas2D.width / 886), 400 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(783 * (canvas2D.width / 886), 400 * (canvas2D.width / 886), 797 * (canvas2D.width / 886), 374 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(797 * (canvas2D.width / 886), 374 * (canvas2D.width / 886), 800 * (canvas2D.width / 886), 355 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(800 * (canvas2D.width / 886), 355 * (canvas2D.width / 886), 790 * (canvas2D.width / 886), 341 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(790 * (canvas2D.width / 886), 341 * (canvas2D.width / 886), 756 * (canvas2D.width / 886), 312 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(756 * (canvas2D.width / 886), 312 * (canvas2D.width / 886), 740 * (canvas2D.width / 886), 286 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(740 * (canvas2D.width / 886), 286 * (canvas2D.width / 886), 740 * (canvas2D.width / 886), 232 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(740 * (canvas2D.width / 886), 232 * (canvas2D.width / 886), 766 * (canvas2D.width / 886), 203 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(766 * (canvas2D.width / 886), 203 * (canvas2D.width / 886), 793 * (canvas2D.width / 886), 188 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(793 * (canvas2D.width / 886), 188 * (canvas2D.width / 886), 814 * (canvas2D.width / 886), 169 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(814 * (canvas2D.width / 886), 169 * (canvas2D.width / 886), 816 * (canvas2D.width / 886), 127 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(816 * (canvas2D.width / 886), 127 * (canvas2D.width / 886), 778 * (canvas2D.width / 886), 103 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(778 * (canvas2D.width / 886), 103 * (canvas2D.width / 886), 719 * (canvas2D.width / 886), 108 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(719 * (canvas2D.width / 886), 108 * (canvas2D.width / 886), 683 * (canvas2D.width / 886), 149 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(683 * (canvas2D.width / 886), 149 * (canvas2D.width / 886), 663 * (canvas2D.width / 886), 205 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(663 * (canvas2D.width / 886), 205 * (canvas2D.width / 886), 621 * (canvas2D.width / 886), 197 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(621 * (canvas2D.width / 886), 197 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), 153 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(581 * (canvas2D.width / 886), 153 * (canvas2D.width / 886), 526 * (canvas2D.width / 886), 119 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(404 * (canvas2D.width / 886), 119 * (canvas2D.width / 886), 526 * (canvas2D.width / 886), 119 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(765 * (canvas2D.width / 886), 738 * (canvas2D.width / 886), 798 * (canvas2D.width / 886), 813 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(798 * (canvas2D.width / 886), 813 * (canvas2D.width / 886), 846 * (canvas2D.width / 886), 737 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            walls.push(new Boundary(846 * (canvas2D.width / 886), 737 * (canvas2D.width / 886), 765 * (canvas2D.width / 886), 738 * (canvas2D.width / 886), "#ff9d00", 1, 0, 300));
+            player.pos.x = 608.7853773197638 * (canvas2D.width / 886);
+            player.pos.y = 699.7654872665915 * (canvas2D.width / 886);
+            player.rotation = 4.031710572106929;
+            player.setAngle(degrees(player.rotation));
+            player.setFarSight(1000);
+            player.setVerticalLook(0);
+
+        }
+
+        function colorsScene() {
+            defaults['sliderH0'] = 0;
+            defaults['sliderH1'] = 300;
+            defaults['sliderFovx'] = 55;
+            defaults['sliderFovy'] = 280;
+            defaults['sliderOpacity'] = 100;
+            defaults['changeAll'] = false;
+            loadDefaults();
+            walls.push(new Boundary(133 * (canvas2D.width / 886), 848 * (canvas2D.width / 886), (252) * (canvas2D.width / 886), (842) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(273 * (canvas2D.width / 886), 718 * (canvas2D.width / 886), (337) * (canvas2D.width / 886), (747) * (canvas2D.width / 886), "#ff9d00", 1, 0, 350));
+            walls.push(new Boundary(323 * (canvas2D.width / 886), 809 * (canvas2D.width / 886), (380) * (canvas2D.width / 886), (869) * (canvas2D.width / 886), "#fff200", 1, 0, 350));
+            walls.push(new Boundary(382 * (canvas2D.width / 886), 691 * (canvas2D.width / 886), (432) * (canvas2D.width / 886), (756) * (canvas2D.width / 886), "#51ff00", 1, 0, 350));
+            walls.push(new Boundary(417 * (canvas2D.width / 886), 832 * (canvas2D.width / 886), (494) * (canvas2D.width / 886), (873) * (canvas2D.width / 886), "#00ffea", 1, 0, 350));
+            walls.push(new Boundary(478 * (canvas2D.width / 886), 844 * (canvas2D.width / 886), (548) * (canvas2D.width / 886), (862) * (canvas2D.width / 886), "#00c8ff", 1, 0, 350));
+            walls.push(new Boundary(518 * (canvas2D.width / 886), 745 * (canvas2D.width / 886), (615) * (canvas2D.width / 886), (863) * (canvas2D.width / 886), "#0011ff", 1, 0, 350));
+            walls.push(new Boundary(581 * (canvas2D.width / 886), 810 * (canvas2D.width / 886), (638) * (canvas2D.width / 886), (829) * (canvas2D.width / 886), "#ae00ff", 1, 0, 350));
+            walls.push(new Boundary(617 * (canvas2D.width / 886), 811 * (canvas2D.width / 886), (685) * (canvas2D.width / 886), (803) * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
+            walls.push(new Boundary(801 * (canvas2D.width / 886), 661 * (canvas2D.width / 886), (808) * (canvas2D.width / 886), (580) * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
+            walls.push(new Boundary(782 * (canvas2D.width / 886), 331 * (canvas2D.width / 886), (733) * (canvas2D.width / 886), (276) * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
+            walls.push(new Boundary(160 * (canvas2D.width / 886), 268 * (canvas2D.width / 886), (256) * (canvas2D.width / 886), (193) * (canvas2D.width / 886), "#00ffe1", 1, 0, 350));
+            walls.push(new Boundary(433 * (canvas2D.width / 886), 183 * (canvas2D.width / 886), (618) * (canvas2D.width / 886), (228) * (canvas2D.width / 886), "#80ff00", 1, 0, 350));
+            walls.push(new Boundary(96 * (canvas2D.width / 886), 543 * (canvas2D.width / 886), (103) * (canvas2D.width / 886), (418) * (canvas2D.width / 886), "#80ff00", 1, 0, 350));
+            walls.push(new Boundary(289 * (canvas2D.width / 886), 260 * (canvas2D.width / 886), (382) * (canvas2D.width / 886), (181) * (canvas2D.width / 886), "#ff00e1", 1, 0, 350));
+            walls.push(new Boundary(122 * (canvas2D.width / 886), 764 * (canvas2D.width / 886), (39) * (canvas2D.width / 886), (674) * (canvas2D.width / 886), "#ff00e1", 1, 0, 350));
+            walls.push(new Boundary(172 * (canvas2D.width / 886), 123 * (canvas2D.width / 886), (344) * (canvas2D.width / 886), (84) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(586 * (canvas2D.width / 886), 45 * (canvas2D.width / 886), (750) * (canvas2D.width / 886), (82) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(651 * (canvas2D.width / 886), 616 * (canvas2D.width / 886), (707) * (canvas2D.width / 886), (526) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(814 * (canvas2D.width / 886), 441 * (canvas2D.width / 886), (852) * (canvas2D.width / 886), (314) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(537 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), (478) * (canvas2D.width / 886), (284) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(170 * (canvas2D.width / 886), 625 * (canvas2D.width / 886), (161) * (canvas2D.width / 886), (536) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(10 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), (84) * (canvas2D.width / 886), (210) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+            walls.push(new Boundary(551 * (canvas2D.width / 886), 644 * (canvas2D.width / 886), (611) * (canvas2D.width / 886), (622) * (canvas2D.width / 886), "#bd8bb5", 1, 0, 300));
+            walls.push(new Boundary(819 * (canvas2D.width / 886), 723 * (canvas2D.width / 886), (856) * (canvas2D.width / 886), (680) * (canvas2D.width / 886), "#3290d0", 1, 0, 300));
+            walls.push(new Boundary(868 * (canvas2D.width / 886), 521 * (canvas2D.width / 886), (871) * (canvas2D.width / 886), (470) * (canvas2D.width / 886), "#47d283", 1, 0, 300));
+            walls.push(new Boundary(862 * (canvas2D.width / 886), 249 * (canvas2D.width / 886), (816) * (canvas2D.width / 886), (197) * (canvas2D.width / 886), "#bef585", 1, 0, 300));
+            walls.push(new Boundary(730 * (canvas2D.width / 886), 144 * (canvas2D.width / 886), (588) * (canvas2D.width / 886), (90) * (canvas2D.width / 886), "#851a4d", 1, 0, 300));
+            walls.push(new Boundary(473 * (canvas2D.width / 886), 51 * (canvas2D.width / 886), (319) * (canvas2D.width / 886), (10) * (canvas2D.width / 886), "#77a13f", 1, 0, 300));
+            walls.push(new Boundary(166 * (canvas2D.width / 886), 21 * (canvas2D.width / 886), (43) * (canvas2D.width / 886), (63) * (canvas2D.width / 886), "#1a01a3", 1, 0, 300));
+            walls.push(new Boundary(34 * (canvas2D.width / 886), 182 * (canvas2D.width / 886), (81) * (canvas2D.width / 886), (123) * (canvas2D.width / 886), "#6b1663", 1, 0, 300));
+            walls.push(new Boundary(153 * (canvas2D.width / 886), 97 * (canvas2D.width / 886), (203) * (canvas2D.width / 886), (73) * (canvas2D.width / 886), "#78d29", 1, 0, 300));
+            walls.push(new Boundary(58 * (canvas2D.width / 886), 385 * (canvas2D.width / 886), (37) * (canvas2D.width / 886), (502) * (canvas2D.width / 886), "#b046ef", 1, 0, 300));
+            walls.push(new Boundary(35 * (canvas2D.width / 886), 597 * (canvas2D.width / 886), (47) * (canvas2D.width / 886), (650) * (canvas2D.width / 886), "#35c0f8", 1, 0, 300));
+            walls.push(new Boundary(54 * (canvas2D.width / 886), 792 * (canvas2D.width / 886), (92) * (canvas2D.width / 886), (869) * (canvas2D.width / 886), "#ac243c", 1, 0, 300));
+            walls.push(new Boundary(175 * (canvas2D.width / 886), 434 * (canvas2D.width / 886), (197) * (canvas2D.width / 886), (366) * (canvas2D.width / 886), "#1df7f3", 1, 0, 300));
+            walls.push(new Boundary(25 * (canvas2D.width / 886), 404 * (canvas2D.width / 886), (28) * (canvas2D.width / 886), (352) * (canvas2D.width / 886), "#2724c5", 1, 0, 300));
+            walls.push(new Boundary(97 * (canvas2D.width / 886), 167 * (canvas2D.width / 886), (135) * (canvas2D.width / 886), (136) * (canvas2D.width / 886), "#d12492", 1, 0, 300));
+            walls.push(new Boundary(189 * (canvas2D.width / 886), 176 * (canvas2D.width / 886), (246) * (canvas2D.width / 886), (148) * (canvas2D.width / 886), "#5ab731", 1, 0, 300));
+            walls.push(new Boundary(429 * (canvas2D.width / 886), 78 * (canvas2D.width / 886), (478) * (canvas2D.width / 886), (97) * (canvas2D.width / 886), "#408148", 1, 0, 300));
+            walls.push(new Boundary(289 * (canvas2D.width / 886), 59 * (canvas2D.width / 886), (347) * (canvas2D.width / 886), (32) * (canvas2D.width / 886), "#b58720", 1, 0, 300));
+            walls.push(new Boundary(531 * (canvas2D.width / 886), 40 * (canvas2D.width / 886), (602) * (canvas2D.width / 886), (13) * (canvas2D.width / 886), "#9ee881", 1, 0, 300));
+            walls.push(new Boundary(810 * (canvas2D.width / 886), 55 * (canvas2D.width / 886), (855) * (canvas2D.width / 886), (108) * (canvas2D.width / 886), "#9b6051", 1, 0, 300));
+            walls.push(new Boundary(864 * (canvas2D.width / 886), 179 * (canvas2D.width / 886), (885) * (canvas2D.width / 886), (228) * (canvas2D.width / 886), "#e1e88", 1, 0, 300));
+            walls.push(new Boundary(854 * (canvas2D.width / 886), 411 * (canvas2D.width / 886), (839) * (canvas2D.width / 886), (458) * (canvas2D.width / 886), "#925bd5", 1, 0, 300));
+            walls.push(new Boundary(538 * (canvas2D.width / 886), 728 * (canvas2D.width / 886), (588) * (canvas2D.width / 886), (712) * (canvas2D.width / 886), "#48ba0f", 1, 0, 300));
+            walls.push(new Boundary(772 * (canvas2D.width / 886), 854 * (canvas2D.width / 886), (841) * (canvas2D.width / 886), (843) * (canvas2D.width / 886), "#f7632b", 1, 0, 300));
+            walls.push(new Boundary(779 * (canvas2D.width / 886), 776 * (canvas2D.width / 886), (830) * (canvas2D.width / 886), (759) * (canvas2D.width / 886), "#f28a97", 1, 0, 300));
+            walls.push(new Boundary(693 * (canvas2D.width / 886), 706 * (canvas2D.width / 886), (700) * (canvas2D.width / 886), (670) * (canvas2D.width / 886), "#763c48", 1, 0, 300));
+            player.pos.x = 358.46248509023616 * (canvas2D.width / 886);
+            player.pos.y = 399.9161444502729 * (canvas2D.width / 886);
+            player.rotation = -4.677482395344825;
+            player.setAngle(degrees(player.rotation));
+            player.setFarSight(1000);
+            player.setVerticalLook(0);
+        }
+
+        function allExamples() {
+            defaults['sliderH0'] = 265;
+            defaults['sliderH1'] = 325;
+            defaults['sliderFovx'] = 55;
+            defaults['sliderFovy'] = 280;
+            defaults['sliderOpacity'] = 75;
+            defaults['changeAll'] = true;
+            loadDefaults(); walls.push(new Boundary(144 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 245 * (canvas2D.width / 886), 485 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
+            walls.push(new Boundary(280 * (canvas2D.width / 886), 467 * (canvas2D.width / 886), 245 * (canvas2D.width / 886), 485 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
+            walls.push(new Boundary(280 * (canvas2D.width / 886), 467 * (canvas2D.width / 886), 329 * (canvas2D.width / 886), 544 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
+            walls.push(new Boundary(329 * (canvas2D.width / 886), 544 * (canvas2D.width / 886), 245 * (canvas2D.width / 886), 795 * (canvas2D.width / 886), "#80ff00", 1, 0, 661));
+            walls.push(new Boundary(245 * (canvas2D.width / 886), 795 * (canvas2D.width / 886), 203 * (canvas2D.width / 886), 725 * (canvas2D.width / 886), "#80ff00", 1, 562, 740));
+            walls.push(new Boundary(203 * (canvas2D.width / 886), 725 * (canvas2D.width / 886), 146 * (canvas2D.width / 886), 697 * (canvas2D.width / 886), "#80ff00", 1, 562, 740));
+            walls.push(new Boundary(146 * (canvas2D.width / 886), 697 * (canvas2D.width / 886), 98 * (canvas2D.width / 886), 703 * (canvas2D.width / 886), "#80ff00", 1, 562, 740));
+            walls.push(new Boundary(98 * (canvas2D.width / 886), 703 * (canvas2D.width / 886), 70 * (canvas2D.width / 886), 618 * (canvas2D.width / 886), "#80ff00", 1, 562, 740));
+            walls.push(new Boundary(70 * (canvas2D.width / 886), 618 * (canvas2D.width / 886), 78 * (canvas2D.width / 886), 544 * (canvas2D.width / 886), "#80ff00", 1, 562, 740));
+            walls.push(new Boundary(78 * (canvas2D.width / 886), 544 * (canvas2D.width / 886), 103 * (canvas2D.width / 886), 476 * (canvas2D.width / 886), "#80ff00", 1, 562, 740));
+            walls.push(new Boundary(103 * (canvas2D.width / 886), 476 * (canvas2D.width / 886), 110 * (canvas2D.width / 886), 433 * (canvas2D.width / 886), "#ffe100", 1, 374, 631));
+            walls.push(new Boundary(110 * (canvas2D.width / 886), 433 * (canvas2D.width / 886), 144 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), "#ff9900", 1, 127, 493));
+            walls.push(new Boundary(381 * (canvas2D.width / 886), 500 * (canvas2D.width / 886), 473 * (canvas2D.width / 886), 542 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 315));
+            walls.push(new Boundary(473 * (canvas2D.width / 886), 542 * (canvas2D.width / 886), 526 * (canvas2D.width / 886), 490 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 315));
+            walls.push(new Boundary(526 * (canvas2D.width / 886), 490 * (canvas2D.width / 886), 451 * (canvas2D.width / 886), 453 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 315));
+            walls.push(new Boundary(451 * (canvas2D.width / 886), 453 * (canvas2D.width / 886), 381 * (canvas2D.width / 886), 500 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 315));
+            walls.push(new Boundary(465 * (canvas2D.width / 886), 515 * (canvas2D.width / 886), 431 * (canvas2D.width / 886), 500 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 700));
+            walls.push(new Boundary(431 * (canvas2D.width / 886), 500 * (canvas2D.width / 886), 457 * (canvas2D.width / 886), 474 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 700));
+            walls.push(new Boundary(457 * (canvas2D.width / 886), 474 * (canvas2D.width / 886), 481 * (canvas2D.width / 886), 488 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 700));
+            walls.push(new Boundary(481 * (canvas2D.width / 886), 488 * (canvas2D.width / 886), 465 * (canvas2D.width / 886), 515 * (canvas2D.width / 886), "#ff00e1", 0.53, 0, 700));
+            walls.push(new Boundary(527 * (canvas2D.width / 886), 687 * (canvas2D.width / 886), 600 * (canvas2D.width / 886), 697 * (canvas2D.width / 886), "#0059ff", 0.75, 522, 621));
+            walls.push(new Boundary(707 * (canvas2D.width / 886), 701 * (canvas2D.width / 886), 773 * (canvas2D.width / 886), 682 * (canvas2D.width / 886), "#0059ff", 0.75, 522, 621));
+            walls.push(new Boundary(468 * (canvas2D.width / 886), 659 * (canvas2D.width / 886), 498 * (canvas2D.width / 886), 661 * (canvas2D.width / 886), "#0059ff", 0.75, 354, 483));
+            walls.push(new Boundary(783 * (canvas2D.width / 886), 645 * (canvas2D.width / 886), 809 * (canvas2D.width / 886), 644 * (canvas2D.width / 886), "#0059ff", 0.75, 354, 483));
+            walls.push(new Boundary(498 * (canvas2D.width / 886), 661 * (canvas2D.width / 886), 541 * (canvas2D.width / 886), 657 * (canvas2D.width / 886), "#0059ff", 0.75, 305, 374));
+            walls.push(new Boundary(783 * (canvas2D.width / 886), 645 * (canvas2D.width / 886), 734 * (canvas2D.width / 886), 644 * (canvas2D.width / 886), "#0059ff", 0.75, 305, 374));
+            walls.push(new Boundary(541 * (canvas2D.width / 886), 657 * (canvas2D.width / 886), 734 * (canvas2D.width / 886), 644 * (canvas2D.width / 886), "#0059ff", 0.75, 265, 325));
+            player.pos.x = 98.38193867258327 * (canvas2D.width / 886);
+            player.pos.y = 156.37837103107117 * (canvas2D.width / 886);
+            player.rotation = 1.0297442586766583;
+            player.setAngle(degrees(player.rotation));
+            player.setFarSight(1000);
+            player.setVerticalLook(0);
+
+
+        }
+
+        function heightShowcase() {
+            defaults['sliderH0'] = 0;
+            defaults['sliderH1'] = 300;
+            defaults['sliderFovx'] = 65;
+            defaults['sliderFovy'] = 280;
+            defaults['sliderOpacity'] = 100;
+            defaults['changeAll'] = false;
+            loadDefaults();
+            player.pos.x = 635.4775787199657 * (canvas2D.width / 861);
+            player.pos.y = 932.6479144721142 * (canvas2D.width / 861);
+            player.rotation = 4.066617157146819;
+            player.setAngle(degrees(4.066617157146819));
+            player.setFarSight(2000);
+            player.setVerticalLook(0.13962634015954636);
+
+            walls.push(new Boundary(canvas2D.width / 2.5, 775 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 775 * (canvas2D.width / 861), "#FF0000", 1, 0, 100));
+            walls.push(new Boundary(canvas2D.width / 2.5, 750 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 750 * (canvas2D.width / 861), "#FF0000", 1, 25, 150));
+            walls.push(new Boundary(canvas2D.width / 2.5, 700 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 700 * (canvas2D.width / 861), "#FF0000", 1, 50, 200));
+            walls.push(new Boundary(canvas2D.width / 2.5, 650 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 650 * (canvas2D.width / 861), "#FF0000", 1, 100, 250));
+            walls.push(new Boundary(canvas2D.width / 2.5, 600 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 600 * (canvas2D.width / 861), "#FF0000", 1, 150, 300));
+            walls.push(new Boundary(canvas2D.width / 2.5, 550 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 550 * (canvas2D.width / 861), "#FF0000", 1, 200, 400));
+            walls.push(new Boundary(canvas2D.width / 2.5, 500 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 500 * (canvas2D.width / 861), "#FF0000", 1, 300, 500));
+            walls.push(new Boundary(canvas2D.width / 2.5, 450 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 450 * (canvas2D.width / 861), "#FF0000", 1, 350, 600));
+            walls.push(new Boundary(canvas2D.width / 2.5, 400 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 400 * (canvas2D.width / 861), "#FF0000", 1, 300, 500));
+            walls.push(new Boundary(canvas2D.width / 2.5, 350 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 350 * (canvas2D.width / 861), "#FF0000", 1, 200, 400));
+            walls.push(new Boundary(canvas2D.width / 2.5, 300 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 300 * (canvas2D.width / 861), "#FF0000", 1, 150, 300));
+            walls.push(new Boundary(canvas2D.width / 2.5, 250 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 250 * (canvas2D.width / 861), "#FF0000", 1, 100, 250));
+            walls.push(new Boundary(canvas2D.width / 2.5, 200 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 200 * (canvas2D.width / 861), "#FF0000", 1, 50, 200));
+            walls.push(new Boundary(canvas2D.width / 2.5, 175 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 175 * (canvas2D.width / 861), "#FF0000", 1, 25, 150));
+            walls.push(new Boundary(canvas2D.width / 2.5, 150 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 150 * (canvas2D.width / 861), "#FF0000", 1, 0, 100));
+
+            walls.push(new Boundary(canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), "#FF0000", 1, (25 + 25) , (150 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25) , (200 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (650 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (650 - 25) * (canvas2D.width / 861), "#FF0000", 1, (100 + 25), (250 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (600 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (600 - 25) * (canvas2D.width / 861), "#FF0000", 1, (150 + 25), (300 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (550 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (550 - 25) * (canvas2D.width / 861), "#FF0000", 1, (200 + 25), (400 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (500 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (500 - 25) * (canvas2D.width / 861), "#FF0000", 1, (300 + 25), (500 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (450 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (450 - 25) * (canvas2D.width / 861), "#FF0000", 1, (300 + 25), (500 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (400 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (400 - 25) * (canvas2D.width / 861), "#FF0000", 1, (200 + 25), (400 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (350 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (350 - 25) * (canvas2D.width / 861), "#FF0000", 1, (150 + 25), (300 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (300 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (300 - 25) * (canvas2D.width / 861), "#FF0000", 1, (100 + 25), (250 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25) , (200 + 25)));
+
+            walls.push(new Boundary(323 * (canvas2D.width / 861), 832 * (canvas2D.width / 861), (312) * (canvas2D.width / 861), (773) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(312 * (canvas2D.width / 861), 773 * (canvas2D.width / 861), (314) * (canvas2D.width / 861), (717) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(314 * (canvas2D.width / 861), 717 * (canvas2D.width / 861), (302) * (canvas2D.width / 861), (648) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(302 * (canvas2D.width / 861), 648 * (canvas2D.width / 861), (307) * (canvas2D.width / 861), (579) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(307 * (canvas2D.width / 861), 579 * (canvas2D.width / 861), (298) * (canvas2D.width / 861), (538) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(298 * (canvas2D.width / 861), 538 * (canvas2D.width / 861), (304) * (canvas2D.width / 861), (489) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(304 * (canvas2D.width / 861), 489 * (canvas2D.width / 861), (285) * (canvas2D.width / 861), (432) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(285 * (canvas2D.width / 861), 432 * (canvas2D.width / 861), (298) * (canvas2D.width / 861), (393) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(298 * (canvas2D.width / 861), 393 * (canvas2D.width / 861), (286) * (canvas2D.width / 861), (345) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(286 * (canvas2D.width / 861), 345 * (canvas2D.width / 861), (291) * (canvas2D.width / 861), (301) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(291 * (canvas2D.width / 861), 301 * (canvas2D.width / 861), (272) * (canvas2D.width / 861), (235) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(272 * (canvas2D.width / 861), 235 * (canvas2D.width / 861), (272) * (canvas2D.width / 861), (133) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(272 * (canvas2D.width / 861), 133 * (canvas2D.width / 861), (266) * (canvas2D.width / 861), (86) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(266 * (canvas2D.width / 861), 86 * (canvas2D.width / 861), (269) * (canvas2D.width / 861), (40) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(269 * (canvas2D.width / 861), 40 * (canvas2D.width / 861), (303) * (canvas2D.width / 861), (12) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(303 * (canvas2D.width / 861), 12 * (canvas2D.width / 861), (412) * (canvas2D.width / 861), (9) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(412 * (canvas2D.width / 861), 9 * (canvas2D.width / 861), (486) * (canvas2D.width / 861), (11) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+            walls.push(new Boundary(486 * (canvas2D.width / 861), 11 * (canvas2D.width / 861), (571) * (canvas2D.width / 861), (11) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+        }
+
+        function roomShow() {
+            defaults['sliderH0'] = 0;
+            defaults['sliderH1'] = 300;
+            defaults['sliderFovx'] = 55;
+            defaults['sliderFovy'] = 280;
+            defaults['sliderOpacity'] = 100;
+            defaults['changeAll'] = false;
+            loadDefaults();
+            walls.push(new Boundary(50 * (canvas2D.width / 886), 850 * (canvas2D.width / 886), (50) * (canvas2D.width / 886), (100) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(50 * (canvas2D.width / 886), 850 * (canvas2D.width / 886), (800) * (canvas2D.width / 886), (850) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(800 * (canvas2D.width / 886), 200 * (canvas2D.width / 886), (800) * (canvas2D.width / 886), (850) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(200 * (canvas2D.width / 886), 200 * (canvas2D.width / 886), (800) * (canvas2D.width / 886), (200) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(150 * (canvas2D.width / 886), 750 * (canvas2D.width / 886), (150) * (canvas2D.width / 886), (100) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(350 * (canvas2D.width / 886), 700 * (canvas2D.width / 886), (350) * (canvas2D.width / 886), (750) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(200 * (canvas2D.width / 886), 700 * (canvas2D.width / 886), (350) * (canvas2D.width / 886), (700) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(200 * (canvas2D.width / 886), 700 * (canvas2D.width / 886), (200) * (canvas2D.width / 886), (200) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(150 * (canvas2D.width / 886), 750 * (canvas2D.width / 886), (350) * (canvas2D.width / 886), (750) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            walls.push(new Boundary(200 * (canvas2D.width / 886), 200 * (canvas2D.width / 886), (150) * (canvas2D.width / 886), (100) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+            player.pos.x = 67.1105733581063 * (canvas2D.width / 886);
+            player.pos.y = -82.78833278838782 * (canvas2D.width / 886);
+            player.rotation = 1.2740903539558694;
+            player.setAngle(degrees(1.2740903539558694));
+            player.setFarSight(2000);
+            player.setVerticalLook(0);
+
+            walls.push(new Boundary(330 * (canvas2D.width / 886), 594 * (canvas2D.width / 886), (354) * (canvas2D.width / 886), (607) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(354 * (canvas2D.width / 886), 607 * (canvas2D.width / 886), (367) * (canvas2D.width / 886), (585) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(367 * (canvas2D.width / 886), 585 * (canvas2D.width / 886), (344) * (canvas2D.width / 886), (571) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(344 * (canvas2D.width / 886), 571 * (canvas2D.width / 886), (330) * (canvas2D.width / 886), (594) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(552 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), (569) * (canvas2D.width / 886), (602) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(569 * (canvas2D.width / 886), 602 * (canvas2D.width / 886), (597) * (canvas2D.width / 886), (610) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(597 * (canvas2D.width / 886), 610 * (canvas2D.width / 886), (626) * (canvas2D.width / 886), (595) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(626 * (canvas2D.width / 886), 595 * (canvas2D.width / 886), (624) * (canvas2D.width / 886), (580) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(624 * (canvas2D.width / 886), 580 * (canvas2D.width / 886), (608) * (canvas2D.width / 886), (558) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(608 * (canvas2D.width / 886), 558 * (canvas2D.width / 886), (579) * (canvas2D.width / 886), (555) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(579 * (canvas2D.width / 886), 555 * (canvas2D.width / 886), (557) * (canvas2D.width / 886), (564) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(557 * (canvas2D.width / 886), 564 * (canvas2D.width / 886), (552) * (canvas2D.width / 886), (581) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(278 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), (300) * (canvas2D.width / 886), (340) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(300 * (canvas2D.width / 886), 340 * (canvas2D.width / 886), (336) * (canvas2D.width / 886), (344) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(336 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), (358) * (canvas2D.width / 886), (324) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(358 * (canvas2D.width / 886), 324 * (canvas2D.width / 886), (353) * (canvas2D.width / 886), (294) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(353 * (canvas2D.width / 886), 294 * (canvas2D.width / 886), (332) * (canvas2D.width / 886), (275) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(332 * (canvas2D.width / 886), 275 * (canvas2D.width / 886), (303) * (canvas2D.width / 886), (277) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(303 * (canvas2D.width / 886), 277 * (canvas2D.width / 886), (279) * (canvas2D.width / 886), (298) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+            walls.push(new Boundary(279 * (canvas2D.width / 886), 298 * (canvas2D.width / 886), (278) * (canvas2D.width / 886), (321) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+
+            walls.push(new Boundary(344 * (canvas2D.width / 886), 559 * (canvas2D.width / 886), (383) * (canvas2D.width / 886), (583) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(383 * (canvas2D.width / 886), 583 * (canvas2D.width / 886), (358) * (canvas2D.width / 886), (626) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(358 * (canvas2D.width / 886), 626 * (canvas2D.width / 886), (316) * (canvas2D.width / 886), (601) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(316 * (canvas2D.width / 886), 601 * (canvas2D.width / 886), (344) * (canvas2D.width / 886), (559) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(544 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), (551) * (canvas2D.width / 886), (559) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(551 * (canvas2D.width / 886), 559 * (canvas2D.width / 886), (577) * (canvas2D.width / 886), (548) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(577 * (canvas2D.width / 886), 548 * (canvas2D.width / 886), (611) * (canvas2D.width / 886), (552) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(611 * (canvas2D.width / 886), 552 * (canvas2D.width / 886), (633) * (canvas2D.width / 886), (575) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(633 * (canvas2D.width / 886), 575 * (canvas2D.width / 886), (634) * (canvas2D.width / 886), (598) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(634 * (canvas2D.width / 886), 598 * (canvas2D.width / 886), (597) * (canvas2D.width / 886), (620) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(597 * (canvas2D.width / 886), 620 * (canvas2D.width / 886), (565) * (canvas2D.width / 886), (609) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(565 * (canvas2D.width / 886), 609 * (canvas2D.width / 886), (544) * (canvas2D.width / 886), (581) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(300 * (canvas2D.width / 886), 347 * (canvas2D.width / 886), (339) * (canvas2D.width / 886), (351) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(339 * (canvas2D.width / 886), 351 * (canvas2D.width / 886), (366) * (canvas2D.width / 886), (326) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(366 * (canvas2D.width / 886), 326 * (canvas2D.width / 886), (361) * (canvas2D.width / 886), (292) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(361 * (canvas2D.width / 886), 292 * (canvas2D.width / 886), (337) * (canvas2D.width / 886), (268) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(337 * (canvas2D.width / 886), 268 * (canvas2D.width / 886), (298) * (canvas2D.width / 886), (270) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(298 * (canvas2D.width / 886), 270 * (canvas2D.width / 886), (272) * (canvas2D.width / 886), (296) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(272 * (canvas2D.width / 886), 296 * (canvas2D.width / 886), (271) * (canvas2D.width / 886), (325) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+            walls.push(new Boundary(271 * (canvas2D.width / 886), 325 * (canvas2D.width / 886), (300) * (canvas2D.width / 886), (347) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+
+            walls.push(new Boundary(757 * (canvas2D.width / 886), 365 * (canvas2D.width / 886), (732) * (canvas2D.width / 886), (314) * (canvas2D.width / 886), "#4440bf", 1, 280, 999));
+            walls.push(new Boundary(711 * (canvas2D.width / 886), 271 * (canvas2D.width / 886), (687) * (canvas2D.width / 886), (223) * (canvas2D.width / 886), "#4440bf", 1, 280, 999));
+            walls.push(new Boundary(755 * (canvas2D.width / 886), 388 * (canvas2D.width / 886), (671) * (canvas2D.width / 886), (211) * (canvas2D.width / 886), "#4440bf", 1, 29, 128));
+        }
+
+        function mainPic() {
+            defaults['sliderH0'] = 0;
+            defaults['sliderH1'] = 300;
+            defaults['sliderFovx'] = 55;
+            defaults['sliderFovy'] = 280;
+            defaults['sliderOpacity'] = 100;
+            defaults['changeAll'] = false;
+            loadDefaults();
+            walls.push(new Boundary(323 * (canvas2D.width / 886), 395 * (canvas2D.width / 886), 369 * (canvas2D.width / 886), 371 * (canvas2D.width / 886), "#0000ff", 1, 0, 300));
+            walls.push(new Boundary(322 * (canvas2D.width / 886), 469 * (canvas2D.width / 886), 381 * (canvas2D.width / 886), 562 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
+            walls.push(new Boundary(416 * (canvas2D.width / 886), 303 * (canvas2D.width / 886), 435 * (canvas2D.width / 886), 287 * (canvas2D.width / 886), "#ff00ee", 1, 0, 300));
+            walls.push(new Boundary(433 * (canvas2D.width / 886), 269 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
+            walls.push(new Boundary(452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), 465 * (canvas2D.width / 886), 305 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
+            walls.push(new Boundary(464 * (canvas2D.width / 886), 373 * (canvas2D.width / 886), 533 * (canvas2D.width / 886), 485 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
+            walls.push(new Boundary(481 * (canvas2D.width / 886), 343 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), "#ffe100", 1, 0, 300));
+            walls.push(new Boundary(498 * (canvas2D.width / 886), 311 * (canvas2D.width / 886), 597 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), "#00f6ff", 1, 0, 300));
+            player.pos.x = 443 * (canvas2D.width / 886);
+            player.pos.y = 177.2 * (canvas2D.width / 886);
+            player.rotation = 1.5707963267948966;
+            player.setAngle(degrees(player.rotation));
+            player.setFarSight(1000);
+            player.setVerticalLook(0);
+        }
+
+        function clearWalls() {
+            renderWalls.splice(0, renderWalls.length);
+            wallCount = 0;
+            walls.splice(0, walls.length);
+        }
+
+        function importWalls(imported) {
+            clearWalls();
+            defaults['sliderH0'] = parseInt(imported['sliderH0'])
+            defaults['sliderH1'] = parseInt(imported['sliderH1'])
+            defaults['sliderFovx'] = parseInt(imported['sliderFovx'])
+            defaults['sliderFovy'] = parseInt(imported['sliderFovy'])
+            defaults['sliderOpacity'] = parseInt(imported['sliderOpacity'])
+            defaults['changeAll'] = imported['changeAll']
+            defaults['randomColor'] = imported['randomColor']
+            loadDefaults();
+            imported["walls"].forEach(w => {
+                walls.push(new Boundary(w["posx"] * (canvas2D.width / imported["width"]),
+                                        w["posy"] * (canvas2D.width / imported["width"]),
+                                        w["dirx"] * (canvas2D.width / imported["width"]),
+                                        w["diry"] * (canvas2D.width / imported["width"]),
+                                        w["hex"],
+                                        w["opacity"],
+                                        w["height0"],
+                                        w["height1"]
+                                        ))
+            })
+            player.pos.x = imported.player.posx * (canvas2D.width / imported["width"]);
+            player.pos.y = imported.player.posy * (canvas2D.width / imported["width"]);
+            player.rotation = imported.player.rotation
+            player.setAngle(degrees(player.rotation))
+            player.setFarSight(imported.player.farSight)
+            player.setVerticalLook(imported.player.vertRotation)
+        }
+        function exportWalls() {
+            tmp = {
+                "sliderH0": document.getElementById("sliderH0").value,
+                "sliderH1": document.getElementById("sliderH1").value,
+                "sliderFovx": document.getElementById("sliderFovx").value,
+                "sliderFovy": document.getElementById("sliderFovy").value,
+                "sliderOpacity": document.getElementById("sliderOpacity").value,
+                "changeAll": document.getElementById("changeAll").checked,
+                "randomColor": document.getElementById("randomColor").checked,
+                "width": canvas2D.width,
+                "expansion": expansion,
+                "walls": [],
+                "player": {
+                    "posx": player.pos.x,
+                    "posy": player.pos.y,
+                    "rotation": player.rotation,
+                    "farSight": player.farSight,
+                    "vertRotation": player.vertRotation
+                }
+            }
+            walls.forEach(w => {
+                tmp.walls.push({
+                                "posx": w.pos.x,
+                                "posy": w.pos.y,
+                                "dirx": w.pos.x + w.dir.x,
+                                "diry": w.pos.y + w.dir.y,
+                                "hex": w.hex,
+                                "opacity": w.opacity,
+                                "height0": w.height0,
+                                "height1": w.height1,
+                                })
+            })
+            return tmp;
+        }
+
+        function copyWallsCode() {
+            tmp = "defaults['sliderH0'] = " + document.getElementById("sliderH0").value + ";\n" +
+                "defaults['sliderH1'] = " + document.getElementById("sliderH1").value + ";\n" +
+                "defaults['sliderFovx'] = " + document.getElementById("sliderFovx").value + ";\n" +
+                "defaults['sliderFovy'] = " + document.getElementById("sliderFovy").value + ";\n" +
+                "defaults['sliderOpacity'] = " + document.getElementById("sliderOpacity").value + ";\n" +
+                "defaults['changeAll'] = " + document.getElementById("changeAll").checked + ";\n" +
+                "loadDefaults();\n"
+            walls.forEach(w => {
+                tmp = tmp + `walls.push(new Boundary(${w.pos.x} * (canvas2D.width/${canvas2D.width}), ${w.pos.y} * (canvas2D.width/${canvas2D.width}), (${w.pos.x + w.dir.x}) * (canvas2D.width/${canvas2D.width}), (${w.pos.y + w.dir.y}) * (canvas2D.width/${canvas2D.width}), "${w.hex}", ${w.opacity}, ${w.height0}, ${w.height1}));\n`
+            });
+            tmp = tmp + `player.pos.x = ${player.pos.x} * (canvas2D.width/${canvas2D.width});\nplayer.pos.y = ${player.pos.y} * (canvas2D.width/${canvas2D.width});\nplayer.rotation = ${player.rotation};\nplayer.setAngle(degrees(${player.rotation}));\nplayer.setFarSight(${player.farSight});\nplayer.setVerticalLook(${player.vertRotation});\n`
+            // console.log(tmp);
+            navigator.clipboard.writeText(tmp)
+        }
+
+        function loadScene(sceneName) {
+            clearWalls();
+            player.setFarSight(1000);
+            switch (sceneName) {
+                case "example":
+                    exampleScene();
+                    break;
+                case "colors":
+                    colorsScene();
+                    break;
+                case "penis":
+                    penislol();
+                    break;
+                case "allExamples":
+                    allExamples();
+                    break;
+                case "collidingWalls":
+                    collidingWalls();
+                    break;
+                case "mainPic":
+                    mainPic();
+                    break;
+                case "heightShowcase":
+                    heightShowcase();
+                    break;
+                case "roomShow":
+                    roomShow();
+                    break;
+            }
+            return true;
+        }
+
+        // corridors
+        // colors
+        // different sizes 1 ok
+        // different sizes 2
+        // performance
+        // normal room
+
+        function resetPlayer() {
+            player.rotation = 0;
+            player.setAngle(0);
+            player.pos.x = canvas2D.width/2;
+            player.pos.y = canvas2D.height/2;
+            player.setVerticalLook(0)
+            player.setFarSight(1000)
+        }
+
+        // Canvas declared in interface.js
+        handlers.updateCanvasSize();
+
+        let wallCount = 0;
+        const walls = [];
+        const wallsTemp = [];
+        let renderWalls = [];
+
+        let showGraph = false;
+        const color = {
+            "light-gray": getComputedStyle(document.documentElement).getPropertyValue('--light-gray'),
+            "dark-gray": getComputedStyle(document.documentElement).getPropertyValue('--dark-gray'),
+            "yellow": getComputedStyle(document.documentElement).getPropertyValue('--yellow'),
+            "dark-blue": getComputedStyle(document.documentElement).getPropertyValue('--dark-blue'),
+            "sky-blue": getComputedStyle(document.documentElement).getPropertyValue('--sky-blue'),
+            "mid-blue": getComputedStyle(document.documentElement).getPropertyValue('--mid-blue'),
+            "pink": getComputedStyle(document.documentElement).getPropertyValue('--pink')
+        }
+
+        const player = new Player(canvas2D.width/2, canvas2D.height/5, 90);
+        player.fov.xamount =  55;
+
+
+        player.setFOV();
+
+        window.addEventListener("orientationchange", handlers.reloadCanvas, false);
+        window.addEventListener("resize", handlers.reloadCanvas, false);
+
+
+        let show2D = true;
+        let show2D2 = false;
+        let showWallNums = false;
+        let rainbowMode = false;
+        let changeAll = true;
+        let sortedActive = true;
+        let randomColor = false;
+
+        const defaults = {
+            "changeAll": true,
+            "colorpick": "#ff0000",
+            "randomColor": false,
+            "sliderOpacity": 100,
+            "sliderH1": 300,
+            "sliderH0": 0,
+            "sliderFovx": player.fov.xamount,
+            "sliderFovy": player.fov.yamount
+        }
+
+        loadDefaults();
+
+        let prevScene = localStorage.getItem("prevScene");
+        if (prevScene) {
+            prevScene = JSON.parse(prevScene);
+            if (prevScene["expansion"]) expand();
+            importWalls(prevScene);
+            localStorage.removeItem("prevScene");
+        } else {
+            loadScene("mainPic");
+        }
+
+        window.requestAnimationFrame(gameLoop);
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx2D.clearRect(0, 0, canvas2D.width, canvas2D.height);
+
+
+            background();
+            playerHandler.movement();
+                set2Dctx();
+                player.draw();
+                set3Dctx();
+            renderWalls.splice(0, renderWalls.length)
+            walls.forEach(wall => {
+                if (rainbowMode) {
+                    if (wall.hue >= 255) wall.hue = -1;
+                    wall.hue +=1;
+                }
+                if (show2D) {
+                    set2Dctx();
+                    wall.draw();
+                    set3Dctx();
+                }
+                if (wall.isInsideFOV()) {
+                    wall.processFOV();
+                    wall.calculate3D();
+                    renderWalls.push(wall);
+                }
+            });
+            
+            if (renderWalls.length >= 1) {
+                if (sortedActive) {
+                    let sorted = wallsToGraph(renderWalls);
+                    if (sorted.length <= 1) sorted = [0]
+                        sorted.forEach(index => {
+                            renderWalls[index].display3D();
+                    });
+                } else {
+                    renderWalls.forEach(wall => {
+                        wall.display3D();
+                    });
+                }
+            }
+
+            drawing.start();
+            touchControls();
+
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        // background terrain
+        function background() {
+            ctx.fillStyle = color["sky-blue"]; // blue
+            ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height*35);
+            ctx.fillStyle = color["dark-gray"]; // gray
+            ctx.fillRect(0, canvas.height/2, canvas.width, -canvas.height*35);
+
+            ctx2D.fillStyle = color["dark-gray"];
+            ctx2D.fillRect(0, 0, canvas2D.width, canvas2D.height);
+
+        }
+    </script>
+</body>
+</html>

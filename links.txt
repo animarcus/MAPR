@@ -1,9 +1,0 @@
-https://stackoverflow.com/questions/66645171/how-can-i-determine-which-one-of-two-segments-is-lowest-on-the-y-axis/66729933#66729933
-https://en.wikipedia.org/wiki/Partially_ordered_set
-https://www.geeksforgeeks.org/mathematics-partial-orders-lattices/
-https://en.wikipedia.org/wiki/Topological_sorting
-
-JS:
-https://www.tutorialspoint.com/Topological-sorting-using-Javascript-DFS
-https://gist.github.com/shinout/1232505
-https://www.google.com/search?q=topological+sort+javascript&sxsrf=AOaemvJjMtJ8tc2wRSj-JeXxMGDZ2mwPbg%3A1631466001870&ei=ETI-YZO6NKyB9u8PgdyqkA4&oq=topological+sort+javas&gs_lcp=Cgdnd3Mtd2l6EAEYADIFCAAQgAQyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB46BwgAEEcQsAM6BwgAELADEENKBAhBGABQoQlYoQlg9g9oAXACeACAAXOIAXOSAQMwLjGYAQCgAQHIAQrAAQE&sclient=gws-wiz

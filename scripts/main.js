@@ -1,13 +1,6 @@
 // Canvas declared in interface.js
 handlers.updateCanvasSize();
 
-// ctx.translate(0,canvas.height);
-// ctx.scale(1,-1);
-
-// ctx2D.translate(0, canvas2D.height);
-// ctx2D.scale(1, -1);
-
-
 let wallCount = 0;
 const walls = [];
 const wallsTemp = [];

@@ -91,7 +91,7 @@ function ptInTriangle(P, A, B, C) {
     if (isSame(P, A) || isSame(P, B) || isSame(P, C)) return false
     const w1 = (A.x*(C.y - A.y) + (P.y - A.y)*(C.x - A.x) - P.x*(C.y - A.y)) / ((B.y - A.y)*(C.x - A.x) - (B.x - A.x)*(C.y - A.y))
     const w2 = (P.y - A.y - w1*(B.y - A.y)) / (C.y - A.y)
-    return w1 > 0 && w2 > 0 && w1 + w2 < 1
+    return w1 >= 0 && w2 >= 0 && w1 + w2 <= 1
 }
 
 function isIntersectionVectors(v1, v2) {

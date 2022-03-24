@@ -90,116 +90,64 @@ function colorsScene() {
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
     defaults['changeAll'] = false;
-    loadDefaults(); walls.push(new Boundary(133 * (canvas2D.width / 886), 848 * (canvas2D.width / 886), 252 * (canvas2D.width / 886), 842 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(273 * (canvas2D.width / 886), 718 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), 747 * (canvas2D.width / 886), "#ff9d00", 1, 0, 350));
-    walls.push(new Boundary(323 * (canvas2D.width / 886), 809 * (canvas2D.width / 886), 380 * (canvas2D.width / 886), 869 * (canvas2D.width / 886), "#fff200", 1, 0, 350));
-    walls.push(new Boundary(382 * (canvas2D.width / 886), 691 * (canvas2D.width / 886), 432 * (canvas2D.width / 886), 756 * (canvas2D.width / 886), "#51ff00", 1, 0, 350));
-    walls.push(new Boundary(417 * (canvas2D.width / 886), 832 * (canvas2D.width / 886), 494 * (canvas2D.width / 886), 873 * (canvas2D.width / 886), "#00ffea", 1, 0, 350));
-    walls.push(new Boundary(478 * (canvas2D.width / 886), 844 * (canvas2D.width / 886), 548 * (canvas2D.width / 886), 862 * (canvas2D.width / 886), "#00c8ff", 1, 0, 350));
-    walls.push(new Boundary(518 * (canvas2D.width / 886), 745 * (canvas2D.width / 886), 615 * (canvas2D.width / 886), 863 * (canvas2D.width / 886), "#0011ff", 1, 0, 350));
-    walls.push(new Boundary(581 * (canvas2D.width / 886), 810 * (canvas2D.width / 886), 638 * (canvas2D.width / 886), 829 * (canvas2D.width / 886), "#ae00ff", 1, 0, 350));
-    walls.push(new Boundary(617 * (canvas2D.width / 886), 811 * (canvas2D.width / 886), 685 * (canvas2D.width / 886), 803 * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
-    walls.push(new Boundary(801 * (canvas2D.width / 886), 661 * (canvas2D.width / 886), 808 * (canvas2D.width / 886), 580 * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
-    walls.push(new Boundary(782 * (canvas2D.width / 886), 331 * (canvas2D.width / 886), 733 * (canvas2D.width / 886), 276 * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
-    walls.push(new Boundary(160 * (canvas2D.width / 886), 268 * (canvas2D.width / 886), 256 * (canvas2D.width / 886), 193 * (canvas2D.width / 886), "#00ffe1", 1, 0, 350));
-    walls.push(new Boundary(433 * (canvas2D.width / 886), 183 * (canvas2D.width / 886), 618 * (canvas2D.width / 886), 228 * (canvas2D.width / 886), "#80ff00", 1, 0, 350));
-    walls.push(new Boundary(96 * (canvas2D.width / 886), 543 * (canvas2D.width / 886), 103 * (canvas2D.width / 886), 418 * (canvas2D.width / 886), "#80ff00", 1, 0, 350));
-    walls.push(new Boundary(289 * (canvas2D.width / 886), 260 * (canvas2D.width / 886), 382 * (canvas2D.width / 886), 181 * (canvas2D.width / 886), "#ff00e1", 1, 0, 350));
-    walls.push(new Boundary(122 * (canvas2D.width / 886), 764 * (canvas2D.width / 886), 39 * (canvas2D.width / 886), 674 * (canvas2D.width / 886), "#ff00e1", 1, 0, 350));
-    walls.push(new Boundary(172 * (canvas2D.width / 886), 123 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), 84 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(586 * (canvas2D.width / 886), 45 * (canvas2D.width / 886), 750 * (canvas2D.width / 886), 82 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(651 * (canvas2D.width / 886), 616 * (canvas2D.width / 886), 707 * (canvas2D.width / 886), 526 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(814 * (canvas2D.width / 886), 441 * (canvas2D.width / 886), 852 * (canvas2D.width / 886), 314 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(537 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), 478 * (canvas2D.width / 886), 284 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(170 * (canvas2D.width / 886), 625 * (canvas2D.width / 886), 161 * (canvas2D.width / 886), 536 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
-    walls.push(new Boundary(10 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 84 * (canvas2D.width / 886), 210 * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    loadDefaults();
+    walls.push(new Boundary(133 * (canvas2D.width / 886), 848 * (canvas2D.width / 886), (252) * (canvas2D.width / 886), (842) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(273 * (canvas2D.width / 886), 718 * (canvas2D.width / 886), (337) * (canvas2D.width / 886), (747) * (canvas2D.width / 886), "#ff9d00", 1, 0, 350));
+    walls.push(new Boundary(323 * (canvas2D.width / 886), 809 * (canvas2D.width / 886), (380) * (canvas2D.width / 886), (869) * (canvas2D.width / 886), "#fff200", 1, 0, 350));
+    walls.push(new Boundary(382 * (canvas2D.width / 886), 691 * (canvas2D.width / 886), (432) * (canvas2D.width / 886), (756) * (canvas2D.width / 886), "#51ff00", 1, 0, 350));
+    walls.push(new Boundary(417 * (canvas2D.width / 886), 832 * (canvas2D.width / 886), (494) * (canvas2D.width / 886), (873) * (canvas2D.width / 886), "#00ffea", 1, 0, 350));
+    walls.push(new Boundary(478 * (canvas2D.width / 886), 844 * (canvas2D.width / 886), (548) * (canvas2D.width / 886), (862) * (canvas2D.width / 886), "#00c8ff", 1, 0, 350));
+    walls.push(new Boundary(518 * (canvas2D.width / 886), 745 * (canvas2D.width / 886), (615) * (canvas2D.width / 886), (863) * (canvas2D.width / 886), "#0011ff", 1, 0, 350));
+    walls.push(new Boundary(581 * (canvas2D.width / 886), 810 * (canvas2D.width / 886), (638) * (canvas2D.width / 886), (829) * (canvas2D.width / 886), "#ae00ff", 1, 0, 350));
+    walls.push(new Boundary(617 * (canvas2D.width / 886), 811 * (canvas2D.width / 886), (685) * (canvas2D.width / 886), (803) * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
+    walls.push(new Boundary(801 * (canvas2D.width / 886), 661 * (canvas2D.width / 886), (808) * (canvas2D.width / 886), (580) * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
+    walls.push(new Boundary(782 * (canvas2D.width / 886), 331 * (canvas2D.width / 886), (733) * (canvas2D.width / 886), (276) * (canvas2D.width / 886), "#ff00ee", 1, 0, 350));
+    walls.push(new Boundary(160 * (canvas2D.width / 886), 268 * (canvas2D.width / 886), (256) * (canvas2D.width / 886), (193) * (canvas2D.width / 886), "#00ffe1", 1, 0, 350));
+    walls.push(new Boundary(433 * (canvas2D.width / 886), 183 * (canvas2D.width / 886), (618) * (canvas2D.width / 886), (228) * (canvas2D.width / 886), "#80ff00", 1, 0, 350));
+    walls.push(new Boundary(96 * (canvas2D.width / 886), 543 * (canvas2D.width / 886), (103) * (canvas2D.width / 886), (418) * (canvas2D.width / 886), "#80ff00", 1, 0, 350));
+    walls.push(new Boundary(289 * (canvas2D.width / 886), 260 * (canvas2D.width / 886), (382) * (canvas2D.width / 886), (181) * (canvas2D.width / 886), "#ff00e1", 1, 0, 350));
+    walls.push(new Boundary(122 * (canvas2D.width / 886), 764 * (canvas2D.width / 886), (39) * (canvas2D.width / 886), (674) * (canvas2D.width / 886), "#ff00e1", 1, 0, 350));
+    walls.push(new Boundary(172 * (canvas2D.width / 886), 123 * (canvas2D.width / 886), (344) * (canvas2D.width / 886), (84) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(586 * (canvas2D.width / 886), 45 * (canvas2D.width / 886), (750) * (canvas2D.width / 886), (82) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(651 * (canvas2D.width / 886), 616 * (canvas2D.width / 886), (707) * (canvas2D.width / 886), (526) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(814 * (canvas2D.width / 886), 441 * (canvas2D.width / 886), (852) * (canvas2D.width / 886), (314) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(537 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), (478) * (canvas2D.width / 886), (284) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(170 * (canvas2D.width / 886), 625 * (canvas2D.width / 886), (161) * (canvas2D.width / 886), (536) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(10 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), (84) * (canvas2D.width / 886), (210) * (canvas2D.width / 886), "#ff0000", 1, 0, 350));
+    walls.push(new Boundary(551 * (canvas2D.width / 886), 644 * (canvas2D.width / 886), (611) * (canvas2D.width / 886), (622) * (canvas2D.width / 886), "#bd8bb5", 1, 0, 300));
+    walls.push(new Boundary(819 * (canvas2D.width / 886), 723 * (canvas2D.width / 886), (856) * (canvas2D.width / 886), (680) * (canvas2D.width / 886), "#3290d0", 1, 0, 300));
+    walls.push(new Boundary(868 * (canvas2D.width / 886), 521 * (canvas2D.width / 886), (871) * (canvas2D.width / 886), (470) * (canvas2D.width / 886), "#47d283", 1, 0, 300));
+    walls.push(new Boundary(862 * (canvas2D.width / 886), 249 * (canvas2D.width / 886), (816) * (canvas2D.width / 886), (197) * (canvas2D.width / 886), "#bef585", 1, 0, 300));
+    walls.push(new Boundary(730 * (canvas2D.width / 886), 144 * (canvas2D.width / 886), (588) * (canvas2D.width / 886), (90) * (canvas2D.width / 886), "#851a4d", 1, 0, 300));
+    walls.push(new Boundary(473 * (canvas2D.width / 886), 51 * (canvas2D.width / 886), (319) * (canvas2D.width / 886), (10) * (canvas2D.width / 886), "#77a13f", 1, 0, 300));
+    walls.push(new Boundary(166 * (canvas2D.width / 886), 21 * (canvas2D.width / 886), (43) * (canvas2D.width / 886), (63) * (canvas2D.width / 886), "#1a01a3", 1, 0, 300));
+    walls.push(new Boundary(34 * (canvas2D.width / 886), 182 * (canvas2D.width / 886), (81) * (canvas2D.width / 886), (123) * (canvas2D.width / 886), "#6b1663", 1, 0, 300));
+    walls.push(new Boundary(153 * (canvas2D.width / 886), 97 * (canvas2D.width / 886), (203) * (canvas2D.width / 886), (73) * (canvas2D.width / 886), "#78d29", 1, 0, 300));
+    walls.push(new Boundary(58 * (canvas2D.width / 886), 385 * (canvas2D.width / 886), (37) * (canvas2D.width / 886), (502) * (canvas2D.width / 886), "#b046ef", 1, 0, 300));
+    walls.push(new Boundary(35 * (canvas2D.width / 886), 597 * (canvas2D.width / 886), (47) * (canvas2D.width / 886), (650) * (canvas2D.width / 886), "#35c0f8", 1, 0, 300));
+    walls.push(new Boundary(54 * (canvas2D.width / 886), 792 * (canvas2D.width / 886), (92) * (canvas2D.width / 886), (869) * (canvas2D.width / 886), "#ac243c", 1, 0, 300));
+    walls.push(new Boundary(175 * (canvas2D.width / 886), 434 * (canvas2D.width / 886), (197) * (canvas2D.width / 886), (366) * (canvas2D.width / 886), "#1df7f3", 1, 0, 300));
+    walls.push(new Boundary(25 * (canvas2D.width / 886), 404 * (canvas2D.width / 886), (28) * (canvas2D.width / 886), (352) * (canvas2D.width / 886), "#2724c5", 1, 0, 300));
+    walls.push(new Boundary(97 * (canvas2D.width / 886), 167 * (canvas2D.width / 886), (135) * (canvas2D.width / 886), (136) * (canvas2D.width / 886), "#d12492", 1, 0, 300));
+    walls.push(new Boundary(189 * (canvas2D.width / 886), 176 * (canvas2D.width / 886), (246) * (canvas2D.width / 886), (148) * (canvas2D.width / 886), "#5ab731", 1, 0, 300));
+    walls.push(new Boundary(429 * (canvas2D.width / 886), 78 * (canvas2D.width / 886), (478) * (canvas2D.width / 886), (97) * (canvas2D.width / 886), "#408148", 1, 0, 300));
+    walls.push(new Boundary(289 * (canvas2D.width / 886), 59 * (canvas2D.width / 886), (347) * (canvas2D.width / 886), (32) * (canvas2D.width / 886), "#b58720", 1, 0, 300));
+    walls.push(new Boundary(531 * (canvas2D.width / 886), 40 * (canvas2D.width / 886), (602) * (canvas2D.width / 886), (13) * (canvas2D.width / 886), "#9ee881", 1, 0, 300));
+    walls.push(new Boundary(810 * (canvas2D.width / 886), 55 * (canvas2D.width / 886), (855) * (canvas2D.width / 886), (108) * (canvas2D.width / 886), "#9b6051", 1, 0, 300));
+    walls.push(new Boundary(864 * (canvas2D.width / 886), 179 * (canvas2D.width / 886), (885) * (canvas2D.width / 886), (228) * (canvas2D.width / 886), "#e1e88", 1, 0, 300));
+    walls.push(new Boundary(854 * (canvas2D.width / 886), 411 * (canvas2D.width / 886), (839) * (canvas2D.width / 886), (458) * (canvas2D.width / 886), "#925bd5", 1, 0, 300));
+    walls.push(new Boundary(538 * (canvas2D.width / 886), 728 * (canvas2D.width / 886), (588) * (canvas2D.width / 886), (712) * (canvas2D.width / 886), "#48ba0f", 1, 0, 300));
+    walls.push(new Boundary(772 * (canvas2D.width / 886), 854 * (canvas2D.width / 886), (841) * (canvas2D.width / 886), (843) * (canvas2D.width / 886), "#f7632b", 1, 0, 300));
+    walls.push(new Boundary(779 * (canvas2D.width / 886), 776 * (canvas2D.width / 886), (830) * (canvas2D.width / 886), (759) * (canvas2D.width / 886), "#f28a97", 1, 0, 300));
+    walls.push(new Boundary(693 * (canvas2D.width / 886), 706 * (canvas2D.width / 886), (700) * (canvas2D.width / 886), (670) * (canvas2D.width / 886), "#763c48", 1, 0, 300));
     player.pos.x = 358.46248509023616 * (canvas2D.width / 886);
     player.pos.y = 399.9161444502729 * (canvas2D.width / 886);
     player.rotation = -4.677482395344825;
     player.setAngle(degrees(player.rotation));
     player.setFarSight(1000);
-    player.setVerticalLook(0.10471975511965977);
-
-
+    player.setVerticalLook(0);
 }
 
-function penislol() {
-    defaults["sliderFovx"] = 55;
-    walls.push(new Boundary(307 * (canvas2D.width/861), 594 * (canvas2D.width/861), 324 * (canvas2D.width/861), 607 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(331 * (canvas2D.width/861), 613 * (canvas2D.width/861), 343 * (canvas2D.width/861), 618 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(355 * (canvas2D.width/861), 620 * (canvas2D.width/861), 367 * (canvas2D.width/861), 622 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(376 * (canvas2D.width/861), 619 * (canvas2D.width/861), 392 * (canvas2D.width/861), 606 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(394 * (canvas2D.width/861), 599 * (canvas2D.width/861), 403 * (canvas2D.width/861), 578 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(402 * (canvas2D.width/861), 574 * (canvas2D.width/861), 399 * (canvas2D.width/861), 550 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(395 * (canvas2D.width/861), 543 * (canvas2D.width/861), 379 * (canvas2D.width/861), 531 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(373 * (canvas2D.width/861), 527 * (canvas2D.width/861), 358 * (canvas2D.width/861), 528 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(347 * (canvas2D.width/861), 532 * (canvas2D.width/861), 333 * (canvas2D.width/861), 541 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(323 * (canvas2D.width/861), 547 * (canvas2D.width/861), 318 * (canvas2D.width/861), 566 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(313 * (canvas2D.width/861), 577 * (canvas2D.width/861), 309 * (canvas2D.width/861), 591 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(404 * (canvas2D.width/861), 596 * (canvas2D.width/861), 418 * (canvas2D.width/861), 615 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(423 * (canvas2D.width/861), 618 * (canvas2D.width/861), 442 * (canvas2D.width/861), 626 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(448 * (canvas2D.width/861), 626 * (canvas2D.width/861), 473 * (canvas2D.width/861), 622 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(477 * (canvas2D.width/861), 616 * (canvas2D.width/861), 486 * (canvas2D.width/861), 604 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(487 * (canvas2D.width/861), 595 * (canvas2D.width/861), 489 * (canvas2D.width/861), 580 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(487 * (canvas2D.width/861), 571 * (canvas2D.width/861), 486 * (canvas2D.width/861), 556 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(482 * (canvas2D.width/861), 546 * (canvas2D.width/861), 479 * (canvas2D.width/861), 534 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(463 * (canvas2D.width/861), 520 * (canvas2D.width/861), 449 * (canvas2D.width/861), 521 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(404 * (canvas2D.width/861), 554 * (canvas2D.width/861), 416 * (canvas2D.width/861), 539 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(421 * (canvas2D.width/861), 535 * (canvas2D.width/861), 442 * (canvas2D.width/861), 526 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(468 * (canvas2D.width/861), 523 * (canvas2D.width/861), 479 * (canvas2D.width/861), 531 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(374 * (canvas2D.width/861), 523 * (canvas2D.width/861), 377 * (canvas2D.width/861), 507 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(376 * (canvas2D.width/861), 495 * (canvas2D.width/861), 374 * (canvas2D.width/861), 483 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(374 * (canvas2D.width/861), 476 * (canvas2D.width/861), 373 * (canvas2D.width/861), 455 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(374 * (canvas2D.width/861), 451 * (canvas2D.width/861), 375 * (canvas2D.width/861), 424 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(374 * (canvas2D.width/861), 419 * (canvas2D.width/861), 374 * (canvas2D.width/861), 398 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(377 * (canvas2D.width/861), 395 * (canvas2D.width/861), 383 * (canvas2D.width/861), 379 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(384 * (canvas2D.width/861), 379 * (canvas2D.width/861), 400 * (canvas2D.width/861), 377 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(404 * (canvas2D.width/861), 380 * (canvas2D.width/861), 416 * (canvas2D.width/861), 394 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(416 * (canvas2D.width/861), 399 * (canvas2D.width/861), 419 * (canvas2D.width/861), 416 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(419 * (canvas2D.width/861), 421 * (canvas2D.width/861), 422 * (canvas2D.width/861), 445 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(419 * (canvas2D.width/861), 449 * (canvas2D.width/861), 419 * (canvas2D.width/861), 465 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(418 * (canvas2D.width/861), 475 * (canvas2D.width/861), 422 * (canvas2D.width/861), 496 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(422 * (canvas2D.width/861), 501 * (canvas2D.width/861), 424 * (canvas2D.width/861), 517 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(418 * (canvas2D.width/861), 531 * (canvas2D.width/861), 421 * (canvas2D.width/861), 519 * (canvas2D.width/861), "#ff0000", 1, 0, 35));
-    walls.push(new Boundary(620 * (canvas2D.width/861), 252 * (canvas2D.width/861), 808 * (canvas2D.width/861), 327 * (canvas2D.width/861), "#80ff00", 1, 0, 264));
-
-}
-
-function test() {
-    defaults.sliderH0 = 0;
-    defaults.sliderH1 = 300;
-    defaults.sliderFovx = 55;
-    defaults.sliderFovy = 280;
-    defaults.sliderOpacity = 100;
-    defaults.changeAll = false;
-    loadDefaults()
-    walls.push(new Boundary(0 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(886 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(314 * (canvas2D.width / 886), 448 * (canvas2D.width / 886), 516 * (canvas2D.width / 886), 450 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(518 * (canvas2D.width / 886), 650 * (canvas2D.width / 886), 516 * (canvas2D.width / 886), 450 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(309 * (canvas2D.width / 886), 642 * (canvas2D.width / 886), 314 * (canvas2D.width / 886), 448 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(405 * (canvas2D.width / 886), 592 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(445 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(444 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), 445 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(560 * (canvas2D.width / 886), 251 * (canvas2D.width / 886), 725 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(747 * (canvas2D.width / 886), 444 * (canvas2D.width / 886), 725 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(788 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), 747 * (canvas2D.width / 886), 444 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(750 * (canvas2D.width / 886), 373 * (canvas2D.width / 886), 788 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), "#007bff", 0.69, 116, 672));
-    walls.push(new Boundary(368 * (canvas2D.width / 886), 646 * (canvas2D.width / 886), 346 * (canvas2D.width / 886), 657 * (canvas2D.width / 886), "#ff0000", 0.33, 0, 369));
-    walls.push(new Boundary(283 * (canvas2D.width / 886), 682 * (canvas2D.width / 886), 252 * (canvas2D.width / 886), 668 * (canvas2D.width / 886), "#ff0000", 0.33, 0, 369));
-    walls.push(new Boundary(507 * (canvas2D.width / 886), 698 * (canvas2D.width / 886), 550 * (canvas2D.width / 886), 713 * (canvas2D.width / 886), "#ff0000", 0.33, 0, 201));
-    walls.push(new Boundary(607 * (canvas2D.width / 886), 676 * (canvas2D.width / 886), 650 * (canvas2D.width / 886), 649 * (canvas2D.width / 886), "#ff0000", 0.33, 0, 201));
-    walls.push(new Boundary(672 * (canvas2D.width / 886), 592 * (canvas2D.width / 886), 676 * (canvas2D.width / 886), 552 * (canvas2D.width / 886), "#ff0000", 0.33, 0, 201));
-    walls.push(new Boundary(651 * (canvas2D.width / 886), 511 * (canvas2D.width / 886), 604 * (canvas2D.width / 886), 481 * (canvas2D.width / 886), "#ff0000", 0.33, 0, 201));
-    player.pos.x = 584.4246764890964 * (canvas2D.width / 886);
-    player.pos.y = 802.5186785707073 * (canvas2D.width / 886);
-    player.rotation = -2.0420352248333686;
-    player.setAngle(degrees(player.rotation));
-    player.setFarSight(2000);
-    player.setVerticalLook(0.2792526803190927);
-}
 function allExamples() {
     defaults['sliderH0'] = 265;
     defaults['sliderH1'] = 325;
@@ -244,49 +192,139 @@ function allExamples() {
 
 }
 
-function collidingWalls() {
+function heightShowcase() {
     defaults['sliderH0'] = 0;
-    defaults['sliderH1'] = 999;
-    defaults['sliderFovx'] = 55;
+    defaults['sliderH1'] = 300;
+    defaults['sliderFovx'] = 65;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
-    defaults['changeAll'] = true;
-    loadDefaults(); walls.push(new Boundary(0 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), "#55ff00", 1, 0, 300));
-    walls.push(new Boundary(886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), "#55ff00", 1, 0, 300));
-    walls.push(new Boundary(886 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), "#55ff00", 1, 0, 300));
-    walls.push(new Boundary(0 * (canvas2D.width / 886), 886 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), 0 * (canvas2D.width / 886), "#55ff00", 1, 0, 300));
-    walls.push(new Boundary(314 * (canvas2D.width / 886), 448 * (canvas2D.width / 886), 516 * (canvas2D.width / 886), 450 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(518 * (canvas2D.width / 886), 650 * (canvas2D.width / 886), 516 * (canvas2D.width / 886), 450 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(309 * (canvas2D.width / 886), 642 * (canvas2D.width / 886), 314 * (canvas2D.width / 886), 448 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(405 * (canvas2D.width / 886), 592 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(445 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), 367 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(444 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), 445 * (canvas2D.width / 886), 508 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(560 * (canvas2D.width / 886), 251 * (canvas2D.width / 886), 725 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(747 * (canvas2D.width / 886), 444 * (canvas2D.width / 886), 725 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(788 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), 747 * (canvas2D.width / 886), 444 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    walls.push(new Boundary(750 * (canvas2D.width / 886), 373 * (canvas2D.width / 886), 788 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    player.pos.x = 410.1240052445875 * (canvas2D.width / 886);
-    player.pos.y = 882.2961144666627 * (canvas2D.width / 886);
-    player.rotation = -1.4660765716752409;
-    player.setAngle(degrees(player.rotation));
+    defaults['changeAll'] = false;
+    loadDefaults();
+    player.pos.x = 635.4775787199657 * (canvas2D.width / 861);
+    player.pos.y = 932.6479144721142 * (canvas2D.width / 861);
+    player.rotation = 4.066617157146819;
+    player.setAngle(degrees(4.066617157146819));
     player.setFarSight(2000);
-    player.setVerticalLook(2.0816681711721685e-17);
+    player.setVerticalLook(0.13962634015954636);
+
+    walls.push(new Boundary(canvas2D.width / 2.5, 775 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 775 * (canvas2D.width / 861), "#FF0000", 1, 0, 100));
+    walls.push(new Boundary(canvas2D.width / 2.5, 750 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 750 * (canvas2D.width / 861), "#FF0000", 1, 25, 150));
+    walls.push(new Boundary(canvas2D.width / 2.5, 700 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 700 * (canvas2D.width / 861), "#FF0000", 1, 50, 200));
+    walls.push(new Boundary(canvas2D.width / 2.5, 650 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 650 * (canvas2D.width / 861), "#FF0000", 1, 100, 250));
+    walls.push(new Boundary(canvas2D.width / 2.5, 600 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 600 * (canvas2D.width / 861), "#FF0000", 1, 150, 300));
+    walls.push(new Boundary(canvas2D.width / 2.5, 550 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 550 * (canvas2D.width / 861), "#FF0000", 1, 200, 400));
+    walls.push(new Boundary(canvas2D.width / 2.5, 500 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 500 * (canvas2D.width / 861), "#FF0000", 1, 300, 500));
+    walls.push(new Boundary(canvas2D.width / 2.5, 450 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 450 * (canvas2D.width / 861), "#FF0000", 1, 350, 600));
+    walls.push(new Boundary(canvas2D.width / 2.5, 400 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 400 * (canvas2D.width / 861), "#FF0000", 1, 300, 500));
+    walls.push(new Boundary(canvas2D.width / 2.5, 350 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 350 * (canvas2D.width / 861), "#FF0000", 1, 200, 400));
+    walls.push(new Boundary(canvas2D.width / 2.5, 300 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 300 * (canvas2D.width / 861), "#FF0000", 1, 150, 300));
+    walls.push(new Boundary(canvas2D.width / 2.5, 250 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 250 * (canvas2D.width / 861), "#FF0000", 1, 100, 250));
+    walls.push(new Boundary(canvas2D.width / 2.5, 200 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 200 * (canvas2D.width / 861), "#FF0000", 1, 50, 200));
+    walls.push(new Boundary(canvas2D.width / 2.5, 175 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 175 * (canvas2D.width / 861), "#FF0000", 1, 25, 150));
+    walls.push(new Boundary(canvas2D.width / 2.5, 150 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 150 * (canvas2D.width / 861), "#FF0000", 1, 0, 100));
+
+    walls.push(new Boundary(canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), "#FF0000", 1, (25 + 25) , (150 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25) , (200 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (650 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (650 - 25) * (canvas2D.width / 861), "#FF0000", 1, (100 + 25), (250 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (600 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (600 - 25) * (canvas2D.width / 861), "#FF0000", 1, (150 + 25), (300 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (550 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (550 - 25) * (canvas2D.width / 861), "#FF0000", 1, (200 + 25), (400 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (500 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (500 - 25) * (canvas2D.width / 861), "#FF0000", 1, (300 + 25), (500 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (450 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (450 - 25) * (canvas2D.width / 861), "#FF0000", 1, (300 + 25), (500 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (400 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (400 - 25) * (canvas2D.width / 861), "#FF0000", 1, (200 + 25), (400 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (350 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (350 - 25) * (canvas2D.width / 861), "#FF0000", 1, (150 + 25), (300 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (300 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (300 - 25) * (canvas2D.width / 861), "#FF0000", 1, (100 + 25), (250 + 25)));
+    walls.push(new Boundary(canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25) , (200 + 25)));
+
+    walls.push(new Boundary(323 * (canvas2D.width / 861), 832 * (canvas2D.width / 861), (312) * (canvas2D.width / 861), (773) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(312 * (canvas2D.width / 861), 773 * (canvas2D.width / 861), (314) * (canvas2D.width / 861), (717) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(314 * (canvas2D.width / 861), 717 * (canvas2D.width / 861), (302) * (canvas2D.width / 861), (648) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(302 * (canvas2D.width / 861), 648 * (canvas2D.width / 861), (307) * (canvas2D.width / 861), (579) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(307 * (canvas2D.width / 861), 579 * (canvas2D.width / 861), (298) * (canvas2D.width / 861), (538) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(298 * (canvas2D.width / 861), 538 * (canvas2D.width / 861), (304) * (canvas2D.width / 861), (489) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(304 * (canvas2D.width / 861), 489 * (canvas2D.width / 861), (285) * (canvas2D.width / 861), (432) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(285 * (canvas2D.width / 861), 432 * (canvas2D.width / 861), (298) * (canvas2D.width / 861), (393) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(298 * (canvas2D.width / 861), 393 * (canvas2D.width / 861), (286) * (canvas2D.width / 861), (345) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(286 * (canvas2D.width / 861), 345 * (canvas2D.width / 861), (291) * (canvas2D.width / 861), (301) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(291 * (canvas2D.width / 861), 301 * (canvas2D.width / 861), (272) * (canvas2D.width / 861), (235) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(272 * (canvas2D.width / 861), 235 * (canvas2D.width / 861), (272) * (canvas2D.width / 861), (133) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(272 * (canvas2D.width / 861), 133 * (canvas2D.width / 861), (266) * (canvas2D.width / 861), (86) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(266 * (canvas2D.width / 861), 86 * (canvas2D.width / 861), (269) * (canvas2D.width / 861), (40) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(269 * (canvas2D.width / 861), 40 * (canvas2D.width / 861), (303) * (canvas2D.width / 861), (12) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(303 * (canvas2D.width / 861), 12 * (canvas2D.width / 861), (412) * (canvas2D.width / 861), (9) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(412 * (canvas2D.width / 861), 9 * (canvas2D.width / 861), (486) * (canvas2D.width / 861), (11) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
+    walls.push(new Boundary(486 * (canvas2D.width / 861), 11 * (canvas2D.width / 861), (571) * (canvas2D.width / 861), (11) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
 }
 
-function oneWall() {
+function roomShow() {
     defaults['sliderH0'] = 0;
     defaults['sliderH1'] = 300;
     defaults['sliderFovx'] = 55;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
-    defaults['changeAll'] = true;
-    loadDefaults(); walls.push(new Boundary(330.5 * (canvas2D.width / 861), 555.8600451467269 * (canvas2D.width / 861), 530.5 * (canvas2D.width / 861), 555.8600451467269 * (canvas2D.width / 861), "#ff0000", 1, 0, 300));
-    player.pos.x = 430.5 * (canvas2D.width / 861);
-    player.pos.y = 172.2 * (canvas2D.width / 861);
-    player.rotation = 1.5707963267948966;
-    player.setAngle(degrees(player.rotation));
-    player.setFarSight(1000);
+    defaults['changeAll'] = false;
+    loadDefaults();
+    walls.push(new Boundary(50 * (canvas2D.width / 886), 850 * (canvas2D.width / 886), (50) * (canvas2D.width / 886), (100) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(50 * (canvas2D.width / 886), 850 * (canvas2D.width / 886), (800) * (canvas2D.width / 886), (850) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(800 * (canvas2D.width / 886), 200 * (canvas2D.width / 886), (800) * (canvas2D.width / 886), (850) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(200 * (canvas2D.width / 886), 200 * (canvas2D.width / 886), (800) * (canvas2D.width / 886), (200) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(150 * (canvas2D.width / 886), 750 * (canvas2D.width / 886), (150) * (canvas2D.width / 886), (100) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(350 * (canvas2D.width / 886), 700 * (canvas2D.width / 886), (350) * (canvas2D.width / 886), (750) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(200 * (canvas2D.width / 886), 700 * (canvas2D.width / 886), (350) * (canvas2D.width / 886), (700) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(200 * (canvas2D.width / 886), 700 * (canvas2D.width / 886), (200) * (canvas2D.width / 886), (200) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(150 * (canvas2D.width / 886), 750 * (canvas2D.width / 886), (350) * (canvas2D.width / 886), (750) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(200 * (canvas2D.width / 886), 200 * (canvas2D.width / 886), (150) * (canvas2D.width / 886), (100) * (canvas2D.width / 886), "#8dbfbc", 1, 0, 900));
+    player.pos.x = 67.1105733581063 * (canvas2D.width / 886);
+    player.pos.y = -82.78833278838782 * (canvas2D.width / 886);
+    player.rotation = 1.2740903539558694;
+    player.setAngle(degrees(1.2740903539558694));
+    player.setFarSight(2000);
     player.setVerticalLook(0);
+
+    walls.push(new Boundary(330 * (canvas2D.width / 886), 594 * (canvas2D.width / 886), (354) * (canvas2D.width / 886), (607) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(354 * (canvas2D.width / 886), 607 * (canvas2D.width / 886), (367) * (canvas2D.width / 886), (585) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(367 * (canvas2D.width / 886), 585 * (canvas2D.width / 886), (344) * (canvas2D.width / 886), (571) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(344 * (canvas2D.width / 886), 571 * (canvas2D.width / 886), (330) * (canvas2D.width / 886), (594) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(552 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), (569) * (canvas2D.width / 886), (602) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(569 * (canvas2D.width / 886), 602 * (canvas2D.width / 886), (597) * (canvas2D.width / 886), (610) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(597 * (canvas2D.width / 886), 610 * (canvas2D.width / 886), (626) * (canvas2D.width / 886), (595) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(626 * (canvas2D.width / 886), 595 * (canvas2D.width / 886), (624) * (canvas2D.width / 886), (580) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(624 * (canvas2D.width / 886), 580 * (canvas2D.width / 886), (608) * (canvas2D.width / 886), (558) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(608 * (canvas2D.width / 886), 558 * (canvas2D.width / 886), (579) * (canvas2D.width / 886), (555) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(579 * (canvas2D.width / 886), 555 * (canvas2D.width / 886), (557) * (canvas2D.width / 886), (564) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(557 * (canvas2D.width / 886), 564 * (canvas2D.width / 886), (552) * (canvas2D.width / 886), (581) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(278 * (canvas2D.width / 886), 321 * (canvas2D.width / 886), (300) * (canvas2D.width / 886), (340) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(300 * (canvas2D.width / 886), 340 * (canvas2D.width / 886), (336) * (canvas2D.width / 886), (344) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(336 * (canvas2D.width / 886), 344 * (canvas2D.width / 886), (358) * (canvas2D.width / 886), (324) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(358 * (canvas2D.width / 886), 324 * (canvas2D.width / 886), (353) * (canvas2D.width / 886), (294) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(353 * (canvas2D.width / 886), 294 * (canvas2D.width / 886), (332) * (canvas2D.width / 886), (275) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(332 * (canvas2D.width / 886), 275 * (canvas2D.width / 886), (303) * (canvas2D.width / 886), (277) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(303 * (canvas2D.width / 886), 277 * (canvas2D.width / 886), (279) * (canvas2D.width / 886), (298) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+    walls.push(new Boundary(279 * (canvas2D.width / 886), 298 * (canvas2D.width / 886), (278) * (canvas2D.width / 886), (321) * (canvas2D.width / 886), "#80450d", 1, 0, 600));
+
+    walls.push(new Boundary(344 * (canvas2D.width / 886), 559 * (canvas2D.width / 886), (383) * (canvas2D.width / 886), (583) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(383 * (canvas2D.width / 886), 583 * (canvas2D.width / 886), (358) * (canvas2D.width / 886), (626) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(358 * (canvas2D.width / 886), 626 * (canvas2D.width / 886), (316) * (canvas2D.width / 886), (601) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(316 * (canvas2D.width / 886), 601 * (canvas2D.width / 886), (344) * (canvas2D.width / 886), (559) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(544 * (canvas2D.width / 886), 581 * (canvas2D.width / 886), (551) * (canvas2D.width / 886), (559) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(551 * (canvas2D.width / 886), 559 * (canvas2D.width / 886), (577) * (canvas2D.width / 886), (548) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(577 * (canvas2D.width / 886), 548 * (canvas2D.width / 886), (611) * (canvas2D.width / 886), (552) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(611 * (canvas2D.width / 886), 552 * (canvas2D.width / 886), (633) * (canvas2D.width / 886), (575) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(633 * (canvas2D.width / 886), 575 * (canvas2D.width / 886), (634) * (canvas2D.width / 886), (598) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(634 * (canvas2D.width / 886), 598 * (canvas2D.width / 886), (597) * (canvas2D.width / 886), (620) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(597 * (canvas2D.width / 886), 620 * (canvas2D.width / 886), (565) * (canvas2D.width / 886), (609) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(565 * (canvas2D.width / 886), 609 * (canvas2D.width / 886), (544) * (canvas2D.width / 886), (581) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(300 * (canvas2D.width / 886), 347 * (canvas2D.width / 886), (339) * (canvas2D.width / 886), (351) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(339 * (canvas2D.width / 886), 351 * (canvas2D.width / 886), (366) * (canvas2D.width / 886), (326) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(366 * (canvas2D.width / 886), 326 * (canvas2D.width / 886), (361) * (canvas2D.width / 886), (292) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(361 * (canvas2D.width / 886), 292 * (canvas2D.width / 886), (337) * (canvas2D.width / 886), (268) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(337 * (canvas2D.width / 886), 268 * (canvas2D.width / 886), (298) * (canvas2D.width / 886), (270) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(298 * (canvas2D.width / 886), 270 * (canvas2D.width / 886), (272) * (canvas2D.width / 886), (296) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(272 * (canvas2D.width / 886), 296 * (canvas2D.width / 886), (271) * (canvas2D.width / 886), (325) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(271 * (canvas2D.width / 886), 325 * (canvas2D.width / 886), (300) * (canvas2D.width / 886), (347) * (canvas2D.width / 886), "#3ab20c", 1, 250, 600));
+
+    walls.push(new Boundary(757 * (canvas2D.width / 886), 365 * (canvas2D.width / 886), (732) * (canvas2D.width / 886), (314) * (canvas2D.width / 886), "#4440bf", 1, 280, 999));
+    walls.push(new Boundary(711 * (canvas2D.width / 886), 271 * (canvas2D.width / 886), (687) * (canvas2D.width / 886), (223) * (canvas2D.width / 886), "#4440bf", 1, 280, 999));
+    walls.push(new Boundary(755 * (canvas2D.width / 886), 388 * (canvas2D.width / 886), (671) * (canvas2D.width / 886), (211) * (canvas2D.width / 886), "#4440bf", 1, 29, 128));
 }
 
 function mainPic() {
@@ -391,23 +429,12 @@ function copyWallsCode() {
         "defaults['changeAll'] = " + document.getElementById("changeAll").checked + ";\n" +
         "loadDefaults();\n"
     walls.forEach(w => {
-        tmp = tmp + "walls.push(new Boundary(" + w.pos.x + " * (canvas2D.width/" + canvas2D.width + "), " +
-            w.pos.y + " * (canvas2D.width/" + canvas2D.width + "), " +
-            (w.pos.x + w.dir.x) + " * (canvas2D.width/" + canvas2D.width + "), " +
-            (w.pos.y + w.dir.y) + " * (canvas2D.width/" + canvas2D.width + "), " +
-            w.hue + ", " + w.opacity + ", " + w.height0 + ", " + w.height1 + "));\n"
+        tmp = tmp + `walls.push(new Boundary(${w.pos.x} * (canvas2D.width/${canvas2D.width}), ${w.pos.y} * (canvas2D.width/${canvas2D.width}), (${w.pos.x + w.dir.x}) * (canvas2D.width/${canvas2D.width}), (${w.pos.y + w.dir.y}) * (canvas2D.width/${canvas2D.width}), "${w.hex}", ${w.opacity}, ${w.height0}, ${w.height1}));\n`
     });
-    tmp = tmp + "player.pos.x = " + player.pos.x + " * (canvas2D.width/" + canvas2D.width + ");\n" +
-        "player.pos.y = " + player.pos.y + " * (canvas2D.width/" + canvas2D.width + ");\n" +
-        "player.rotation = " + player.rotation + ";\n" +
-        "player.setAngle(degrees(player.rotation))" + ";\n" +
-        "player.setFarSight(" + player.farSight + ")" + ";\n" +
-        "player.setVerticalLook(" + player.vertRotation + ")" + ";\n"
-    console.log(tmp);
-    // navigator.clipboard.writeText(JSON.stringify(copyWalls()))
+    tmp = tmp + `player.pos.x = ${player.pos.x} * (canvas2D.width/${canvas2D.width});\nplayer.pos.y = ${player.pos.y} * (canvas2D.width/${canvas2D.width});\nplayer.rotation = ${player.rotation};\nplayer.setAngle(degrees(${player.rotation}));\nplayer.setFarSight(${player.farSight});\nplayer.setVerticalLook(${player.vertRotation});\n`
+    // console.log(tmp);
     navigator.clipboard.writeText(tmp)
 }
-
 
 function loadScene(sceneName) {
     clearWalls();
@@ -422,20 +449,20 @@ function loadScene(sceneName) {
         case "penis":
             penislol();
             break;
-        case "test":
-            test();
-            break;
         case "allExamples":
             allExamples();
             break;
         case "collidingWalls":
             collidingWalls();
             break;
-        case "oneWall":
-            oneWall();
-            break;
         case "mainPic":
             mainPic();
+            break;
+        case "heightShowcase":
+            heightShowcase();
+            break;
+        case "roomShow":
+            roomShow();
             break;
     }
     return true;
@@ -443,7 +470,7 @@ function loadScene(sceneName) {
 
 // corridors
 // colors
-// different sizes 1
+// different sizes 1 ok
 // different sizes 2
 // performance
 // normal room

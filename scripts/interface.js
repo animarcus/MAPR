@@ -1,5 +1,3 @@
-// const canvas3D = document.getElementById('canvas3D');
-// const canvas2D = document.getElementById("canvas2D");
 const canvas = document.getElementById('canvas3D');
 let ctx = canvas.getContext('2d', { alpha: false });
 
@@ -40,8 +38,6 @@ const handlers = {
     click(e) {
         mouse.x = e.offsetX;
         mouse.y = canvas2D.height - e.offsetY;
-        // drawing.startpos.x = mouse.x;
-        // drawing.startpos.y = mouse.y;
         e.preventDefault();
         drawing.isDrawing = true;
     },
@@ -71,7 +67,7 @@ const handlers = {
         window.location = window.location;
     }
 };
-document.addEventListener('resize', handlers.updateCanvasSize());
+
 document.onkeyup = (e) => delete keysPressed[e.key];
 document.onkeydown = (e) => {
     keysPressed[e.key] = true;
@@ -136,14 +132,14 @@ const drawing = {
             if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
                 undoWall = false;
                 currentCooldown = cooldown - 1;
-                console.log("undioing") // TEST
+                // console.log("undioing") // TEST
                 wallCount --;
                 wallsTemp.push(walls.pop());
             }
             if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
                 redoWall = false;
                 currentCooldown = cooldown - 1;
-                console.log("REDO") // TEST
+                // console.log("REDO") // TEST
                 walls.push(wallsTemp.pop())
             }
         }
@@ -199,7 +195,6 @@ const drawing = {
                 }
             });
             if (intCount == 0) {
-                // console.log(parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100))
                 walls.push(new Boundary(this.startpos.x, this.startpos.y,
                                         mouse.x, mouse.y,
                                         document.getElementById("colorpick").value,
@@ -207,7 +202,6 @@ const drawing = {
                                         document.getElementById("sliderH0").value,
                                         document.getElementById("sliderH1").value));
                 if (randomColor) {
-                    console.log("boop")
                     walls[walls.length - 1].hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`
                 }
             }

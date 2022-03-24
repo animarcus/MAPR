@@ -1,0 +1,5 @@
+{"rule":"FR_SIMPLE_REPLACE","sentence":"^\\QHTML (HyperText Markup Language) permettant de décrire le contenu statique (texte formaté, images, etc...) inclus sur la page.\\E$"}
+{"rule":"FR_SIMPLE_REPLACE","sentence":"^\\QHTML (HyperText Markup Language) permettant de décrire le contenu statique (texte formaté, images, etc.) inclus sur la page.\\E$"}
+{"rule":"ACCORD_SUJET_VERBE","sentence":"^\\QPar exemple, un ensemble de nombres qui deux a deux peuvent tous être comparés pour les ordonner du petit au plus grand.\\E$"}
+{"rule":"SEARCH","sentence":"^\\QPour ordonner ce graphe, on va utiliser un algorithme de traversée appelé Depth First Search (qui signifie en anglais parcours en profondeur) afin d'accéder à tous les sommets dans leur ordre dans le graphe.\\E$"}
+{"rule":"FRENCH_WHITESPACE","sentence":"^\\QComme nous sommes sur un plan en 2D on appliquera le produit vectoriel \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q:\\E$"}
