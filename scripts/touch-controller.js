@@ -77,8 +77,7 @@ if (isTouchScreen) {
     canvas.onpointerleave = pointerup;
 }
 
-
-
+handlers.updateCanvasSize()
 
 let W = canvas.width/6;
 let H = canvas.width/6;

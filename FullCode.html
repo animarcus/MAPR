@@ -9,7 +9,579 @@
     <link rel="stylesheet" href="./styles/button.css">
     <link rel="stylesheet" href="./styles/checkbox.css">
     <link rel="stylesheet" href="./styles/input.css">
-    <title>Marcus' Algorithm for Pseudo3D Rendering</title>
+    <style>
+        .normalButton {
+            box-shadow: inset -6px 1px 0px -18px #ffffff;
+            background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+            background-color: #ffffff;
+            border-radius: 7px;
+            border: 3px solid #666666;
+            display: inline-block;
+            cursor: pointer;
+            color: #615f61;
+            font-family: Arial;
+            font-size: 20px;
+            font-weight: bold;
+            /* font-style:italic; */
+            padding: 12px 24px;
+            text-decoration: none;
+            text-shadow: -2px 3px 4px #bdbdbd;
+        }
+
+        .normalButton:hover,
+        .resetButton:hover {
+            background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+            background-color: #f6f6f6;
+        }
+
+        .normalButton:active,
+        .resetButton:active {
+            position: relative;
+            top: 1px;
+        }
+
+        .levelButton {
+            width: 100%;
+        }
+
+        .resetButton {
+            box-shadow: inset -6px 1px 0px -18px #ffffff;
+            background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+            background-color: #ffffff;
+            border-radius: 7px;
+            border: 2px solid #666666;
+            display: inline-block;
+            cursor: pointer;
+            color: #615f61;
+            font-family: Arial;
+            /* font-family: Lucida Sans Unicode; */
+            font-size: 15px;
+            font-weight: bold;
+            display: block;
+            padding: 5px 2px;
+            text-decoration: none;
+            text-shadow: -2px 3px 4px #bdbdbd;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+        }
+
+        .resetAllButton {
+            padding: 10px 10px;
+        }
+
+        :root {
+            --checked-background: rgb(0, 174, 255);
+            --border: rgb(0, 0, 0);
+            --checked-hover-focus: rgb(45, 223, 255);
+            --disabled-background: rgba(236, 236, 236, 0.5);
+            --checkmark-enabled: rgba(255, 255, 255, 1);
+            --hover-focus: rgba(231, 238, 243, 1);
+        }
+
+        #sortingCheck {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #252525;
+            font-family: Arial;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: var(--disabled-background);
+            border: 2px solid var(--border);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+            padding: 9px;
+            margin: 15px;
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+            /* transform: scale(2); */
+        }
+
+
+        .checkbox:active,
+        .checkbox:checked:active {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkbox:checked {
+            background-color: var(--checked-background);
+            border: 2px solid var(--border);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+        }
+
+        .checkbox:checked:after {
+            content: '\2713';
+            font-size: 17px;
+            font-weight: bold;
+            position: absolute;
+            top: 0px;
+            left: 3px;
+            color: var(--checkmark-enabled);
+        }
+
+        .big-checkbox {
+            padding: 18px;
+        }
+
+        .big-checkbox:checked:after {
+            font-size: 28px;
+            left: 6px;
+        }
+
+        .checkbox:hover {
+            background-color: var(--hover-focus);
+            cursor: pointer;
+        }
+
+        .checkbox:checked:hover {
+            background-color: var(--checked-hover-focus);
+            cursor: pointer;
+        }
+
+        :root {
+            --light-gray: #B1AFAF;
+            --dark-gray: #605F5E;
+            --yellow: #F0A202;
+            --dark-blue: #0A2463;
+            --sky-blue: #51CBFF;
+            --mid-blue: #247BA0;
+            --pink: #FDCFF3;
+            --background-settings: #cacaca;
+            --lighter-gray: #cacaca;
+        }
+
+        html,
+        body {
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+/Edge */
+            user-select: none;
+            /* Standard */
+
+            background-color: var(--mid-blue);
+            height: 100vh;
+            position: fixed;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .no-touch {
+            touch-action: none;
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+/Edge */
+            user-select: none;
+            /* Standard */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 65% auto;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                "perspective flatview"
+                "perspective controls";
+            width: 100vw;
+            height: 100vh;
+            background: var(--mid-blue);
+            /*linear-gradient(140deg, var(--dark-blue) 10%, var(--sky-blue) 100%) fixed;*/
+        }
+
+
+        .controls {
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: baseline;
+            align-items: center;
+            /* padding-top: 30px; */
+            padding: 30px;
+            margin: 0;
+
+            background-color: var(--lighter-gray);
+            grid-area: controls;
+        }
+
+        .perspective {
+            display: flex;
+            flex-direction: column;
+            justify-content: baseline;
+            align-items: center;
+            padding: 5px 5px 5px 5px;
+            /* padding-left: 5px;
+            padding-right: 5px; */
+
+            /* background-color: rgb(0, 110, 255); */
+            grid-area: perspective;
+        }
+
+        .flatview {
+            display: flex;
+            flex-direction: column;
+            justify-content: baseline;
+            align-items: center;
+            padding: 5px;
+
+            /* background-color: rgb(0, 110, 255); */
+            grid-area: flatview;
+        }
+
+        #canvas3D {
+            width: 100%;
+            height: 99%;
+            /* max-height: min-content;
+            max-height: width; */
+            background: rgb(56, 56, 56);
+        }
+
+        #canvas2D {
+            width: 100%;
+            height: auto;
+            background: rgb(56, 56, 56);
+        }
+
+
+        .instructions {
+            /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+            font-family: sans-serif;
+            font-size: larger;
+            font-weight: bold;
+            text-align: center;
+            color: #000000;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: solid;
+            border-radius: 5px;
+            background-color: #ffffff;
+            padding: 10px;
+            /* 0px 10px 0px */
+        }
+
+        .sceneSettings {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            row-gap: 10px;
+            padding: 20px 20px 300px 20px;
+        }
+
+        .scene {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            padding: 20px;
+            background-color: var(--background-settings);
+        }
+
+        .walls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 10px;
+            padding: 20px;
+            background-color: var(--background-settings);
+        }
+
+        .general {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            padding: 20px;
+            background-color: var(--background-settings);
+        }
+
+        .sectionText {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 26px;
+            letter-spacing: 0px;
+            word-spacing: 2px;
+            color: #000000;
+            font-weight: 700;
+            text-decoration: underline rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+            padding: 20px 5px 20px 5px;
+            width: 100%;
+            background-color: white;
+        }
+
+        .expand {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            font-family: sans-serif;
+            font-size: small;
+            font-weight: bold;
+            text-align: center;
+            color: #000000;
+            border-width: 2px;
+            border-color: #000000;
+            border-style: solid;
+            border-radius: 5px;
+            background-color: #ffffff;
+            padding: 2px 2px 2px 2px;
+        }
+
+        .divTable {
+            display: table;
+            width: 90%;
+        }
+
+        .divTableRow {
+            display: table-row;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+
+        .divTableCell,
+        .divTableHead {
+            display: table-cell;
+            padding: 3px 10px;
+            text-align: right;
+            vertical-align: middle;
+
+
+            font-family: Arial;
+            font-size: 20px;
+            font-weight: bold;
+            /* font-style:italic; */
+            padding: 12px 24px;
+            text-decoration: none;
+            text-shadow: -2px 3px 4px #bdbdbd;
+            box-shadow: inset -6px 1px 0px -18px #ffffff;
+        }
+
+        .divTableColor {
+            border-top: 1px solid #999999;
+            border-bottom: 1px solid #999999;
+            background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+            background-color: #ffffff;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+
+        .divTableBody {
+            display: table-row-group;
+        }
+
+        .miniImg {
+            height: auto;
+            width: 30%;
+            padding-left: 30px;
+            margin: auto;
+        }
+
+        .miniDiv {
+            display: flex;
+            row-gap: 200px;
+            flex-direction: row;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 40px;
+            border: solid 3px rgba(179, 179, 179, 0.5);
+            border-radius: 5%;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+        }
+
+        @media screen and (max-width: 1300px) and (min-width: 800px) {
+            .container {
+                grid-template-columns: 60% auto;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .container {
+                display: grid;
+                grid-template-columns: 65% auto;
+                grid-template-rows: 75% auto;
+                grid-template-areas:
+                    "perspective flatview"
+                    "controls controls";
+                width: 100vw;
+                height: 100vh;
+                background: var(--mid-blue);
+            }
+
+            .divTableCell,
+            .divTableHead {
+                display: table-cell;
+                padding: 3px 10px;
+                text-align: right;
+                vertical-align: middle;
+
+
+                font-family: Arial;
+                font-size: 15px;
+                font-weight: bold;
+                /* font-style:italic; */
+                /* padding:12px 24px; */
+                text-decoration: none;
+                text-shadow: -2px 3px 4px #bdbdbd;
+                box-shadow: inset -6px 1px 0px -18px #ffffff;
+            }
+        }
+
+        @media (max-width: 850px) and (max-height: 550px) {
+            .container {
+                display: grid;
+                grid-template-columns: 65% auto;
+                grid-template-rows: 85% auto;
+            }
+        }
+
+
+        #title {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            background-color: white;
+            padding: 10px 0px 10px 0px;
+        }
+
+        @media screen and (max-height: 550px) {
+            #title {
+                display: none;
+            }
+        }
+
+        input[type=range] {
+            width: 100%;
+            margin: 13.8px 0;
+            background-color: transparent;
+            -webkit-appearance: none;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            background: #3e71a9;
+            border: 0.2px solid #010101;
+            border-radius: 1.3px;
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            margin-top: -14px;
+            width: 16px;
+            height: 36px;
+            background: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 3px;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #467ebb;
+        }
+
+        input[type=range]::-moz-range-track {
+            background: #3e71a9;
+            border: 0.2px solid #010101;
+            border-radius: 1.3px;
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            width: 16px;
+            height: 36px;
+            background: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type=range]::-ms-track {
+            background: transparent;
+            border-color: transparent;
+            border-width: 14.8px 0;
+            color: transparent;
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            background: #376596;
+            border: 0.2px solid #010101;
+            border-radius: 2.6px;
+        }
+
+        input[type=range]::-ms-fill-upper {
+            background: #3e71a9;
+            border: 0.2px solid #010101;
+            border-radius: 2.6px;
+        }
+
+        input[type=range]::-ms-thumb {
+            width: 16px;
+            height: 36px;
+            background: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 0px;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: #3e71a9;
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #467ebb;
+        }
+    </style>
+    <title>MAPR</title>
 </head>
 
 <body>
@@ -48,7 +620,8 @@
                                     <div class="miniDiv">
                                         <button class="normalButton levelButton" onclick='loadScene("mainPic")'> Cover
                                             Photo Scene </button>
-                                        <img class="miniImg" src="./img/Minimap/mainPic.png">
+                                        <img class="miniImg"
+                                            src="https://github.com/animarcus/raycasting/raw/main/img/Minimap/mainPic.png">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +630,8 @@
                                     <div class="miniDiv">
                                         <button class="normalButton levelButton" onclick='loadScene("example")'> Simple
                                             Example </button>
-                                        <img class="miniImg" src="./img/Minimap/example.png">
+                                        <img class="miniImg"
+                                            src="https://github.com/animarcus/raycasting/raw/main/img/Minimap/example.png">
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +641,8 @@
                                         <button class="normalButton levelButton" onclick='loadScene("heightShowcase")'>
                                             Different Wall Heights
                                         </button>
-                                        <img class="miniImg" src="./img/Minimap/heightShowcase.png"></img>
+                                        <img class="miniImg"
+                                            src="https://github.com/animarcus/raycasting/raw/main/img/Minimap/heightShowcase.png"></img>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +651,8 @@
                                     <div class="miniDiv">
                                         <button class="normalButton levelButton" onclick='loadScene("colors")'> Colors
                                             !!! </button>
-                                        <img class="miniImg" src="./img/Minimap/colors.png"></img>
+                                        <img class="miniImg"
+                                            src="https://github.com/animarcus/raycasting/raw/main/img/Minimap/colors.png"></img>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +661,8 @@
                                     <div class="miniDiv">
                                         <button class="normalButton levelButton" onclick='loadScene("roomShow")'>
                                             Corridor with a Room </button>
-                                        <img class="miniImg" src="./img/Minimap/roomShow.png"></img>
+                                        <img class="miniImg"
+                                            src="https://github.com/animarcus/raycasting/raw/main/img/Minimap/roomShow.png"></img>
                                     </div>
                                 </div>
                             </div>
@@ -228,11 +805,11 @@
     </div>
     <script>
         function radians(degreeValue) {
-            return degreeValue * (Math.PI/180);
+            return degreeValue * (Math.PI / 180);
         }
 
         function degrees(radianValue) {
-            return radianValue * (180/Math.PI);
+            return radianValue * (180 / Math.PI);
         }
 
         function circle(x, y, r, fill = "white", lineWidth = 1, lineColor = fill) {
@@ -259,7 +836,7 @@
             ctx.beginPath();
             ctx.lineWidth = lineWidth;
             ctx.strokeStyle = lineColor;
-            ctx.moveTo(x1,y1);
+            ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.stroke();
         }
@@ -273,7 +850,7 @@
             ctx.beginPath();
             ctx.moveTo(coords[0], coords[1]);
             for (let i = 2; i < coords.length; i += 2) {
-                ctx.lineTo(coords[i], coords[i+1]);
+                ctx.lineTo(coords[i], coords[i + 1]);
             }
             ctx.closePath();
             ctx.fillStyle = fill;
@@ -287,7 +864,7 @@
 
 
         function getRotation(pos, dir) {
-            let rotation = Math.abs(Math.atan(dir.y/dir.x));
+            let rotation = Math.abs(Math.atan(dir.y / dir.x));
             const x = pos.x;
             const y = pos.y;
             const x2 = pos.x + dir.x;
@@ -295,7 +872,7 @@
             if (x2 > x && y2 >= y) rotation = rotation; //Q1  no change
             if (x2 <= x && y2 > y) rotation = Math.PI - rotation; //Q2  add 90 degrees
             if (x2 < x && y2 <= y) rotation += Math.PI;
-            if (x2 >= x && y2 < y) rotation = Math.PI*2 - rotation;
+            if (x2 >= x && y2 < y) rotation = Math.PI * 2 - rotation;
             return rotation;
         }
 
@@ -414,11 +991,11 @@
 
 
         const drawing = {
-            isDrawing : false,
-            startpos : {
+            isDrawing: false,
+            startpos: {
                 'fixed': false,
-                'x' : undefined,
-                'y' : undefined
+                'x': undefined,
+                'y': undefined
             },
             start() {
 
@@ -428,13 +1005,13 @@
                 set3Dctx();
                 if (currentCooldown <= 0) currentCooldown = cooldown;
                 if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown--;
-                
+
                 if (!this.isDrawing) {
                     if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
                         undoWall = false;
                         currentCooldown = cooldown - 1;
                         // console.log("undioing") // TEST
-                        wallCount --;
+                        wallCount--;
                         wallsTemp.push(walls.pop());
                     }
                     if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
@@ -453,7 +1030,7 @@
                     set3Dctx();
                 }
             },
-            snappingThreshold : 15,
+            snappingThreshold: 15,
             snapping() {
 
                 if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
@@ -472,36 +1049,41 @@
             },
             stop() {
                 if (this.isDrawing && (Math.abs(this.startpos.x - mouse.x) > 10 || Math.abs(this.startpos.y - mouse.y) > 10)) {
-                    newWall = { "pos": {"x": this.startpos.x,
-                                        "y": this.startpos.y },
-                                "dir": {"x": mouse.x - this.startpos.x,
-                                        "y": mouse.y - this.startpos.y }
+                    newWall = {
+                        "pos": {
+                            "x": this.startpos.x,
+                            "y": this.startpos.y
+                        },
+                        "dir": {
+                            "x": mouse.x - this.startpos.x,
+                            "y": mouse.y - this.startpos.y
+                        }
                     }
                     let intCount = 0;
                     walls.forEach(wall => {
                         if (isIntersectionVectors(wall, newWall)) {
-                            intCount ++;
+                            intCount++;
                         };
-                        if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold/3 && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold/3) {
+                        if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold / 3 && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold / 3) {
                             mouse.x = wall.pos.x;
                             mouse.y = wall.pos.y;
                             intCount = 0;
-                            
+
                         }
-                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold/3 && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold/3) {
+                        if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold / 3 && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold / 3) {
                             mouse.x = wall.pos.x + wall.dir.x;
                             mouse.y = wall.pos.y + wall.dir.y;
                             intCount = 0;
-                            
+
                         }
                     });
                     if (intCount == 0) {
                         walls.push(new Boundary(this.startpos.x, this.startpos.y,
-                                                mouse.x, mouse.y,
-                                                document.getElementById("colorpick").value,
-                                                parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
-                                                document.getElementById("sliderH0").value,
-                                                document.getElementById("sliderH1").value));
+                            mouse.x, mouse.y,
+                            document.getElementById("colorpick").value,
+                            parseFloat(parseInt(document.getElementById("sliderOpacity").value) / 100),
+                            document.getElementById("sliderH0").value,
+                            document.getElementById("sliderH1").value));
                         if (randomColor) {
                             walls[walls.length - 1].hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`
                         }
@@ -649,20 +1231,20 @@
             draw() {
                 let tmpalpha = ctx.globalAlpha;
                 ctx.globalAlpha = 0.1;
-                
-                ctx.save();
-                        ctx.setTransform(1, 0, 0, 1, 0, 0);
-                        
 
-                        polygon([   this.x, canvas.height - this.y,
-                                    this.x, canvas.height - (this.y + this.height),
-                                    this.x + this.width, canvas.height - (this.y + this.height),
-                                    this.x + this.width, canvas.height - this.y], this.color)
-                        ctx.font = "bolder 15px Arial";
-                        ctx.textAlign = "center";
-                        ctx.textBaseline = 'middle';
-                        ctx.fillStyle = "black";
-                        ctx.fillText(this.text, this.x + this.width/2, canvas.height - this.y - this.height/2);
+                ctx.save();
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+
+                polygon([this.x, canvas.height - this.y,
+                this.x, canvas.height - (this.y + this.height),
+                this.x + this.width, canvas.height - (this.y + this.height),
+                this.x + this.width, canvas.height - this.y], this.color)
+                ctx.font = "bolder 15px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = "black";
+                ctx.fillText(this.text, this.x + this.width / 2, canvas.height - this.y - this.height / 2);
                 ctx.restore();
                 ctx.globalAlpha = tmpalpha;
             }
@@ -713,21 +1295,20 @@
             canvas.onpointerleave = pointerup;
         }
 
+        handlers.updateCanvasSize()
 
-
-
-        let W = canvas.width/6;
-        let H = canvas.width/6;
+        let W = canvas.width / 6;
+        let H = canvas.width / 6;
         if (H < 50) H = 100;
         let buttons = [
-            new Button(0    , 0, W, H, "yellow" ,"a", "Left"),
-            new Button(2 * W, 0, W, H, "green"  ,"d", "Right"),
-            new Button(W    , 0, W, H, "cyan"   ,"s", "Back"),
-            new Button(W    , H, W, H, "orange" ,"w", "Forward"),
-            new Button(3 * W, 0, W, H, "yellow" ,"ArrowLeft", "Look left"),
-            new Button(5 * W, 0, W, H, "green"  ,"ArrowRight", "Look Right"),
-            new Button(4 * W, 0, W, H, "cyan"   ,"ArrowDown", "Look Down"),
-            new Button(4 * W, H, W, H, "orange" ,"ArrowUp", "Look Up")
+            new Button(0, 0, W, H, "yellow", "a", "Left"),
+            new Button(2 * W, 0, W, H, "green", "d", "Right"),
+            new Button(W, 0, W, H, "cyan", "s", "Back"),
+            new Button(W, H, W, H, "orange", "w", "Forward"),
+            new Button(3 * W, 0, W, H, "yellow", "ArrowLeft", "Look left"),
+            new Button(5 * W, 0, W, H, "green", "ArrowRight", "Look Right"),
+            new Button(4 * W, 0, W, H, "cyan", "ArrowDown", "Look Down"),
+            new Button(4 * W, H, W, H, "orange", "ArrowUp", "Look Up")
         ]
 
         function touchControls() {
@@ -756,14 +1337,18 @@
 
         class Ray {
             constructor(x, y, rotation, length = 200) {
-                this.pos = {'x': x,
-                            'y': y };
-                this.dir = { 'x': Math.cos(radians(rotation)),
-                                'y': Math.sin(radians(rotation)),
-                                'length': length };
+                this.pos = {
+                    'x': x,
+                    'y': y
+                };
+                this.dir = {
+                    'x': Math.cos(radians(rotation)),
+                    'y': Math.sin(radians(rotation)),
+                    'length': length
+                };
             }
-            draw(COLOR, lineWidth=1) { // 2D
-                line(this.pos.x, this.pos.y, this.pos.x + this.dir.x*this.dir.length, this.pos.y + this.dir.y*this.dir.length, COLOR, lineWidth);
+            draw(COLOR, lineWidth = 1) { // 2D
+                line(this.pos.x, this.pos.y, this.pos.x + this.dir.x * this.dir.length, this.pos.y + this.dir.y * this.dir.length, COLOR, lineWidth);
             }
             setAngle(angle) { //input is in degrees but handled in radians
                 this.dir.x = Math.cos(radians(angle));
@@ -831,12 +1416,12 @@
             verticalLook(angle) {
                 // angle = radians(angle)
                 let vertLimit = {};
-                vertLimit.max = 4*Math.PI/9;    // 80
-                vertLimit.min = -Math.PI/3;     // -60
+                vertLimit.max = 4 * Math.PI / 9;    // 80
+                vertLimit.min = -Math.PI / 3;     // -60
                 if (this.vertRotation + radians(angle) >= vertLimit.min && this.vertRotation + radians(angle) <= vertLimit.max) {
                     this.vertRotation += radians(angle)
 
-                    let newTranslate = (100/7)*(degrees(this.vertRotation) + 10) - 1000/7
+                    let newTranslate = (100 / 7) * (degrees(this.vertRotation) + 10) - 1000 / 7
                     // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
                     ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
                     this.fov.currentTranslate = newTranslate
@@ -857,8 +1442,8 @@
                 }
             }
             sideMove(step) {
-                this.pos.x += -step * this.dir.y/2;
-                this.pos.y += step * this.dir.x/2;
+                this.pos.x += -step * this.dir.y / 2;
+                this.pos.y += step * this.dir.x / 2;
                 this.setFOV();
             }
             straightMove(step) {
@@ -911,13 +1496,13 @@
                 if (keysPressed.ArrowRight) {
                     player.sideLook(-player.lookStepH);
                 }
-                
+
                 player.moveStep = 1.4;
             }
         };
 
         class Boundary {
-            constructor(x1, y1, x2, y2, hex="#FF0000", opacity=0.5, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
+            constructor(x1, y1, x2, y2, hex = "#FF0000", opacity = 0.5, height0 = document.getElementById("sliderH0").value, height1 = document.getElementById("sliderH1").value) {
                 this.pos = {
                     'x': x1,
                     'y': y1
@@ -927,7 +1512,7 @@
                     'y': y2 - y1,
                 };
                 wallCount++;
-                this.index = wallCount -1;
+                this.index = wallCount - 1;
                 this.length = Math.sqrt((this.dir.x) * (this.dir.x) + (this.dir.y) * (this.dir.y));
 
                 this.rotation = getRotation(this.pos, this.dir);
@@ -950,7 +1535,7 @@
                     ctx.setTransform(1, 0, 0, 1, 0, 0);
                     ctx.font = "30px Arial";
                     ctx.fillStyle = 'white';
-                    ctx.fillText(this.index, (this.pos.x*2 + this.dir.x)/2 - 10, canvas2D.height - (this.pos.y*2 + this.dir.y)/2 - 10);
+                    ctx.fillText(this.index, (this.pos.x * 2 + this.dir.x) / 2 - 10, canvas2D.height - (this.pos.y * 2 + this.dir.y) / 2 - 10);
                     ctx.restore();
                 }
                 set3Dctx();
@@ -966,15 +1551,15 @@
                     'x': (this.pos.x + this.dir.x) - player.pos.x,
                     'y': (this.pos.y + this.dir.y) - player.pos.y
                 };
-                
+
                 this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
                 this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
 
                 if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
                     (isClockwiseOrder(player.fov.v1.dir, this.p) && !isClockwiseOrder(player.fov.v2.dir, this.p) &&
-                    isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h) 
-                    // && (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
-                    // (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2)
+                        isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h)
+                        // && (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
+                        // (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2)
                     )
                 ) return true;
             }
@@ -1022,9 +1607,9 @@
 
                 let v1xangle = Math.acos(vectorDotProduct(this.p, dir));        // get angle between dir and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
                 let v2xangle = Math.acos(vectorDotProduct(this.h, this.p));     // get angle between v1 and v2
-                                                                                // angles are calculated using | adjacent / hypothenuse
-                                                                                // hypothenuse is 1 because v1/v1 was normalized (no denominator)
-                                                                                // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
+                // angles are calculated using | adjacent / hypothenuse
+                // hypothenuse is 1 because v1/v1 was normalized (no denominator)
+                // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
 
                 if (!isClockwiseOrder(dir, this.p)) v1xangle = -v1xangle;  // correct sign depending on side of v1/v2
                 if (!isClockwiseOrder(this.p, this.h)) v2xangle = -v2xangle;
@@ -1049,9 +1634,9 @@
                 const floor = vectorCreate(v.dist, -player.height);
                 return {
                     'floor': (floor.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
-                    'h0':    (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
-                    'h1':    (h1.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
-                    'sat': 1, 
+                    'h0': (h0.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+                    'h1': (h1.y * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * v.dist),
+                    'sat': 1,
                     'dist': v.dist
                 };
             }
@@ -1059,7 +1644,7 @@
             display3D() {
                 const maxl = 0;
                 const minl = -0.75; // maximum darkness for color
-                const a = canvas2D.width/1.2; // distance until it gets completely darkened
+                const a = canvas2D.width / 1.2; // distance until it gets completely darkened
                 const n = 2 // if pair, makes the curves more "square"
 
                 // function determined with https://math.stackexchange.com/questions/2170013/looking-for-a-decreasing-function-which-initially-decreases-slowly-and-then-decr
@@ -1072,25 +1657,25 @@
                 if (L2 > maxl) L2 = maxl;
 
                 const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
-                            this.x2 + canvas.width / 2, canvas.height / 2);
+                    this.x2 + canvas.width / 2, canvas.height / 2);
 
                 grd.addColorStop(0, shadeHexColor(this.hex, L1));
                 grd.addColorStop(1, shadeHexColor(this.hex, L2));
                 ctx.fillStyle = grd;
-                
+
                 let tmpalpha = ctx.globalAlpha;
                 ctx.globalAlpha = this.opacity;
                 if (sortedActive) {  // adds color under the wall to hide any overlap
-                    polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
-                            this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
-                            this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
-                            this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
+                    polygon([this.x1 + canvas.width / 2, this.h1.floor + canvas.height / 2,
+                    this.x2 + canvas.width / 2, this.h2.floor + canvas.height / 2,
+                    this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
+                    this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
                     ], color["dark-gray"], 0);
                 }
                 polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
-                this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
-                this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,
-                this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2
+                this.x1 + canvas.width / 2, this.h1.h1 + canvas.height / 2,
+                this.x2 + canvas.width / 2, this.h2.h1 + canvas.height / 2,
+                this.x2 + canvas.width / 2, this.h2.h0 + canvas.height / 2
                 ], `grd`, 2);
 
                 ctx.globalAlpha = tmpalpha;
@@ -1131,16 +1716,16 @@
 
         function isClockwiseOrder(v1, v2) {  // Tests if the cross product with z=0, returns positive or negative (clockwise or anticlockwise)
             // const crossProduct = v1.x*v2.y - v1.y*v2.x;
-            return v1.x*v2.y - v1.y*v2.x <= 0;
+            return v1.x * v2.y - v1.y * v2.x <= 0;
         }
 
         function vectorDist(x, y) { // returns distance of a vector
-            return Math.sqrt(x**2 + y**2);
+            return Math.sqrt(x ** 2 + y ** 2);
         }
 
         function vectorDotProduct(v1, v2) {
             // const dot = v1.x*v2.x + v1.y*v2.y;
-            return v1.x*v2.x + v1.y*v2.y;
+            return v1.x * v2.x + v1.y * v2.y;
         }
 
         function vectorCreate(dirx, diry) {
@@ -1150,9 +1735,9 @@
             };
         }
 
-        function vectorNormalize(v, dist=v.dist) {
-            v.x = v.x/dist;
-            v.y = v.y/dist;
+        function vectorNormalize(v, dist = v.dist) {
+            v.x = v.x / dist;
+            v.y = v.y / dist;
             return v;
         }
 
@@ -1196,7 +1781,7 @@
 
 
         // condensed version of intersection() but only the conditional
-        function isIntersectionFovW(w1, w2) {   
+        function isIntersectionFovW(w1, w2) {
             const x1 = w1.pos.x; // meant for fov rays
             const y1 = w1.pos.y;
             const x2 = x1 + w1.dir.x * w1.dir.length;
@@ -1211,9 +1796,9 @@
             if (den == 0) return false;
             const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
             const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
-            
+
             // if t and u are between 0 and 1 then the intersection falls between v1 and v2
-            return u >= 0 && u <= 1 && t >= 0 && t <= 1;  
+            return u >= 0 && u <= 1 && t >= 0 && t <= 1;
         }
 
         function intersectionFovW(w1, w2) {
@@ -1320,7 +1905,7 @@
             //     // console.log(s);
             //     let ds = distance.get(s);
             //     for (let v of this.adjacencyList.get(s)) {
-                    
+
             //         if (!distance.has(v) || distance.get(v) < ds + 1) {
             //             distance.set(v, ds+1);
             //             this.dfs(v, distance);
@@ -1355,7 +1940,7 @@
             }
             dfs(s, distance, G) {
                 let counter = new Map();
-                let nodes_to_visit = [ s ]
+                let nodes_to_visit = [s]
 
                 while (nodes_to_visit.length > 0) {
                     let currentnode = nodes_to_visit.shift();
@@ -1377,7 +1962,7 @@
                             nodes_to_visit.unshift(node);
                         }
                     })
-                    
+
                 }
             }
         }
@@ -1387,7 +1972,7 @@
 
             const g = new Graph();
             for (let i = 0; i < w.length - 1; i++) {
-                for (let j = i+1; j < w.length; j++) {
+                for (let j = i + 1; j < w.length; j++) {
                     if (v1HigherThanv2(w[i], w[j])) {
                         g.addEdge(j, i);
                     } else if (v1HigherThanv2(w[j], w[i])) {
@@ -1409,23 +1994,35 @@
                 return false
             }
             W1HtoW1P = vectorCreate(w1.p.x * w1.p.dist - w1.h.x * w1.h.dist,
-                                    w1.p.y * w1.p.dist - w1.h.y * w1.h.dist)
+                w1.p.y * w1.p.dist - w1.h.y * w1.h.dist)
             W2HtoW2P = vectorCreate(w2.p.x * w2.p.dist - w2.h.x * w2.h.dist,
-                                    w2.p.y * w2.p.dist - w2.h.y * w2.h.dist)
+                w2.p.y * w2.p.dist - w2.h.y * w2.h.dist)
 
             // V1 Just the wall vector (v1dir - v1pos)
             // Creating the vector is different so that we can check for intersections
-            const W1ptoW1h = {"pos": {  "x": player.pos.x + w1.p.x * w1.p.dist,
-                                        "y": player.pos.y + w1.p.y * w1.p.dist },
-                            "dir": {  "x": w1.h.x * w1.h.dist - w1.p.x * w1.p.dist,
-                                        "y": w1.h.y * w1.h.dist - w1.p.y * w1.p.dist }};
+            const W1ptoW1h = {
+                "pos": {
+                    "x": player.pos.x + w1.p.x * w1.p.dist,
+                    "y": player.pos.y + w1.p.y * w1.p.dist
+                },
+                "dir": {
+                    "x": w1.h.x * w1.h.dist - w1.p.x * w1.p.dist,
+                    "y": w1.h.y * w1.h.dist - w1.p.y * w1.p.dist
+                }
+            };
 
             // V2 Just the wall vector (v2dir - v2pos)
             // Creating the vector is different so that we can check for intersections
-            const W2ptoW2h = {"pos": {  "x": player.pos.x + w2.p.x * w2.p.dist,
-                                        "y": player.pos.y + w2.p.y * w2.p.dist },
-                            "dir": {  "x": w2.h.x * w2.h.dist - w2.p.x * w2.p.dist,
-                                        "y": w2.h.y * w2.h.dist - w2.p.y * w2.p.dist }};
+            const W2ptoW2h = {
+                "pos": {
+                    "x": player.pos.x + w2.p.x * w2.p.dist,
+                    "y": player.pos.y + w2.p.y * w2.p.dist
+                },
+                "dir": {
+                    "x": w2.h.x * w2.h.dist - w2.p.x * w2.p.dist,
+                    "y": w2.h.y * w2.h.dist - w2.p.y * w2.p.dist
+                }
+            };
 
             let alpha, beta
             if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.p, w2.p.dist))) {
@@ -1439,42 +2036,62 @@
                 return Math.abs(alpha) < Math.abs(beta)
             }
 
-            const PltoW1P = { "pos": {  "x": player.pos.x,
-                                        "y": player.pos.y },
-                            "dir": {  "x": w1.p.x * w1.p.dist,
-                                        "y": w1.p.y * w1.p.dist }};
-            const PltoW1H = { "pos": {  "x": player.pos.x,
-                                        "y": player.pos.y },
-                            "dir": {  "x": w1.h.x * w1.h.dist,
-                                        "y": w1.h.y * w1.h.dist }};
+            const PltoW1P = {
+                "pos": {
+                    "x": player.pos.x,
+                    "y": player.pos.y
+                },
+                "dir": {
+                    "x": w1.p.x * w1.p.dist,
+                    "y": w1.p.y * w1.p.dist
+                }
+            };
+            const PltoW1H = {
+                "pos": {
+                    "x": player.pos.x,
+                    "y": player.pos.y
+                },
+                "dir": {
+                    "x": w1.h.x * w1.h.dist,
+                    "y": w1.h.y * w1.h.dist
+                }
+            };
 
-            const W1p = {   "x": player.pos.x + w1.p.dist * w1.p.x,
-                            "y": player.pos.y + w1.p.dist * w1.p.y}
-            const W1h = {   "x": player.pos.x + w1.h.dist * w1.h.x,
-                            "y": player.pos.y + w1.h.dist * w1.h.y}
-            const W2p = {   "x": player.pos.x + w2.p.dist * w2.p.x,
-                            "y": player.pos.y + w2.p.dist * w2.p.y}
-            const W2h = {   "x": player.pos.x + w2.h.dist * w2.h.x,
-                            "y": player.pos.y + w2.h.dist * w2.h.y}
-            
-            return  isIntersectionVectors(PltoW1P, W2ptoW2h, [[w1.index, w2.index], "isint1"]) ||
-                    isIntersectionVectors(PltoW1H, W2ptoW2h, [[w1.index, w2.index], "isint2"]) ||
-                    ptInTriangle(W2p, player.pos, W1p, W1h, [[w1.index, w2.index], "istri1"]) ||
-                    ptInTriangle(W2h, player.pos, W1p, W1h, [[w1.index, w2.index], "istri2"])
+            const W1p = {
+                "x": player.pos.x + w1.p.dist * w1.p.x,
+                "y": player.pos.y + w1.p.dist * w1.p.y
+            }
+            const W1h = {
+                "x": player.pos.x + w1.h.dist * w1.h.x,
+                "y": player.pos.y + w1.h.dist * w1.h.y
+            }
+            const W2p = {
+                "x": player.pos.x + w2.p.dist * w2.p.x,
+                "y": player.pos.y + w2.p.dist * w2.p.y
+            }
+            const W2h = {
+                "x": player.pos.x + w2.h.dist * w2.h.x,
+                "y": player.pos.y + w2.h.dist * w2.h.y
+            }
+
+            return isIntersectionVectors(PltoW1P, W2ptoW2h, [[w1.index, w2.index], "isint1"]) ||
+                isIntersectionVectors(PltoW1H, W2ptoW2h, [[w1.index, w2.index], "isint2"]) ||
+                ptInTriangle(W2p, player.pos, W1p, W1h, [[w1.index, w2.index], "istri1"]) ||
+                ptInTriangle(W2h, player.pos, W1p, W1h, [[w1.index, w2.index], "istri2"])
 
         }
 
 
         const EPSILON = 0.01
         function isSame(v1, v2) {
-            return  Math.abs(v1.x - v2.x) < EPSILON &&
-                    Math.abs(v1.y - v2.y) < EPSILON
+            return Math.abs(v1.x - v2.x) < EPSILON &&
+                Math.abs(v1.y - v2.y) < EPSILON
         }
 
         function ptInTriangle(P, A, B, C) {
             if (isSame(P, A) || isSame(P, B) || isSame(P, C)) return false
-            const w1 = (A.x*(C.y - A.y) + (P.y - A.y)*(C.x - A.x) - P.x*(C.y - A.y)) / ((B.y - A.y)*(C.x - A.x) - (B.x - A.x)*(C.y - A.y))
-            const w2 = (P.y - A.y - w1*(B.y - A.y)) / (C.y - A.y)
+            const w1 = (A.x * (C.y - A.y) + (P.y - A.y) * (C.x - A.x) - P.x * (C.y - A.y)) / ((B.y - A.y) * (C.x - A.x) - (B.x - A.x) * (C.y - A.y))
+            const w2 = (P.y - A.y - w1 * (B.y - A.y)) / (C.y - A.y)
             return w1 >= 0 && w2 >= 0 && w1 + w2 <= 1
         }
 
@@ -1494,7 +2111,7 @@
             const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den;
             const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
             // if t and u are between 0 and 1 then the intersection falls between v1 and v2
-            return u > 0.0 && u < 1.0 && t > 0.0 && t < 1.0; 
+            return u > 0.0 && u < 1.0 && t > 0.0 && t < 1.0;
         }
 
         function exampleScene() {
@@ -1722,8 +2339,8 @@
             walls.push(new Boundary(canvas2D.width / 2.5, 175 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 175 * (canvas2D.width / 861), "#FF0000", 1, 25, 150));
             walls.push(new Boundary(canvas2D.width / 2.5, 150 * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, 150 * (canvas2D.width / 861), "#FF0000", 1, 0, 100));
 
-            walls.push(new Boundary(canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), "#FF0000", 1, (25 + 25) , (150 + 25)));
-            walls.push(new Boundary(canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25) , (200 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (750 - 25) * (canvas2D.width / 861), "#FF0000", 1, (25 + 25), (150 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (700 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25), (200 + 25)));
             walls.push(new Boundary(canvas2D.width / 2.5, (650 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (650 - 25) * (canvas2D.width / 861), "#FF0000", 1, (100 + 25), (250 + 25)));
             walls.push(new Boundary(canvas2D.width / 2.5, (600 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (600 - 25) * (canvas2D.width / 861), "#FF0000", 1, (150 + 25), (300 + 25)));
             walls.push(new Boundary(canvas2D.width / 2.5, (550 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (550 - 25) * (canvas2D.width / 861), "#FF0000", 1, (200 + 25), (400 + 25)));
@@ -1732,7 +2349,7 @@
             walls.push(new Boundary(canvas2D.width / 2.5, (400 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (400 - 25) * (canvas2D.width / 861), "#FF0000", 1, (200 + 25), (400 + 25)));
             walls.push(new Boundary(canvas2D.width / 2.5, (350 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (350 - 25) * (canvas2D.width / 861), "#FF0000", 1, (150 + 25), (300 + 25)));
             walls.push(new Boundary(canvas2D.width / 2.5, (300 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (300 - 25) * (canvas2D.width / 861), "#FF0000", 1, (100 + 25), (250 + 25)));
-            walls.push(new Boundary(canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25) , (200 + 25)));
+            walls.push(new Boundary(canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), canvas2D.width - canvas2D.width / 2.5, (250 - 25) * (canvas2D.width / 861), "#FF0000", 1, (50 + 25), (200 + 25)));
 
             walls.push(new Boundary(323 * (canvas2D.width / 861), 832 * (canvas2D.width / 861), (312) * (canvas2D.width / 861), (773) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
             walls.push(new Boundary(312 * (canvas2D.width / 861), 773 * (canvas2D.width / 861), (314) * (canvas2D.width / 861), (717) * (canvas2D.width / 861), "#8ae234", 0.92, 0, 999));
@@ -1868,14 +2485,14 @@
             loadDefaults();
             imported["walls"].forEach(w => {
                 walls.push(new Boundary(w["posx"] * (canvas2D.width / imported["width"]),
-                                        w["posy"] * (canvas2D.width / imported["width"]),
-                                        w["dirx"] * (canvas2D.width / imported["width"]),
-                                        w["diry"] * (canvas2D.width / imported["width"]),
-                                        w["hex"],
-                                        w["opacity"],
-                                        w["height0"],
-                                        w["height1"]
-                                        ))
+                    w["posy"] * (canvas2D.width / imported["width"]),
+                    w["dirx"] * (canvas2D.width / imported["width"]),
+                    w["diry"] * (canvas2D.width / imported["width"]),
+                    w["hex"],
+                    w["opacity"],
+                    w["height0"],
+                    w["height1"]
+                ))
             })
             player.pos.x = imported.player.posx * (canvas2D.width / imported["width"]);
             player.pos.y = imported.player.posy * (canvas2D.width / imported["width"]);
@@ -1906,15 +2523,15 @@
             }
             walls.forEach(w => {
                 tmp.walls.push({
-                                "posx": w.pos.x,
-                                "posy": w.pos.y,
-                                "dirx": w.pos.x + w.dir.x,
-                                "diry": w.pos.y + w.dir.y,
-                                "hex": w.hex,
-                                "opacity": w.opacity,
-                                "height0": w.height0,
-                                "height1": w.height1,
-                                })
+                    "posx": w.pos.x,
+                    "posy": w.pos.y,
+                    "dirx": w.pos.x + w.dir.x,
+                    "diry": w.pos.y + w.dir.y,
+                    "hex": w.hex,
+                    "opacity": w.opacity,
+                    "height0": w.height0,
+                    "height1": w.height1,
+                })
             })
             return tmp;
         }
@@ -1977,8 +2594,8 @@
         function resetPlayer() {
             player.rotation = 0;
             player.setAngle(0);
-            player.pos.x = canvas2D.width/2;
-            player.pos.y = canvas2D.height/2;
+            player.pos.x = canvas2D.width / 2;
+            player.pos.y = canvas2D.height / 2;
             player.setVerticalLook(0)
             player.setFarSight(1000)
         }
@@ -2002,8 +2619,8 @@
             "pink": getComputedStyle(document.documentElement).getPropertyValue('--pink')
         }
 
-        const player = new Player(canvas2D.width/2, canvas2D.height/5, 90);
-        player.fov.xamount =  55;
+        const player = new Player(canvas2D.width / 2, canvas2D.height / 5, 90);
+        player.fov.xamount = 55;
 
 
         player.setFOV();
@@ -2052,14 +2669,14 @@
 
             background();
             playerHandler.movement();
-                set2Dctx();
-                player.draw();
-                set3Dctx();
+            set2Dctx();
+            player.draw();
+            set3Dctx();
             renderWalls.splice(0, renderWalls.length)
             walls.forEach(wall => {
                 if (rainbowMode) {
                     if (wall.hue >= 255) wall.hue = -1;
-                    wall.hue +=1;
+                    wall.hue += 1;
                 }
                 if (show2D) {
                     set2Dctx();
@@ -2072,13 +2689,13 @@
                     renderWalls.push(wall);
                 }
             });
-            
+
             if (renderWalls.length >= 1) {
                 if (sortedActive) {
                     let sorted = wallsToGraph(renderWalls);
                     if (sorted.length <= 1) sorted = [0]
-                        sorted.forEach(index => {
-                            renderWalls[index].display3D();
+                    sorted.forEach(index => {
+                        renderWalls[index].display3D();
                     });
                 } else {
                     renderWalls.forEach(wall => {
@@ -2090,16 +2707,16 @@
             drawing.start();
             touchControls();
 
-            
+
             requestAnimationFrame(gameLoop);
         }
 
         // background terrain
         function background() {
             ctx.fillStyle = color["sky-blue"]; // blue
-            ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height*35);
+            ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height * 35);
             ctx.fillStyle = color["dark-gray"]; // gray
-            ctx.fillRect(0, canvas.height/2, canvas.width, -canvas.height*35);
+            ctx.fillRect(0, canvas.height / 2, canvas.width, -canvas.height * 35);
 
             ctx2D.fillStyle = color["dark-gray"];
             ctx2D.fillRect(0, 0, canvas2D.width, canvas2D.height);
@@ -2107,4 +2724,5 @@
         }
     </script>
 </body>
+
 </html>
