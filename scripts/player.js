@@ -63,10 +63,10 @@ class Player {
         if (this.vertRotation + radians(angle) >= vertLimit.min && this.vertRotation + radians(angle) <= vertLimit.max) {
             this.vertRotation += radians(angle)
 
-            let newTranslate = (100/7)*(degrees(this.vertRotation) + 10) - 1000/7
-            // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
-            ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
-            this.fov.currentTranslate = newTranslate
+            // let newTranslate = (100/7)*(degrees(this.vertRotation) + 10) - 1000/7
+            // // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
+            // ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
+            // this.fov.currentTranslate = newTranslate
         }
     }
     setVerticalLook(angle) {

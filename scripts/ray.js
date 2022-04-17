@@ -14,3 +14,4 @@ class Ray {
         this.dir.y = Math.sin(radians(angle));
     }
 }
+

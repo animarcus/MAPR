@@ -114,6 +114,31 @@ class Boundary {
         v2xangle = v2xangle + v1xangle; // make v2 relative to v1
 
         this.p.dist *= Math.cos(v1xangle);
+
+        let newp = [];
+        newp[0] = Math.sin(v1xangle)*this.p.dist;
+        
+        let a = performance.now();
+        for (let i=0; i<10000000; i++) {
+            newp[1] = Math.cos(v1xangle)*this.p.dist;
+        }
+        let trig = performance.now() - a
+        a = performance.now()
+        for (let i=0; i<10000000; i++) {
+            newp[1] = Math.sqrt(this.p.dist*this.p.dist - newp[0]*newp[0]);
+        }
+        let pyth = performance.now() - a
+
+        console.log("-----------")
+        if (trig > pyth) {
+            console.log("pyth is faster, diff:", trig - pyth)
+        } else if (trig > pyth) {
+            console.log("trig is faster, diff:", pyth - trig)
+        } else {
+            console.log("tie")
+        }
+        console.log("-----------")
+
         this.x1 = degrees(v1xangle) * canvas.width / fovamount;
         this.h1 = this.calculateHeight(this.p);
 
