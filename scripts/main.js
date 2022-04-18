@@ -106,7 +106,7 @@ function gameLoop() {
     touchControls();
 
     
-    // requestAnimationFrame(gameLoop);
+    requestAnimationFrame(gameLoop);
 }
 
 // background terrain

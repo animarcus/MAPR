@@ -96,58 +96,122 @@ class Boundary {
     }
 
     calculate3D() {
-        const fovamount = player.fov.xamount;
+        // this.p = vectorNormalize(this.p);
+        // this.h = vectorNormalize(this.h);
 
-        this.p = vectorNormalize(this.p);
-        this.h = vectorNormalize(this.h);
-        const dir = vectorNormalize(player.dir, Math.sqrt((player.dir.y) ** 2 + (player.dir.x) ** 2));
+        // let v1xangle = vectorAngleBetween(this.p, dir);
+        // let v2xangle = vectorAngleBetween(this.h, this.p);
 
-        let v1xangle = Math.acos(vectorDotProduct(this.p, dir));        // get angle between dir and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
-        let v2xangle = Math.acos(vectorDotProduct(this.h, this.p));     // get angle between v1 and v2
-                                                                        // angles are calculated using | adjacent / hypothenuse
-                                                                        // hypothenuse is 1 because v1/v1 was normalized (no denominator)
-                                                                        // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
+        // // let v1xangle = Math.acos(vectorDotProduct(this.p, dir));        // get angle between dir and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
+        // // let v2xangle = Math.acos(vectorDotProduct(this.h, this.p));     // get angle between v1 and v2
+        // //                                                                 // angles are calculated using | adjacent / hypothenuse
+        // //                                                                 // hypothenuse is 1 because v1/v1 was normalized (no denominator)
+        // //                                                                 // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
 
-        if (!isClockwiseOrder(dir, this.p)) v1xangle = -v1xangle;  // correct sign depending on side of v1/v2
-        if (!isClockwiseOrder(this.p, this.h)) v2xangle = -v2xangle;
+        // v2xangle = v2xangle + v1xangle; // make v2 relative to v1
 
-        v2xangle = v2xangle + v1xangle; // make v2 relative to v1
+        // this.p.dist *= Math.cos(v1xangle);
+        // this.h.dist *= Math.cos(v2xangle);
 
-        this.p.dist *= Math.cos(v1xangle);
-
-        let newp = [];
-        newp[0] = Math.sin(v1xangle)*this.p.dist;
+        // const newpx = Math.sin(v1xangle)*this.p.dist;
+        // const newpy = Math.sqrt(this.p.dist*this.p.dist - newpx*newpx);
         
-        let a = performance.now();
-        for (let i=0; i<10000000; i++) {
-            newp[1] = Math.cos(v1xangle)*this.p.dist;
+        // const newhx = Math.sin(v2xangle)*this.h.dist;
+        // const newhy = Math.sqrt(this.h.dist*this.h.dist - newhx*newhx);
+
+        const points = [
+            [
+                this.p.x,
+                this.p.y,
+                this.height0
+            ],
+            [
+                this.p.x,
+                this.p.y,
+                this.height1
+            ],
+            [
+                this.h.x,
+                this.h.y,
+                this.height1
+            ],
+            [
+                this.h.x,
+                this.h.y,
+                this.height0
+            ]
+        ]
+
+        const fullWall = [];
+        for (let p of points) {
+            // fullWall.push([ // standard
+            //     p[0], p[1], p[2]
+            // ])
+            fullWall.push([ // for x axis
+                p[0],
+                p[1]*Math.cos(player.vertRotation) - p[2]*Math.sin(player.vertRotation),
+                p[1]*Math.sin(player.vertRotation) + p[2]*Math.cos(player.vertRotation)
+            ])
+
+            // fullWall.push([ // for y axis
+            //     p[0]*Math.cos(player.vertRotation) + p[2]*Math.sin(player.vertRotation),
+            //     p[1],
+            //     -p[0]*Math.sin(player.vertRotation) + p[2]*Math.cos(player.vertRotation)
+            // ])
+
+            // fullWall.push([ // for z axis
+            //     p[0]*Math.cos(player.vertRotation) - p[1]*Math.sin(player.vertRotation),
+            //     p[0]*Math.sin(player.vertRotation) + p[1]*Math.cos(player.vertRotation),
+            //     p[2]
+            // ])
         }
-        let trig = performance.now() - a
-        a = performance.now()
-        for (let i=0; i<10000000; i++) {
-            newp[1] = Math.sqrt(this.p.dist*this.p.dist - newp[0]*newp[0]);
+        const dir = vectorNormalize(player.dir, Math.sqrt((player.dir.y) ** 2 + (player.dir.x) ** 2));
+        const fovamount = player.fov.xamount;
+        
+        // order is p0, p1, h1, h0
+        this.c0 = {
+            "dist": vectorDist(fullWall[0][0], fullWall[0][1]),
+            "xangle": vectorAngleBetween(dir, vectorCreate(fullWall[0][0], fullWall[0][1]))
         }
-        let pyth = performance.now() - a
-
-        console.log("-----------")
-        if (trig > pyth) {
-            console.log("pyth is faster, diff:", trig - pyth)
-        } else if (trig > pyth) {
-            console.log("trig is faster, diff:", pyth - trig)
-        } else {
-            console.log("tie")
+        this.c0.v = vectorCreate(fullWall[0][0], fullWall[0][1])
+        this.c0.x = degrees(this.c0.xangle) * canvas.width / fovamount;
+        // this.c0.dist *= Math.cos(this.c0.xangle)
+        this.c0.floor = (-player.height * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * this.c0.dist);
+        this.c0.h = this.projectHeight(this.c0.dist, this.c0.xangle, this.height0); // p0
+        //////////
+        this.c1 = {
+            "dist": vectorDist(fullWall[1][0], fullWall[1][1]),
+            "xangle": vectorAngleBetween(dir, vectorCreate(fullWall[1][0], fullWall[1][1]))
         }
-        console.log("-----------")
+        this.c1.v = vectorCreate(fullWall[1][0], fullWall[1][1])
+        this.c1.x = degrees(this.c1.xangle) * canvas.width / fovamount;
+        // this.c1.dist *= Math.cos(this.c1.xangle)
+        this.c1.h = this.projectHeight(this.c1.dist, this.c1.xangle, this.height1); // p1
+        //////////
+        this.c2 = {
+            "dist": vectorDist(fullWall[2][0], fullWall[2][1]),
+            "xangle": vectorAngleBetween(this.c1.v, vectorCreate(fullWall[2][0], fullWall[2][1])) + this.c1.xangle
+        }
+        this.c2.x = degrees(this.c2.xangle) * canvas.width / fovamount;
+        // this.c2.dist *= Math.cos(this.c2.xangle)
+        this.c2.h = this.projectHeight(this.c2.dist, this.c2.xangle, this.height1); // h1
+        //////////
+        this.c3 = {
+            "dist": vectorDist(fullWall[3][0], fullWall[3][1]),
+            "xangle": vectorAngleBetween(this.c0.v, vectorCreate(fullWall[3][0], fullWall[3][1])) + this.c0.xangle
+        }
+        this.c3.x = degrees(this.c3.xangle) * canvas.width / fovamount;
+        // this.c3.dist *= Math.cos(this.c3.xangle)
+        this.c3.floor = (-player.height * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * this.c3.dist);
+        this.c3.h = this.projectHeight(this.c3.dist, this.c3.xangle, this.height0); // h0
+    }
 
-        this.x1 = degrees(v1xangle) * canvas.width / fovamount;
-        this.h1 = this.calculateHeight(this.p);
-
-        this.h.dist *= Math.cos(v2xangle);
-        this.x2 = degrees(v2xangle) * canvas.width / fovamount;
-        this.h2 = this.calculateHeight(this.h);
-
-        if (this.h1 > 10000) this.h1 = 10000;
-        if (this.h2 > 10000) this.h2 = 10000;
+    projectHeight(dist, xangle, mainHeight) { // [x, y, z]
+        let h = ((mainHeight - player.height) * canvas.height) / (-Math.tan(radians(player.fov.yamount)) * dist);
+        if (h > 10000) h = 10000;
+        console.log("--------bork: ", h, dist, xangle, degrees(xangle), mainHeight)
+        
+        return h;
     }
 
     calculateHeight(v) { // simple proportion calculations
@@ -170,16 +234,16 @@ class Boundary {
         const n = 2 // if pair, makes the curves more "square"
 
         // function determined with https://math.stackexchange.com/questions/2170013/looking-for-a-decreasing-function-which-initially-decreases-slowly-and-then-decr
-        let L1 = -((this.p.dist / a) ** n); // decreasing exponential function
+        let L1 = -((((this.c0.dist + this.c1.dist)/2) / a) ** n); // decreasing exponential function
         if (L1 < minl) L1 = minl;
         if (L1 > maxl) L1 = maxl;
 
-        let L2 = -((this.h.dist / a) ** n);
+        let L2 = -((((this.c2.dist + this.c3.dist)/2) / a) ** n);
         if (L2 < minl) L2 = minl;
         if (L2 > maxl) L2 = maxl;
-
-        const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
-                    this.x2 + canvas.width / 2, canvas.height / 2);
+        const grd = ctx.createLinearGradient(
+                    ((this.c0.x + this.c1.x)/2) + canvas.width / 2, canvas.height / 2,
+                    ((this.c2.x + this.c3.x)/2) + canvas.width / 2, canvas.height / 2);
 
         grd.addColorStop(0, shadeHexColor(this.hex, L1));
         grd.addColorStop(1, shadeHexColor(this.hex, L2));
@@ -187,17 +251,19 @@ class Boundary {
         
         let tmpalpha = ctx.globalAlpha;
         ctx.globalAlpha = this.opacity;
-        if (sortedActive) {  // adds color under the wall to hide any overlap
-            polygon([   this.x1 + canvas.width / 2, this.h1.floor + canvas.height /2,
-                    this.x2 + canvas.width / 2, this.h2.floor + canvas.height /2,
-                    this.x2 + canvas.width / 2, this.h2.floor - canvas.height,
-                    this.x1 + canvas.width / 2, this.h1.floor - canvas.height,
-            ], color["dark-gray"], 0);
-        }
-        polygon([this.x1 + canvas.width / 2, this.h1.h0 + canvas.height / 2,
-        this.x1 + canvas.width / 2, this.h1.h1 + canvas.height /2,
-        this.x2 + canvas.width / 2, this.h2.h1 + canvas.height /2,
-        this.x2 + canvas.width / 2, this.h2.h0 + canvas.height /2
+        // if (sortedActive) {  // adds color under the wall to hide any overlap
+        //     polygon([   
+        //         this.c0.x + canvas.width / 2, this.c0.floor + canvas.height /2,
+        //         this.c3.x + canvas.width / 2, this.c3.floor + canvas.height /2,
+        //         this.c3.x + canvas.width / 2, this.c3.floor - canvas.height,
+        //         this.c0.x + canvas.width / 2, this.c0.floor - canvas.height,
+        //     ], color["dark-gray"], 0);
+        // }
+        polygon([
+            this.c0.x + canvas.width / 2, this.c0.h + canvas.height / 2,
+            this.c1.x + canvas.width / 2, this.c1.h + canvas.height /2,
+            this.c2.x + canvas.width / 2, this.c2.h + canvas.height /2,
+            this.c3.x + canvas.width / 2, this.c3.h + canvas.height /2
         ], `grd`, 2);
 
         ctx.globalAlpha = tmpalpha;

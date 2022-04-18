@@ -54,9 +54,14 @@ function vectorOpposite(vector) {
 }
 
 function vectorAngleBetween(a, b) {
+    // get angle between dir and v1   vectors are normalized so the dotproduct will give a value between -1 and 1
+    // get angle between v1 and v2
+    // angles are calculated using | adjacent / hypothenuse
+    // hypothenuse is 1 because v1/v1 was normalized (no denominator)
+    // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
+
     const v1 = vectorNormalize(a, vectorDist(a.x, a.y))
     const v2 = vectorNormalize(b, vectorDist(b.x, b.y))
-
 
     let angle = Math.acos(vectorDotProduct(v1, v2))
     if (!isClockwiseOrder(a, b)) angle = -angle
