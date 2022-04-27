@@ -336,16 +336,15 @@ function mainPic() {
     defaults['changeAll'] = false;
     loadDefaults();
     
-    walls.push(new Boundary(0, 0, camera.viewX, 0, "#0000ff", 1, 0, 300));
-    // walls.push(new Boundary(323 * (canvas2D.width / 886), 395 * (canvas2D.width / 886), 369 * (canvas2D.width / 886), 371 * (canvas2D.width / 886), "#0000ff", 1, 0, 300));
-    // walls.push(new Boundary(323 * (canvas2D.width / 886), 395 * (canvas2D.width / 886), 369 * (canvas2D.width / 886), 371 * (canvas2D.width / 886), "#0000ff", 1, 0, 300));
-    // walls.push(new Boundary(322 * (canvas2D.width / 886), 469 * (canvas2D.width / 886), 381 * (canvas2D.width / 886), 562 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
-    // walls.push(new Boundary(416 * (canvas2D.width / 886), 303 * (canvas2D.width / 886), 435 * (canvas2D.width / 886), 287 * (canvas2D.width / 886), "#ff00ee", 1, 0, 300));
-    // walls.push(new Boundary(433 * (canvas2D.width / 886), 269 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
-    // walls.push(new Boundary(464 * (canvas2D.width / 886), 373 * (canvas2D.width / 886), 533 * (canvas2D.width / 886), 485 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
-    // walls.push(new Boundary(452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), 465 * (canvas2D.width / 886), 305 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
-    // walls.push(new Boundary(481 * (canvas2D.width / 886), 343 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), "#ffe100", 1, 0, 300));
-    // walls.push(new Boundary(498 * (canvas2D.width / 886), 311 * (canvas2D.width / 886), 597 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), "#00f6ff", 1, 0, 300));
+    walls.push(new Boundary(323 * (canvas2D.width / 886), 395 * (canvas2D.width / 886), 369 * (canvas2D.width / 886), 371 * (canvas2D.width / 886), "#0000ff", 1, 0, 300));
+    walls.push(new Boundary(323 * (canvas2D.width / 886), 395 * (canvas2D.width / 886), 369 * (canvas2D.width / 886), 371 * (canvas2D.width / 886), "#0000ff", 1, 0, 300));
+    walls.push(new Boundary(322 * (canvas2D.width / 886), 469 * (canvas2D.width / 886), 381 * (canvas2D.width / 886), 562 * (canvas2D.width / 886), "#80ff00", 1, 0, 300));
+    walls.push(new Boundary(416 * (canvas2D.width / 886), 303 * (canvas2D.width / 886), 435 * (canvas2D.width / 886), 287 * (canvas2D.width / 886), "#ff00ee", 1, 0, 300));
+    walls.push(new Boundary(433 * (canvas2D.width / 886), 269 * (canvas2D.width / 886), 452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
+    walls.push(new Boundary(464 * (canvas2D.width / 886), 373 * (canvas2D.width / 886), 533 * (canvas2D.width / 886), 485 * (canvas2D.width / 886), "#ff0000", 1, 0, 300));
+    walls.push(new Boundary(452 * (canvas2D.width / 886), 267 * (canvas2D.width / 886), 465 * (canvas2D.width / 886), 305 * (canvas2D.width / 886), "#ff9900", 1, 0, 300));
+    walls.push(new Boundary(481 * (canvas2D.width / 886), 343 * (canvas2D.width / 886), 503 * (canvas2D.width / 886), 337 * (canvas2D.width / 886), "#ffe100", 1, 0, 300));
+    walls.push(new Boundary(498 * (canvas2D.width / 886), 311 * (canvas2D.width / 886), 597 * (canvas2D.width / 886), 328 * (canvas2D.width / 886), "#00f6ff", 1, 0, 300));
     player.pos.x = 443 * (canvas2D.width / 886);
     player.pos.y = 17 * (canvas2D.width / 886);
     player.rotation = 1.5707963267948966;
@@ -353,137 +352,4 @@ function mainPic() {
     player.setFarSight(1000);
     player.vertRotation = 0.0;
     player.setVerticalLook(0);
-}
-
-function clearWalls() {
-    renderWalls.splice(0, renderWalls.length);
-    wallCount = 0;
-    walls.splice(0, walls.length);
-}
-
-function importWalls(imported) {
-    clearWalls();
-    defaults['sliderH0'] = parseInt(imported['sliderH0'])
-    defaults['sliderH1'] = parseInt(imported['sliderH1'])
-    defaults['sliderFovx'] = parseInt(imported['sliderFovx'])
-    defaults['sliderFovy'] = parseInt(imported['sliderFovy'])
-    defaults['sliderOpacity'] = parseInt(imported['sliderOpacity'])
-    defaults['changeAll'] = imported['changeAll']
-    defaults['randomColor'] = imported['randomColor']
-    loadDefaults();
-    imported["walls"].forEach(w => {
-        walls.push(new Boundary(w["posx"] * (canvas2D.width / imported["width"]),
-                                w["posy"] * (canvas2D.width / imported["width"]),
-                                w["dirx"] * (canvas2D.width / imported["width"]),
-                                w["diry"] * (canvas2D.width / imported["width"]),
-                                w["hex"],
-                                w["opacity"],
-                                w["height0"],
-                                w["height1"]
-                                ))
-    })
-    player.pos.x = imported.player.posx * (canvas2D.width / imported["width"]);
-    player.pos.y = imported.player.posy * (canvas2D.width / imported["width"]);
-    player.rotation = imported.player.rotation
-    player.setAngle(degrees(player.rotation))
-    player.setFarSight(imported.player.farSight)
-    player.setVerticalLook(imported.player.vertRotation)
-}
-function exportWalls() {
-    tmp = {
-        "sliderH0": document.getElementById("sliderH0").value,
-        "sliderH1": document.getElementById("sliderH1").value,
-        "sliderFovx": document.getElementById("sliderFovx").value,
-        "sliderFovy": document.getElementById("sliderFovy").value,
-        "sliderOpacity": document.getElementById("sliderOpacity").value,
-        "changeAll": document.getElementById("changeAll").checked,
-        "randomColor": document.getElementById("randomColor").checked,
-        "width": canvas2D.width,
-        "expansion": expansion,
-        "walls": [],
-        "player": {
-            "posx": player.pos.x,
-            "posy": player.pos.y,
-            "rotation": player.rotation,
-            "farSight": player.farSight,
-            "vertRotation": player.vertRotation
-        }
-    }
-    walls.forEach(w => {
-        tmp.walls.push({
-                        "posx": w.pos.x,
-                        "posy": w.pos.y,
-                        "dirx": w.pos.x + w.dir.x,
-                        "diry": w.pos.y + w.dir.y,
-                        "hex": w.hex,
-                        "opacity": w.opacity,
-                        "height0": w.height0,
-                        "height1": w.height1,
-                        })
-    })
-    return tmp;
-}
-
-function copyWallsCode() {
-    tmp = "defaults['sliderH0'] = " + document.getElementById("sliderH0").value + ";\n" +
-        "defaults['sliderH1'] = " + document.getElementById("sliderH1").value + ";\n" +
-        "defaults['sliderFovx'] = " + document.getElementById("sliderFovx").value + ";\n" +
-        "defaults['sliderFovy'] = " + document.getElementById("sliderFovy").value + ";\n" +
-        "defaults['sliderOpacity'] = " + document.getElementById("sliderOpacity").value + ";\n" +
-        "defaults['changeAll'] = " + document.getElementById("changeAll").checked + ";\n" +
-        "loadDefaults();\n"
-    walls.forEach(w => {
-        tmp = tmp + `walls.push(new Boundary(${w.pos.x} * (canvas2D.width/${canvas2D.width}), ${w.pos.y} * (canvas2D.width/${canvas2D.width}), (${w.pos.x + w.dir.x}) * (canvas2D.width/${canvas2D.width}), (${w.pos.y + w.dir.y}) * (canvas2D.width/${canvas2D.width}), "${w.hex}", ${w.opacity}, ${w.height0}, ${w.height1}));\n`
-    });
-    tmp = tmp + `player.pos.x = ${player.pos.x} * (canvas2D.width/${canvas2D.width});\nplayer.pos.y = ${player.pos.y} * (canvas2D.width/${canvas2D.width});\nplayer.rotation = ${player.rotation};\nplayer.setAngle(degrees(${player.rotation}));\nplayer.setFarSight(${player.farSight});\nplayer.setVerticalLook(${player.vertRotation});\n`
-    // console.log(tmp);
-    navigator.clipboard.writeText(tmp)
-}
-
-function loadScene(sceneName) {
-    clearWalls();
-    player.setFarSight(1000);
-    switch (sceneName) {
-        case "example":
-            exampleScene();
-            break;
-        case "colors":
-            colorsScene();
-            break;
-        case "penis":
-            penislol();
-            break;
-        case "allExamples":
-            allExamples();
-            break;
-        case "collidingWalls":
-            collidingWalls();
-            break;
-        case "mainPic":
-            mainPic();
-            break;
-        case "heightShowcase":
-            heightShowcase();
-            break;
-        case "roomShow":
-            roomShow();
-            break;
-    }
-    return true;
-}
-
-// corridors
-// colors
-// different sizes 1 ok
-// different sizes 2
-// performance
-// normal room
-
-function resetPlayer() {
-    player.rotation = 0;
-    player.setAngle(0);
-    player.pos.x = canvas2D.width/2;
-    player.pos.y = canvas2D.height/2;
-    player.setVerticalLook(0)
-    player.setFarSight(1000)
 }

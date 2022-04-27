@@ -22,11 +22,11 @@ class Boundary {
 
     draw() {
         set2Dctx();
-        line(this.pos.x, this.pos.y, this.pos.x + this.dir.x, this.pos.y + this.dir.y, this.hex, 3);
+        line(cameraOffsetX(this.pos.x), cameraOffsetY(this.pos.y), cameraOffsetX(this.pos.x + this.dir.x), cameraOffsetY(this.pos.y + this.dir.y), this.hex, 3);
         // ellipse(this.pos.x, this.pos.y, dotSize, dotSize, 'green');
         // ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, dotSize, dotSize, 'red');
-        ellipse(this.pos.x, this.pos.y, dotSize, dotSize, this.hex);
-        ellipse(this.pos.x + this.dir.x, this.pos.y + this.dir.y, dotSize, dotSize, this.hex);
+        ellipse(cameraOffsetX(this.pos.x), cameraOffsetY(this.pos.y), dotSize, dotSize, this.hex);
+        ellipse(cameraOffsetX(this.pos.x + this.dir.x), cameraOffsetY(this.pos.y + this.dir.y), dotSize, dotSize, this.hex);
         if (showWallNums) {
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -86,10 +86,12 @@ class Boundary {
         // debugging  2D Representation
         if (show2D2) {
             set2Dctx();
-            ellipse(player.pos.x + this.p.x, player.pos.y + this.p.y, 10, 10, 'yellow');
-            line(player.pos.x, player.pos.y, player.pos.x + this.p.x, player.pos.y + this.p.y, 'purple', 5);
-            ellipse(player.pos.x + this.h.x, player.pos.y + this.h.y, 10, 10, 'cyan');
-            line(player.pos.x, player.pos.y, player.pos.x + this.h.x, player.pos.y + this.h.y, 'purple', 5);
+            ellipse(cameraOffsetX(player.pos.x + this.p.x), cameraOffsetY(player.pos.y + this.p.y), 10, 10, 'yellow');
+            line(   cameraOffsetX(player.pos.x),            cameraOffsetY(player.pos.y),
+                    cameraOffsetX(player.pos.x + this.p.x), cameraOffsetY(player.pos.y + this.p.y), 'purple', 5);
+            ellipse(cameraOffsetX(player.pos.x + this.h.x), cameraOffsetY(player.pos.y + this.h.y), 10, 10, 'cyan');
+            line(   cameraOffsetX(player.pos.x),            cameraOffsetY(player.pos.y),
+                    cameraOffsetX(player.pos.x + this.h.x), cameraOffsetY(player.pos.y + this.h.y), 'purple', 5);
             set3Dctx();
         }
         return true;

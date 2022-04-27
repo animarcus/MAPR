@@ -32,7 +32,7 @@ class Player {
         // ctx.fillStyle = 'white';
         // ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
 
-        ellipse(this.pos.x, this.pos.y, 7, 7, "orange");
+        ellipse(this.pos.x, this.pos.y, 7, 7, "orange"); //2DDraw
 
 
         // line(this.pos.x, this.pos.y, this.pos.x + (this.dir.x) * 100, this.pos.y + (this.dir.y) * 100, 'white', 1);
@@ -63,10 +63,10 @@ class Player {
         if (this.vertRotation + radians(angle) >= vertLimit.min && this.vertRotation + radians(angle) <= vertLimit.max) {
             this.vertRotation += radians(angle)
 
-            // let newTranslate = (100/7)*(degrees(this.vertRotation) + 10) - 1000/7
-            // // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
-            // ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
-            // this.fov.currentTranslate = newTranslate
+            let newTranslate = (100/7)*(degrees(this.vertRotation) + 10) - 1000/7
+            // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
+            ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
+            this.fov.currentTranslate = newTranslate
         }
     }
     setVerticalLook(angle) {

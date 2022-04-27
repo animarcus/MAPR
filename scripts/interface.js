@@ -148,7 +148,7 @@ const drawing = {
                 this.snapping();
             }
             set2Dctx();
-            line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, color.pink, 3);
+            line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, color.pink, 3); //2DDraw
             set3Dctx();
         }
     },
@@ -159,12 +159,12 @@ const drawing = {
             for (let wall of walls) {
                 if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
                 if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
-                    mouse.x = wall.pos.x;
-                    mouse.y = wall.pos.y;
+                    mouse.x = cameraOffsetX(wall.pos.x);
+                    mouse.y = cameraOffsetY(wall.pos.y);
                 }
                 if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
-                    mouse.x = wall.pos.x + wall.dir.x;
-                    mouse.y = wall.pos.y + wall.dir.y;
+                    mouse.x = cameraOffsetY(wall.pos.x + wall.dir.x);
+                    mouse.y = cameraOffsetY(wall.pos.y + wall.dir.y);
                 }
             }
         }
@@ -182,21 +182,21 @@ const drawing = {
                     intCount ++;
                 };
                 if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold/3 && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold/3) {
-                    mouse.x = wall.pos.x;
-                    mouse.y = wall.pos.y;
+                    mouse.x = cameraOffsetX(wall.pos.x);
+                    mouse.y = cameraOffsetY(wall.pos.y);
                     intCount = 0;
                     
                 }
                 if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold/3 && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold/3) {
-                    mouse.x = wall.pos.x + wall.dir.x;
-                    mouse.y = wall.pos.y + wall.dir.y;
+                    mouse.x = cameraOffsetY(wall.pos.x + wall.dir.x);
+                    mouse.y = cameraOffsetY(wall.pos.y + wall.dir.y);
                     intCount = 0;
                     
                 }
             });
-            if (intCount == 0) {
-                walls.push(new Boundary(this.startpos.x, this.startpos.y,
-                                        mouse.x, mouse.y,
+            if (intCount == 0) { //2DDraw
+                walls.push(new Boundary(cameraOffsetX(this.startpos.x), cameraOffsetY(this.startpos.y),
+                                        cameraOffsetX(mouse.x), cameraOffsetY(mouse.y),
                                         document.getElementById("colorpick").value,
                                         parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
                                         document.getElementById("sliderH0").value,

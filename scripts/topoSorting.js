@@ -73,10 +73,10 @@ function v1HigherThanv2(w1, w2) {
     const W2h = {   "x": player.pos.x + w2.h.dist * w2.h.x,
                     "y": player.pos.y + w2.h.dist * w2.h.y}
     
-    return  isIntersectionVectors(PltoW1P, W2ptoW2h, [[w1.index, w2.index], "isint1"]) ||
-            isIntersectionVectors(PltoW1H, W2ptoW2h, [[w1.index, w2.index], "isint2"]) ||
-            ptInTriangle(W2p, player.pos, W1p, W1h, [[w1.index, w2.index], "istri1"]) ||
-            ptInTriangle(W2h, player.pos, W1p, W1h, [[w1.index, w2.index], "istri2"])
+    return  isIntersectionVectors(PltoW1P, W2ptoW2h) ||
+            isIntersectionVectors(PltoW1H, W2ptoW2h) ||
+            ptInTriangle(W2p, player.pos, W1p, W1h) ||
+            ptInTriangle(W2h, player.pos, W1p, W1h)
 
 }
 
