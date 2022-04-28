@@ -130,7 +130,7 @@ class Boundary {
     display3D() {
         const maxl = 0;
         const minl = -0.75; // maximum darkness for color
-        const a = canvas2D.width/1.2; // distance until it gets completely darkened
+        const a = camera.viewX/1.2; // distance until it gets completely darkened
         const n = 2 // if pair, makes the curves more "square"
 
         // function determined with https://math.stackexchange.com/questions/2170013/looking-for-a-decreasing-function-which-initially-decreases-slowly-and-then-decr

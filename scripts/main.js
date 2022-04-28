@@ -55,7 +55,7 @@ if (prevScene) {
     importWalls(prevScene);
     localStorage.removeItem("prevScene");
 } else {
-    loadScene("mainPic");
+    loadScene("heightShowcase");
 }
 
 window.requestAnimationFrame(gameLoop);
@@ -64,7 +64,10 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx2D.clearRect(0, 0, canvas2D.width, canvas2D.height);
 
-
+    set2Dctx();
+    circle(cameraOffsetX(0), cameraOffsetY(0), 100, "purple");
+    set3Dctx();
+    
     background();
     playerHandler.movement();
         set2Dctx();
@@ -112,12 +115,12 @@ function gameLoop() {
 // background terrain
 function background() {
     ctx.fillStyle = color["sky-blue"]; // blue
-    ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height*35);
+    ctx.fillRect(0, Math.floor(canvas.height/2), Math.floor(canvas.width), Math.floor(canvas.height*35));
     ctx.fillStyle = color["dark-gray"]; // gray
-    ctx.fillRect(0, canvas.height/2, canvas.width, -canvas.height*35);
+    ctx.fillRect(0, Math.floor(canvas.height/2), Math.floor(canvas.width), Math.floor(-canvas.height*35));
 
     ctx2D.fillStyle = color["dark-gray"];
-    ctx2D.fillRect(0, 0, canvas2D.width, canvas2D.height);
+    ctx2D.fillRect(0, 0, Math.floor(canvas2D.width), Math.floor(canvas2D.height));
 
 }
 

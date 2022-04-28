@@ -11,6 +11,7 @@
     <title>MAPR</title>
 </head>
 <body>
+    <!-- <button onclick="copyWallsCode()">boop</button> -->
     <!-- <div id="title"> MAPR <br>
     Marcus' Algorithm for Pseudo-3D Rendering</div> -->
     <div class="container">
@@ -180,6 +181,35 @@
                                 <div class="divTableCell divTableColor"></div>
                                 <div class="divTableCell divTableColor"></div>
                                 <div class="divTableCell divTableColor"><button class="resetButton resetAllButton" onclick="loadDefaults()">Reset all</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="sectionText"> CAMERA </span>
+                    <div class="tablemobile divTable">
+                        <div class="divTableBody">
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Camera X</div>
+                                <div class="divTableCell divTableColor"><span id="cameraX">0</span></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.x += 10; document.getElementById('cameraX').innerText = -camera.x">-</button></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.x -= 10; document.getElementById('cameraX').innerText = -camera.x">+</button></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton"
+                                        onclick="camera.x = 0">Reset option</button></div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Camera Y</div>
+                                <div class="divTableCell divTableColor"><span id="cameraY">0</span></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.y += 10; document.getElementById('cameraY').innerText = -camera.y">-</button></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.y -= 10; document.getElementById('cameraY').innerText = -camera.y">+</button></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="camera.y = 0">Reset option</button>
+                                </div>
+                            </div>
+                            <div class="divTableRow">
+                                <div class="divTableCell divTableColor">Camera Zoom</div>
+                                <div class="divTableCell divTableColor"><span id="cameraZoom">0</span></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.viewX += 10; camera.viewY += 10; document.getElementById('cameraZoom').innerText = camera.viewX">-</button></div>
+                                <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.viewX -= 10; camera.viewY -= 10; document.getElementById('cameraZoom').innerText = camera.viewX">+</button></div>
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="camera.viewX = 1000">Reset option</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -158,12 +158,12 @@ const drawing = {
         if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
             for (let wall of walls) {
                 if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
-                if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold) {
+                if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x)) < this.snappingThreshold && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y)) < this.snappingThreshold) {
                     mouse.x = cameraOffsetX(wall.pos.x);
                     mouse.y = cameraOffsetY(wall.pos.y);
                 }
-                if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
-                    mouse.x = cameraOffsetY(wall.pos.x + wall.dir.x);
+                if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
+                    mouse.x = cameraOffsetX(wall.pos.x + wall.dir.x);
                     mouse.y = cameraOffsetY(wall.pos.y + wall.dir.y);
                 }
             }
@@ -171,32 +171,31 @@ const drawing = {
     },
     stop() {
         if (this.isDrawing && (Math.abs(this.startpos.x - mouse.x) > 10 || Math.abs(this.startpos.y - mouse.y) > 10)) {
-            newWall = { "pos": {"x": this.startpos.x,
-                                "y": this.startpos.y },
-                        "dir": {"x": mouse.x - this.startpos.x,
-                                "y": mouse.y - this.startpos.y }
+            newWall = { "pos": {"x": cameraCanvasOffsetX(this.startpos.x),
+                                "y": cameraCanvasOffsetY(this.startpos.y) },
+                        "dir": {"x": cameraCanvasOffsetX(mouse.x) - cameraCanvasOffsetX(this.startpos.x),
+                                "y": cameraCanvasOffsetY(mouse.y) - cameraCanvasOffsetY(this.startpos.y) }
             }
             let intCount = 0;
             walls.forEach(wall => {
                 if (isIntersectionVectors(wall, newWall)) {
                     intCount ++;
+                    console.log(wall, newWall)
                 };
-                if (Math.abs(mouse.x - wall.pos.x) < this.snappingThreshold/3 && Math.abs(mouse.y - wall.pos.y) < this.snappingThreshold/3) {
+                if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x)) < this.snappingThreshold / 3 && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y)) < this.snappingThreshold/3) {
                     mouse.x = cameraOffsetX(wall.pos.x);
                     mouse.y = cameraOffsetY(wall.pos.y);
                     intCount = 0;
-                    
                 }
-                if (Math.abs(mouse.x - (wall.pos.x + wall.dir.x)) < this.snappingThreshold/3 && Math.abs(mouse.y - (wall.pos.y + wall.dir.y)) < this.snappingThreshold/3) {
+                if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x + wall.dir.x)) < this.snappingThreshold / 3 && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y + wall.dir.y)) < this.snappingThreshold/3) {
                     mouse.x = cameraOffsetY(wall.pos.x + wall.dir.x);
                     mouse.y = cameraOffsetY(wall.pos.y + wall.dir.y);
                     intCount = 0;
-                    
                 }
             });
             if (intCount == 0) { //2DDraw
-                walls.push(new Boundary(cameraOffsetX(this.startpos.x), cameraOffsetY(this.startpos.y),
-                                        cameraOffsetX(mouse.x), cameraOffsetY(mouse.y),
+                walls.push(new Boundary(cameraCanvasOffsetX(this.startpos.x), cameraCanvasOffsetY(this.startpos.y),
+                                        cameraCanvasOffsetX(mouse.x), cameraCanvasOffsetY(mouse.y),
                                         document.getElementById("colorpick").value,
                                         parseFloat(parseInt(document.getElementById("sliderOpacity").value)/100),
                                         document.getElementById("sliderH0").value,

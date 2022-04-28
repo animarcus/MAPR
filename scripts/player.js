@@ -32,7 +32,7 @@ class Player {
         // ctx.fillStyle = 'white';
         // ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
 
-        ellipse(this.pos.x, this.pos.y, 7, 7, "orange"); //2DDraw
+        ellipse(cameraOffsetX(this.pos.x), cameraOffsetY(this.pos.y), 7, 7, "orange"); //2DDraw
 
 
         // line(this.pos.x, this.pos.y, this.pos.x + (this.dir.x) * 100, this.pos.y + (this.dir.y) * 100, 'white', 1);

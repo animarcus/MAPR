@@ -4,6 +4,7 @@ const camera = {
     "viewX": 1000,
     "viewY": 1000
 }
+// Values displayed on html, is modified to appear more logical
 
 // class Camera {
 //     constructor(x, y, viewX, viewY = viewX) {
@@ -15,9 +16,27 @@ const camera = {
 // }
 
 function cameraOffsetX(x) {
-    return (camera.x + x)*canvas2D.width/camera.viewX;
+    const relative = x - camera.x;
+    const a = canvas2D.width / camera.viewX;
+    const res = a * relative + canvas2D.width / 2;
+    return res;
 }
 
 function cameraOffsetY(y) {
-    return (camera.y + y)*canvas2D.width/camera.viewY;
+    const relative = y - camera.y;
+    const a = canvas2D.height / camera.viewY;
+    const res = a * relative + canvas2D.height / 2;
+    return res;
+}
+
+function cameraCanvasOffsetX(x) {
+    const a = camera.viewX / canvas2D.width;
+    const res = a * x - camera.viewX/2 + camera.x;
+    return res;
+}
+
+function cameraCanvasOffsetY(y) {
+    const a = camera.viewY / canvas2D.height;
+    const res = a * y - camera.viewY/2 + camera.y;
+    return res;
 }

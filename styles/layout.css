@@ -25,6 +25,10 @@ html, body {
     overflow: hidden;
 }
 
+.monospaceText {
+    font-family: monospace;
+}
+
 .no-touch {
     touch-action: none;
     -webkit-user-select: none; /* Safari */
@@ -263,10 +267,13 @@ input[type="color"]::-webkit-color-swatch {
     }
 }
 @media (max-width: 850px) {
+    #canvas3D {
+        max-height: 400px;
+    }
     .container {
         display: grid;
         grid-template-columns: 65% auto;
-        grid-template-rows: 75% auto;
+        grid-template-rows: 65% auto;
         grid-template-areas:
             "perspective flatview"
             "controls controls";
