@@ -43,16 +43,22 @@ function v1HigherThanv2(w1, w2) {
                       "dir": {  "x": w2.h.x * w2.h.dist - w2.p.x * w2.p.dist,
                                 "y": w2.h.y * w2.h.dist - w2.p.y * w2.p.dist }};
 
-    let alpha, beta
-    if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.p, w2.p.dist))) {
-        alpha = vectorAngleBetween(vectorMult(w1.p, w1.p.dist), W1ptoW1h.dir)
-        beta = vectorAngleBetween(vectorMult(w1.p, w1.p.dist), W2ptoW2h.dir)
-    } else if (isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.h, w2.h.dist))) {
-        alpha = vectorAngleBetween(vectorMult(w1.h, w1.h.dist), W1HtoW1P)
-        beta = vectorAngleBetween(vectorMult(w1.h, w1.h.dist), W2HtoW2P)
+
+    const W2p = {
+        "x": player.pos.x + w2.p.dist * w2.p.x,
+        "y": player.pos.y + w2.p.dist * w2.p.y
     }
-    if ((alpha > 0 && beta > 0) || (alpha < 0 && beta < 0)) {
-        return Math.abs(alpha) < Math.abs(beta)
+    const W2h = {
+        "x": player.pos.x + w2.h.dist * w2.h.x,
+        "y": player.pos.y + w2.h.dist * w2.h.y
+    }
+
+    if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.p, w2.p.dist)) && isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.h, w2.h.dist))) {
+        return isClockwiseOrder(W1ptoW1h.dir, vectorSubtract(W2p, W1ptoW1h.pos)) && isClockwiseOrder(W1ptoW1h.dir, vectorSubtract(W2h, W1ptoW1h.pos));
+    } else if (isSame(vectorMult(w1.p, w1.p.dist), vectorMult(w2.p, w2.p.dist))) {
+        return isClockwiseOrder(W1ptoW1h.dir, W2ptoW2h.dir);
+    } else if (isSame(vectorMult(w1.h, w1.h.dist), vectorMult(w2.h, w2.h.dist))) {
+        return !isClockwiseOrder(W1HtoW1P, W2HtoW2P);
     }
 
     const PltoW1P = { "pos": {  "x": player.pos.x,
@@ -68,10 +74,6 @@ function v1HigherThanv2(w1, w2) {
                     "y": player.pos.y + w1.p.dist * w1.p.y}
     const W1h = {   "x": player.pos.x + w1.h.dist * w1.h.x,
                     "y": player.pos.y + w1.h.dist * w1.h.y}
-    const W2p = {   "x": player.pos.x + w2.p.dist * w2.p.x,
-                    "y": player.pos.y + w2.p.dist * w2.p.y}
-    const W2h = {   "x": player.pos.x + w2.h.dist * w2.h.x,
-                    "y": player.pos.y + w2.h.dist * w2.h.y}
     
     return  isIntersectionVectors(PltoW1P, W2ptoW2h) ||
             isIntersectionVectors(PltoW1H, W2ptoW2h) ||

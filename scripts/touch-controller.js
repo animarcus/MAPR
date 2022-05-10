@@ -63,7 +63,7 @@ if (isTouchScreen) {
             if (
                 pointer.x > button.x && pointer.x < button.x + button.width &&
                 pointer.y > button.y && pointer.y < button.y + button.height) {
-                keysPressed[button.key] = false
+                keysPressed[button.key.toLowerCase()] = false
             }
         }
     }
@@ -108,11 +108,11 @@ function renderButtons() {
 
 function detectButtons() {
     for (let button of buttons) {
-        keysPressed[button.key] = false
+        keysPressed[button.key.toLowerCase()] = false
         if (
             pointer.x > button.x && pointer.x < button.x + button.width &&
             pointer.y > button.y && pointer.y < button.y + button.height) {
-            keysPressed[button.key] = true
+            keysPressed[button.key.toLowerCase()] = true
         }
     }
 }

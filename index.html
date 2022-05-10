@@ -36,12 +36,24 @@
             </div>
             <div class="sceneSettings">
                 <div class="scene">
+                    <span class="sectionText"> Current rule: <br>
+                                                <div id="currentRuleContainer">
+                                                    <div id="currentRule">Nothing</div>
+                                                </div> </span>
                     <span class="sectionText"> SET SCENE </span>
                     <div class="tablemobile divTable">
                         <div class="divTableBody">
                             <!-- <div class="divTableRow">
                                 <div class="divTableCell"><button class="normalButton" onclick='copyWallsCode()'> (temporary) Copy current selection to clipboard !!!!!!</button></div>
                             </div> -->
+                            <div class="divTableRow">
+                                <div class="divTableCell">
+                                    <div class="miniDiv">
+                                        <button class="normalButton levelButton" onclick='loadScene("blank")'> Blank Scene </button>
+                                        <img class="miniImg" src="./img/Minimap/blank.png">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="divTableRow">
                                 <div class="divTableCell">
                                     <div class="miniDiv">
@@ -192,15 +204,14 @@
                                 <div class="divTableCell divTableColor"><span id="cameraX">0</span></div>
                                 <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.x += 10; document.getElementById('cameraX').innerText = -camera.x">-</button></div>
                                 <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.x -= 10; document.getElementById('cameraX').innerText = -camera.x">+</button></div>
-                                <div class="divTableCell divTableColor"><button class="resetButton"
-                                        onclick="camera.x = 0">Reset option</button></div>
+                                <div class="divTableCell divTableColor"></div>
                             </div>
                             <div class="divTableRow">
                                 <div class="divTableCell divTableColor">Camera Y</div>
                                 <div class="divTableCell divTableColor"><span id="cameraY">0</span></div>
                                 <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.y += 10; document.getElementById('cameraY').innerText = -camera.y">-</button></div>
                                 <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.y -= 10; document.getElementById('cameraY').innerText = -camera.y">+</button></div>
-                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="camera.y = 0">Reset option</button>
+                                <div class="divTableCell divTableColor"></div>
                                 </div>
                             </div>
                             <div class="divTableRow">
@@ -208,8 +219,13 @@
                                 <div class="divTableCell divTableColor"><span id="cameraZoom">0</span></div>
                                 <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.viewX += 10; camera.viewY += 10; document.getElementById('cameraZoom').innerText = camera.viewX">-</button></div>
                                 <div class="divTableCell divTableColor"><button class="normalButton" onclick="camera.viewX -= 10; camera.viewY -= 10; document.getElementById('cameraZoom').innerText = camera.viewX">+</button></div>
-                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="camera.viewX = 1000">Reset option</button>
-                                </div>
+                                <div class="divTableCell divTableColor"></div>
+                            </div><div class="divTableRow">
+                                <div class="divTableCell divTableColor"><button class="resetButton" onclick="changeSetting('camera')">Reset camera</button></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
+                                <div class="divTableCell divTableColor"></div>
                             </div>
                         </div>
                     </div>
@@ -229,6 +245,7 @@
     <script src="scripts/graph.js"></script>
     <script src="scripts/topoSorting.js"></script>
     <script src="scripts/scenes.js"></script>
+    <script src="scripts/rules.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 </html>

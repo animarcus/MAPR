@@ -68,9 +68,9 @@ const handlers = {
     }
 };
 
-document.onkeyup = (e) => delete keysPressed[e.key];
+document.onkeyup = (e) => delete keysPressed[e.key.toLowerCase()];
 document.onkeydown = (e) => {
-    keysPressed[e.key] = true;
+    keysPressed[e.key.toLowerCase()] = true;
     e.preventDefault()
 }
 
@@ -86,7 +86,7 @@ canvas2D.addEventListener("pointerdown", (e) => {
     if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
         drawing.startpos.x = mouse.x;
         drawing.startpos.y = mouse.y;
-        if (keysPressed["Shift"]) {
+        if (keysPressed["shift"]) {
             for (let wall of walls) {
                 if (Math.abs(mouse.x - wall.pos.x) < drawing.snappingThreshold && Math.abs(mouse.y - wall.pos.y) < drawing.snappingThreshold) {
                     drawing.startpos.x = wall.pos.x;
@@ -107,7 +107,6 @@ canvas2D.addEventListener("pointerdown", (e) => {
 document.addEventListener('pointerup', (e) => {
     handlers.unclick(e)
     e.preventDefault(e)
-    // document.querySelector(":root").style.setProperty('--pink', '#FDCFF3') //////////////////
 });
 
 
@@ -120,23 +119,18 @@ const drawing = {
         'y' : undefined
     },
     start() {
-
-        set2Dctx();
-        circle(this.startpos.x, this.startpos.y, 5)
-        if (this.isDrawing) circle(mouse.x, mouse.y, 5)
-        set3Dctx();
         if (currentCooldown <= 0) currentCooldown = cooldown;
         if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown--;
         
         if (!this.isDrawing) {
-            if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["Shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
+            if (((keysPressed["control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
                 undoWall = false;
                 currentCooldown = cooldown - 1;
                 // console.log("undioing") // TEST
                 wallCount --;
                 wallsTemp.push(walls.pop());
             }
-            if (((keysPressed["Control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["Shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
+            if (((keysPressed["control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
                 redoWall = false;
                 currentCooldown = cooldown - 1;
                 // console.log("REDO") // TEST
@@ -144,25 +138,35 @@ const drawing = {
             }
         }
         if (this.isDrawing) {
-            if (keysPressed["Shift"]) {
+            if (keysPressed["shift"]) {
                 this.snapping();
+            }
+            if (keysPressed["f"]) {
+                if (Math.abs(this.startpos.x - mouse.x) < 5) {
+                    mouse.x = this.startpos.x;
+                }
+                if (Math.abs(this.startpos.y - mouse.y) < 5) {
+                    mouse.y = this.startpos.y;
+                }
             }
             set2Dctx();
             line(this.startpos.x, this.startpos.y, mouse.x, mouse.y, color.pink, 3); //2DDraw
             set3Dctx();
         }
+        set2Dctx();
+        circle(this.startpos.x, this.startpos.y, 5)
+        if (this.isDrawing) circle(mouse.x, mouse.y, 5)
+        set3Dctx();
     },
-    snappingThreshold : 15,
+    snappingThreshold : 10,
     snapping() {
-
         if (mouse.x < canvas2D.width && mouse.x > 0 && mouse.y < canvas2D.height && mouse.y > 0) {
             for (let wall of walls) {
-                if (Math.abs(mouse.x - this.startpos.x) < this.snappingThreshold && Math.abs(mouse.y - this.startpos.y) < this.snappingThreshold) return
-                if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x)) < this.snappingThreshold && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y)) < this.snappingThreshold) {
+                if (Math.abs(mouse.x - cameraOffsetX(wall.pos.x)) < this.snappingThreshold && Math.abs(mouse.y - cameraOffsetY(wall.pos.y)) < this.snappingThreshold) {
                     mouse.x = cameraOffsetX(wall.pos.x);
                     mouse.y = cameraOffsetY(wall.pos.y);
                 }
-                if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
+                if (Math.abs(mouse.x - cameraOffsetX(wall.pos.x + wall.dir.x)) < this.snappingThreshold && Math.abs(mouse.y - cameraOffsetY(wall.pos.y + wall.dir.y)) < this.snappingThreshold) {
                     mouse.x = cameraOffsetX(wall.pos.x + wall.dir.x);
                     mouse.y = cameraOffsetY(wall.pos.y + wall.dir.y);
                 }
@@ -178,9 +182,9 @@ const drawing = {
             }
             let intCount = 0;
             walls.forEach(wall => {
-                if (isIntersectionVectors(wall, newWall)) {
+                if (isIntersectionVectors(wall, newWall) &&   !(isSame(wall.pos, newWall.pos)                         || isSame(vectorAdd(wall.pos, wall.dir), newWall.pos) ||
+                                                                isSame(wall.pos, vectorAdd(newWall.pos, newWall.dir)) || isSame(vectorAdd(wall.pos, wall.dir), vectorAdd(newWall.pos, newWall.dir)))) {
                     intCount ++;
-                    console.log(wall, newWall)
                 };
                 if (Math.abs(cameraCanvasOffsetX(mouse.x) - cameraOffsetX(wall.pos.x)) < this.snappingThreshold / 3 && Math.abs(cameraCanvasOffsetY(mouse.y) - cameraOffsetY(wall.pos.y)) < this.snappingThreshold/3) {
                     mouse.x = cameraOffsetX(wall.pos.x);
@@ -316,6 +320,19 @@ function changeSetting(sliderId, sliderValue = -1) {
                 }
             }
             break;
+        case "camera":
+            if (sliderValue == -1) {
+                changeSetting(sliderId, defaults[sliderId]);
+                break;
+            }
+            camera.x = sliderValue['x'];
+            camera.y = sliderValue['y'];
+            camera.viewX = sliderValue['viewX'];
+            camera.viewY = sliderValue['viewY'];
+            document.getElementById('cameraX').innerText = camera.x;
+            document.getElementById('cameraY').innerText = -camera.y;
+            document.getElementById('cameraZoom').innerText = Math.round((camera.viewX + camera.viewY)/2);
+            break;
     }
 }
 
@@ -330,4 +347,7 @@ function loadDefaults() {
     changeSetting("sliderOpacity", defaults["sliderOpacity"]);
     changeSetting("changeAll", -1);
     changeSetting("randomColor", -1);
+    changeSetting("camera", defaults["camera"]);
+    // currentRule = 
+    currentRule = rules[defaults["currentRule"]]
 }

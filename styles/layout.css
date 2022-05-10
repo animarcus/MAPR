@@ -29,6 +29,24 @@ html, body {
     font-family: monospace;
 }
 
+#currentRuleContainer {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#currentRule {
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    color: #a81515;
+    padding: 10px 0px 0px 0px;
+    /* word-wrap: break-word; */
+    /* width: 50%; */
+    text-align: center;
+}
+
 .no-touch {
     touch-action: none;
     -webkit-user-select: none; /* Safari */
@@ -156,7 +174,7 @@ html, body {
     word-spacing: 2px;
     color: #000000;
     font-weight: 700;
-    text-decoration: underline rgb(68, 68, 68);
+    /* text-decoration: underline rgb(68, 68, 68); */
     font-style: normal;
     font-variant: normal;
     text-transform: none;

@@ -1,3 +1,5 @@
 .VSCodeCounter
 raycasting.code-workspace
 links.txt
+.vscode
+*.txt

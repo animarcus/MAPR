@@ -59,9 +59,16 @@ function vectorAngleBetween(a, b) {
     // angles are calculated using | adjacent / hypothenuse
     // hypothenuse is 1 because v1/v1 was normalized (no denominator)
     // adjacent is v1/v1 projected onto the dir for the adjacent side of the triangle (or relative to the other v1/v2)
+    let dista = vectorDist(a.x, a.y)
+    let distb = vectorDist(b.x, b.y)
+    // console.log(dista, distb, b)
+    if (dista <= 0.1) dista = 0.5;
+    if (distb <= 0.1) distb = 0.5;
+    // console.log(dista, distb)
 
-    const v1 = vectorNormalize(a, vectorDist(a.x, a.y))
-    const v2 = vectorNormalize(b, vectorDist(b.x, b.y))
+    const v1 = vectorNormalize(a, dista)
+    const v2 = vectorNormalize(b, distb)
+    // console.log(v1, v2)
 
     let angle = Math.acos(vectorDotProduct(v1, v2))
     if (!isClockwiseOrder(a, b)) angle = -angle

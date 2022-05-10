@@ -1,5 +1,5 @@
 class Boundary {
-    constructor(x1, y1, x2, y2, hex="#FF0000", opacity=0.5, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
+    constructor(x1, y1, x2, y2, hex="#FF0000", opacity=1, height0=document.getElementById("sliderH0").value, height1=document.getElementById("sliderH1").value) {
         this.pos = {
             'x': x1,
             'y': y1
@@ -32,10 +32,55 @@ class Boundary {
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.font = "30px Arial";
             ctx.fillStyle = 'white';
-            ctx.fillText(this.index, (this.pos.x*2 + this.dir.x)/2 - 10, canvas2D.height - (this.pos.y*2 + this.dir.y)/2 - 10);
+            ctx.fillText(this.index, cameraOffsetX((this.pos.x * 2 + this.dir.x) / 2) - 10, canvas2D.height - cameraOffsetY((this.pos.y * 2 + this.dir.y)/2));
             ctx.restore();
         }
         set3Dctx();
+    }
+
+    willCollideAfterMove(dir, step, radius) {
+        const C = vectorAdd(player.pos, vectorMult(dir, step));
+        const A = this.pos
+        const B = vectorAdd(this.pos, this.dir)
+
+        const AC = vectorSubtract(C, A);
+        const AB = this.dir;
+        const BC = vectorSubtract(C, B);
+
+        if (vectorDist(AC.x, AC.y) <= radius || vectorDist(BC.x, BC.y) <= radius) {
+            return true;
+        }
+
+        // https://en.wikipedia.org/wiki/Vector_projection projecting AC on AB, gives magnitude of b of where new point lies
+        const d = vectorDotProduct(AC, AB) / vectorDotProduct(AB, AB)
+        if (d >= 1 || d < 0) return false;
+        const proj = vectorCreate(A.x + d * AB.x, A.y + d * AB.y)
+        const DC = vectorSubtract(C, proj);
+        const l = vectorDist(DC.x, DC.y);
+        if (l <= radius) return true;
+        return false;
+    }
+    collidesWithCircle(radius) {
+        const C = player.pos;
+        const A = this.pos
+        const B = vectorAdd(this.pos, this.dir)
+
+        const AC = vectorSubtract(C, A);
+        const AB = this.dir;
+        const BC = vectorSubtract(C, B);
+
+        if (vectorDist(AC.x, AC.y) <= radius || vectorDist(BC.x, BC.y) <= radius) {
+            return true;
+        }
+
+        // https://en.wikipedia.org/wiki/Vector_projection projecting AC on AB, gives magnitude of b of where new point lies
+        const d = vectorDotProduct(AC, AB) / vectorDotProduct(AB, AB)
+        if (d > 1 || d < 0) return false;
+        const proj = vectorCreate(A.x + d * AB.x, A.y + d * AB.y)
+        const DC = vectorSubtract(C, proj);
+        const l = vectorDist(DC.x, DC.y);
+        if (l <= radius) return true;
+        return false;
     }
 
     isInsideFOV() {
@@ -52,11 +97,12 @@ class Boundary {
         this.p.dist = Math.sqrt((this.p.x) ** 2 + (this.p.y) ** 2);
         this.h.dist = Math.sqrt((this.h.x) ** 2 + (this.h.y) ** 2);
 
+
         if ((isIntersectionFovW(player.fov.v1, this) || isIntersectionFovW(player.fov.v2, this)) ||
             (isClockwiseOrder(player.fov.v1.dir, this.p) && !isClockwiseOrder(player.fov.v2.dir, this.p) &&
             isClockwiseOrder(player.fov.v1.dir, this.h) && !isClockwiseOrder(player.fov.v2.dir, this.h) 
-            // && (this.p.dist <= player.fov.v1.dir.length*2 && this.p.dist <= player.fov.v2.dir.length*2) &&
-            // (this.h.dist <= player.fov.v1.dir.length*2 && this.h.dist <= player.fov.v2.dir.length*2)
+            && (this.p.dist <= player.farSight && this.p.dist <= player.farSight) &&
+            (this.h.dist <= player.farSight && this.h.dist <= player.farSight)
             )
         ) return true;
     }
@@ -100,6 +146,9 @@ class Boundary {
     calculate3D() {
         const fovamount = player.fov.xamount;
 
+        if (this.p.dist <= 0.1) this.p.dist = 0.1;
+        if (this.h.dist <= 0.1) this.h.dist = 0.1;
+
         this.p = vectorNormalize(this.p);
         this.h = vectorNormalize(this.h);
         const dir = vectorNormalize(player.dir, Math.sqrt((player.dir.y) ** 2 + (player.dir.x) ** 2));
@@ -130,7 +179,7 @@ class Boundary {
     display3D() {
         const maxl = 0;
         const minl = -0.75; // maximum darkness for color
-        const a = camera.viewX/1.2; // distance until it gets completely darkened
+        const a = camera.viewX*1.3; // distance until it gets completely darkened
         const n = 2 // if pair, makes the curves more "square"
 
         // function determined with https://math.stackexchange.com/questions/2170013/looking-for-a-decreasing-function-which-initially-decreases-slowly-and-then-decr
@@ -145,6 +194,7 @@ class Boundary {
         const grd = ctx.createLinearGradient(this.x1 + canvas.width / 2, canvas.height / 2,
                     this.x2 + canvas.width / 2, canvas.height / 2);
 
+        // console.log(this.hex)
         grd.addColorStop(0, shadeHexColor(this.hex, L1));
         grd.addColorStop(1, shadeHexColor(this.hex, L2));
         ctx.fillStyle = grd;
@@ -198,4 +248,53 @@ function hslToHex(h, s, l) {
         return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
     };
     return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0, g = 0, b = 0;
+    if (H.length == 4) {
+        r = "0x" + H[1] + H[1];
+        g = "0x" + H[2] + H[2];
+        b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+        r = "0x" + H[1] + H[2];
+        g = "0x" + H[3] + H[4];
+        b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r, g, b),
+        cmax = Math.max(r, g, b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+
+    if (delta == 0)
+        h = 0;
+    else if (cmax == r)
+        h = ((g - b) / delta) % 6;
+    else if (cmax == g)
+        h = (b - r) / delta + 2;
+    else
+        h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0)
+        h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return {
+        "h": h,
+        "s": s,
+        "l": l
+    }
 }

@@ -3,7 +3,6 @@ handlers.updateCanvasSize();
 
 let wallCount = 0;
 const walls = [];
-const wallsTemp = [];
 let renderWalls = [];
 
 let showGraph = false;
@@ -20,13 +19,12 @@ const color = {
 const player = new Player(canvas2D.width/2, canvas2D.height/5, 90);
 player.fov.xamount =  55;
 
-
 player.setFOV();
 
 window.addEventListener("orientationchange", handlers.reloadCanvas, false);
 window.addEventListener("resize", handlers.reloadCanvas, false);
 
-
+let showCoords = false;
 let show2D = true;
 let show2D2 = false;
 let showWallNums = false;
@@ -36,6 +34,13 @@ let sortedActive = true;
 let randomColor = false;
 
 const defaults = {
+    "currentRule": rules.Nothing.name,
+    "camera": {
+        "x": 0,
+        "y": 0,
+        "viewX": 500,
+        "viewY": 500
+    },
     "changeAll": true,
     "colorpick": "#ff0000",
     "randomColor": false,
@@ -55,7 +60,7 @@ if (prevScene) {
     importWalls(prevScene);
     localStorage.removeItem("prevScene");
 } else {
-    loadScene("heightShowcase");
+    loadScene("weirdCorridor");
 }
 
 window.requestAnimationFrame(gameLoop);
@@ -73,17 +78,21 @@ function gameLoop() {
         set2Dctx();
         player.draw();
         set3Dctx();
+    
     renderWalls.splice(0, renderWalls.length)
+    player.nearWalls.splice(0, player.nearWalls.length)
     walls.forEach(wall => {
         if (rainbowMode) {
-            if (wall.hue >= 255) wall.hue = -1;
-            wall.hue +=1;
+            wall.hsl = hexToHSL(wall.hex);
+            wall.hsl.h += 1;
+            wall.hex = hslToHex(wall.hsl.h, wall.hsl.s, wall.hsl.l)
         }
         if (show2D) {
             set2Dctx();
             wall.draw();
             set3Dctx();
         }
+        if (wall.collidesWithCircle(player.collisionDistance*2)) player.nearWalls.push(wall);
         if (wall.isInsideFOV()) {
             wall.processFOV();
             wall.calculate3D();
@@ -104,6 +113,8 @@ function gameLoop() {
             });
         }
     }
+
+    currentRule();
 
     drawing.start();
     touchControls();

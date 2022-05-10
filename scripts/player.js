@@ -5,6 +5,8 @@ class Player {
 
         this.height = 180; // height is in cm
 
+        this.nearWalls = []
+        this.collisionDistance = 5;
         this.farSight = 1000
         this.moveStep = 1;
         this.lookStepH = 1;
@@ -29,21 +31,22 @@ class Player {
     }
 
     draw() {
-        // ctx.fillStyle = 'white';
-        // ctx.fillRect(this.pos.x - 5, this.pos.y - 5, 10, 10);
+        ellipse(cameraOffsetX(this.pos.x), cameraOffsetY(this.pos.y), this.collisionDistance*1.5, this.collisionDistance*1.5, "orange"); //2DDraw
 
-        ellipse(cameraOffsetX(this.pos.x), cameraOffsetY(this.pos.y), 7, 7, "orange"); //2DDraw
-
-
+        if (showCoords) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'white';
+            ctx.fillText([Math.round(this.pos.x), Math.round(this.pos.y)], cameraOffsetX(this.pos.x - 30), canvas2D.height - cameraOffsetY(this.pos.y + 20));
+            ctx.restore();
+        }
         // line(this.pos.x, this.pos.y, this.pos.x + (this.dir.x) * 100, this.pos.y + (this.dir.y) * 100, 'white', 1);
 
         this.fov.v1.draw('orange', 3); // green
 
         this.fov.v2.draw("orange", 3); // green
     }
-
-
-
     setAngle(angle) { //input is in degrees but handled in radians
         this.rotation = radians(angle);
         if (this.rotation > 2 * Math.PI) this.rotation -= 2 * Math.PI;
@@ -78,25 +81,37 @@ class Player {
             this.vertRotation = angle
 
             let newTranslate = (100 / 7) * (degrees(this.vertRotation) + 10) - 1000 / 7
-            // console.log(degrees(this.vertRotation) + angle, angle, newTranslate)
             ctx.translate(0, this.fov.currentTranslate - newTranslate); // up: -1000 // down: 1000
             this.fov.currentTranslate = newTranslate
         }
     }
     sideMove(step) {
+        for (const wall of this.nearWalls) {
+            if (wall.willCollideAfterMove(vectorCreate(-this.dir.y, this.dir.x), step/2, this.collisionDistance)) {
+                return;
+            }
+        }
         this.pos.x += -step * this.dir.y/2;
         this.pos.y += step * this.dir.x/2;
-        this.setFOV();
+        this.setFOVPos();
     }
     straightMove(step) {
+        for (const wall of this.nearWalls) {
+            if (wall.willCollideAfterMove(this.dir, step, this.collisionDistance)) {
+                return;
+            }
+        }
         this.pos.x += step * this.dir.x;
         this.pos.y += step * this.dir.y;
-        this.setFOV();
+        this.setFOVPos();
     }
 
     setFOV() {
         this.fov.v1.setAngle(degrees(this.rotation) + this.fov.xamount / 2);
         this.fov.v2.setAngle(degrees(this.rotation) - this.fov.xamount / 2);
+    }
+
+    setFOVPos() {
         this.fov.v1.pos = this.pos;
         this.fov.v2.pos = this.pos;
     }
@@ -107,12 +122,21 @@ class Player {
         this.fov.v2 = new Ray(this.pos.x, this.pos.y, degrees(this.rotation) - this.fov.xamount / 2, this.farSight);
     }
 }
-let timer = 0
-let timer1, timer2
+
+let viewTimer = 0;
+const viewTimerMax = 10;
+const controlStep = Math.PI/10;
 const playerHandler = {
     movement() {
+        if (viewTimer > 0) viewTimer--;
+        // console.log(viewTimer)
+        
         if (keysPressed[" "]) {
-            player.moveStep = 2.5;
+            player.moveStep = 3;
+            player.lookStepH = 1.6;
+        } else {
+            player.lookStepH = 1.2;
+            player.moveStep = 1.6;
         }
         if (keysPressed.w) {
             player.straightMove(player.moveStep);
@@ -126,20 +150,30 @@ const playerHandler = {
         if (keysPressed.d) {
             player.sideMove(-player.moveStep);
         }
-        if (keysPressed.ArrowUp) {
+        if (keysPressed.arrowup) {
             player.verticalLook(player.lookStepV);
         }
-        if (keysPressed.ArrowDown) {
+        if (keysPressed.arrowdown) {
             player.verticalLook(-player.lookStepV);
         }
-        if (keysPressed.ArrowLeft) {
+
+        if (keysPressed.arrowleft && keysPressed.control && viewTimer == 0) {
+            viewTimer = viewTimerMax;
+            player.rotation = player.rotation - (player.rotation % controlStep);
+            player.sideLook(degrees(controlStep));
+        }
+        if (keysPressed.arrowleft && !keysPressed.control) {
             player.sideLook(player.lookStepH);
         }
-        if (keysPressed.ArrowRight) {
+
+        if (keysPressed.arrowright && keysPressed.control && viewTimer == 0) {
+            viewTimer = viewTimerMax;
+            player.rotation = player.rotation - (player.rotation % controlStep);
+            player.sideLook(degrees(-controlStep));
+        }
+        if (keysPressed.arrowright && !keysPressed.control) {
             player.sideLook(-player.lookStepH);
         }
-        
-        player.moveStep = 1.4;
     }
 };
 

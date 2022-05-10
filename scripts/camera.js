@@ -15,6 +15,7 @@ const camera = {
 //     }
 // }
 
+// adapts absolute coords to Canvas x coords
 function cameraOffsetX(x) {
     const relative = x - camera.x;
     const a = canvas2D.width / camera.viewX;
@@ -22,6 +23,7 @@ function cameraOffsetX(x) {
     return res;
 }
 
+// adapts absolute coords to Canvas Y coords
 function cameraOffsetY(y) {
     const relative = y - camera.y;
     const a = canvas2D.height / camera.viewY;
@@ -29,12 +31,14 @@ function cameraOffsetY(y) {
     return res;
 }
 
+// adapts Canvas Y coords to absolute coords
 function cameraCanvasOffsetX(x) {
     const a = camera.viewX / canvas2D.width;
     const res = a * x - camera.viewX/2 + camera.x;
     return res;
 }
 
+// adapts Canvas Y coords to absolute coords
 function cameraCanvasOffsetY(y) {
     const a = camera.viewY / canvas2D.height;
     const res = a * y - camera.viewY/2 + camera.y;
