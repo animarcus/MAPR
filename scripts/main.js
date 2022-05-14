@@ -2,6 +2,7 @@
 handlers.updateCanvasSize();
 
 let wallCount = 0;
+const wallsTemp = [];
 const walls = [];
 let renderWalls = [];
 
@@ -34,7 +35,7 @@ let sortedActive = true;
 let randomColor = false;
 
 const defaults = {
-    "currentRule": rules.Nothing.name,
+    "currentRule": rules.nothing.name,
     "camera": {
         "x": 0,
         "y": 0,
@@ -60,9 +61,12 @@ if (prevScene) {
     importWalls(prevScene);
     localStorage.removeItem("prevScene");
 } else {
-    loadScene("weirdCorridor");
+    // loadScene("rotatingScene");
+    loadScene("infiniteCorridor");
+    // loadScene("weirdCorridor");
 }
 
+// document.getElementById("canvas2D").style.display = "none"
 window.requestAnimationFrame(gameLoop);
 
 function gameLoop() {

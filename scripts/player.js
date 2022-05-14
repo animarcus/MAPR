@@ -9,7 +9,7 @@ class Player {
         this.collisionDistance = 5;
         this.farSight = 1000
         this.moveStep = 1;
-        this.lookStepH = 1;
+        this.lookStepH = 200;
         this.lookStepV = 1;
         this.pos = {
             'x': x,

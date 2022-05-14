@@ -1,4 +1,30 @@
+function rotatingScene() {
+    defaults['currentRule'] = rules.rotatingScene.name;
+
+    defaults['sliderH0'] = 0;
+    defaults['sliderH1'] = 300;
+    defaults['sliderFovx'] = 55;
+    defaults['sliderFovy'] = 280;
+    defaults['sliderOpacity'] = 100;
+    defaults['changeAll'] = false;
+    loadDefaults();
+    walls.push(new Boundary(-50, 0, 50, 0, "#80ff00", 1, 0, 300));
+    player.pos.x = 0;
+    player.pos.y = -200;
+    player.rotation = Math.PI/2;
+    player.setAngle(degrees(player.rotation));
+    player.setFarSight(1000);
+    player.setVerticalLook(0);
+}
+
 function exampleScene() {
+    defaults['currentRule'] = rules.nothing.name;
+
+    defaults['camera']['x'] = 0;
+    defaults['camera']['y'] = -10;
+    defaults['camera']['viewX'] = 820;
+    defaults['camera']['viewY'] = 820;
+
     defaults['sliderH0'] = 0;
     defaults['sliderH1'] = 300;
     defaults['sliderFovx'] = 55;
@@ -83,7 +109,7 @@ function exampleScene() {
 }
 
 function colorsScene() {
-    currentLevel = () => { }
+    defaults['currentRule'] = rules.nothing.name;
 
     defaults['camera']['x'] = 0;
     defaults['camera']['y'] = 0;
@@ -149,14 +175,14 @@ function colorsScene() {
     player.pos.x = 0;
     player.pos.y = 0;
     player.rotation = -4.677482395344825;
-    player.setAngle(degrees(-4.677482395344825));
+    player.setAngle(degrees(player.rotation));
     player.setFarSight(1000);
 
     player.setVerticalLook(0);
 }
 
 function allExamples() {
-    currentLevel = () => { }
+    defaults['currentRule'] = rules.nothing.name;
 
     defaults['sliderH0'] = 265;
     defaults['sliderH1'] = 325;
@@ -195,13 +221,15 @@ function allExamples() {
     player.pos.x = -321.61806132741674;
     player.pos.y = -283.6216289689288;
     player.rotation = 1.0297442586766583;
-    player.setAngle(degrees(1.0297442586766583));
+    player.setAngle(degrees(player.rotation));
     player.setFarSight(1000);
     player.setVerticalLook(0);
 
 }
 
 function heightShowcase() {
+    defaults['currentRule'] = rules.nothing.name;
+
     defaults['camera']['x'] = 0;
     defaults['camera']['y'] = -50;
     defaults['camera']['viewY'] = 940;
@@ -260,14 +288,15 @@ function heightShowcase() {
     player.pos.x = 163;
     player.pos.y = 479;
     player.rotation = 4;
-    player.setAngle(degrees(4));
+    player.setAngle(degrees(player.rotation));
     player.setFarSight(2000);
     player.setVerticalLook(0);
 
 }
 
 function roomShow() {
-    currentLevel = () => { }
+    defaults['currentRule'] = rules.nothing.name;
+
     defaults['camera']['x'] = 0;
     defaults['camera']['y'] = -30;
     defaults['camera']['viewY'] = 870;
@@ -280,16 +309,16 @@ function roomShow() {
     defaults['sliderOpacity'] = 100;
     defaults['changeAll'] = false;
     loadDefaults();
-    walls.push(new Boundary(-370, 390, -370, -360, "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(-370, 390, -370, 50, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-370, 390, 380, 390, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(380, -260, 380, 390, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-220, -260, 380, -260, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-270, 290, -270, -360, "#8dbfbc", 1, 0, 900));
+    walls.push(new Boundary(-270, 290, -270, 50, "#8dbfbc", 1, 0, 900));
+    // walls.push(new Boundary(-255, 50, -270, 50, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-70, 240, -70, 290, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-220, 240, -70, 240, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-220, 240, -220, -260, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-270, 290, -70, 290, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-220, -260, -270, -360, "#8dbfbc", 1, 0, 900));
     walls.push(new Boundary(-90, 134, -66, 147, "#80450d", 1, 0, 600));
     walls.push(new Boundary(-66, 147, -53, 125, "#80450d", 1, 0, 600));
     walls.push(new Boundary(-53, 125, -76, 111, "#80450d", 1, 0, 600));
@@ -333,15 +362,17 @@ function roomShow() {
     walls.push(new Boundary(337, -95, 312, -146, "#4440bf", 1, 280, 999));
     walls.push(new Boundary(291, -189, 267, -237, "#4440bf", 1, 280, 999));
     walls.push(new Boundary(335, -72, 251, -249, "#4440bf", 1, 29, 128));
-    player.pos.x = -345;
-    player.pos.y = -465;
-    player.rotation = 1.4032447186034411;
-    player.setAngle(degrees(1.4032447186034411));
+    player.pos.x = -320;
+    player.pos.y = -40;
+    player.rotation = Math.PI/2;
+    player.setAngle(degrees(player.rotation));
     player.setFarSight(2000);
     player.setVerticalLook(0);
 }
 
 function mainPic() {
+    defaults['currentRule'] = rules.nothing.name;
+
     defaults['camera']['x'] = 0;
     defaults['camera']['y'] = 180;
     defaults['camera']['viewY'] = 450;
@@ -365,12 +396,14 @@ function mainPic() {
     player.pos.x = 0;
     player.pos.y = 0;
     player.rotation = 1.5707963267948966;
-    player.setAngle(degrees(1.5707963267948966));
+    player.setAngle(degrees(player.rotation));
     player.setFarSight(1000);
     player.setVerticalLook(0);
 }
 
 function testScene() {
+    defaults['currentRule'] = rules.nothing.name;
+
     defaults['sliderH0'] = 0;
     defaults['sliderH1'] = 300;
     defaults['sliderFovx'] = 65;
@@ -391,6 +424,8 @@ function testScene() {
 }
 
 function weirdCorridor() {
+    defaults['currentRule'] = rules.weirdCorridor.name;
+
     defaults['camera']['x'] = 0;
     defaults['camera']['y'] = 0;
     defaults['camera']['viewX'] = 600;
@@ -421,11 +456,70 @@ function weirdCorridor() {
     walls.push(new Boundary(180, 0, 110, 0, "#fff200"));
     walls.push(new Boundary(110, 0, 110, 70, "#6f00ff"));
 
-    currentRule = rules.weirdCorridor;
-
     player.pos.x = -100;
     player.pos.y = -250;
-    player.setAngle(90);
+    player.rotation = Math.PI/2;
+    player.setAngle(degrees(player.rotation));
+}
+
+function infiniteCorridor() {
+
+    defaults['currentRule'] = rules.infiniteCorridor.name;
+
+    defaults['camera']['x'] = 0;
+    defaults['camera']['y'] = 0;
+    defaults['camera']['viewX'] = 600;
+    defaults['camera']['viewY'] = 600;
+    loadDefaults();
+    
+        // bottom left
+    walls.push(new Boundary(-250, -250, -40, -250 , "#ff0000")); // 0
+    walls.push(new Boundary(-40, -250, -40, -40   , "#ffa500")); // 1
+    walls.push(new Boundary(-250, -40, -40, -40   , "#ffa500")); // 2
+    walls.push(new Boundary(-250, -250, -250, -40 , "#ff0000")); // 3
+
+    walls.push(new Boundary(-180, -180, -110, -180, "#ff0000")); // 4
+    walls.push(new Boundary(-110, -180, -110, -110, "#ffa500")); // 5
+    walls.push(new Boundary(-110, -110, -180, -110, "#ffa500")); // 6
+    walls.push(new Boundary(-180, -110, -180, -180, "#ff0000")); // 7
+
+        // bottom right
+    walls.push(new Boundary(40, -250, 250, -250   , "#ffa500")); // 8
+    walls.push(new Boundary(250, -250, 250, -40   , "#008000")); // 9
+    walls.push(new Boundary(40, -40, 250, -40     , "#008000")); // 10
+    walls.push(new Boundary(40, -250, 40, -40     , "#ffa500")); // 11
+
+    walls.push(new Boundary(110, -180, 180, -180  , "#ffa500")); // 12
+    walls.push(new Boundary(180, -180, 180, -110  , "#008000")); // 13
+    walls.push(new Boundary(180, -110, 110, -110  , "#008000")); // 14
+    walls.push(new Boundary(110, -110, 110, -180  , "#ffa500")); // 15
+        // top right
+    walls.push(new Boundary(40, 40, 250, 40       , "#008000")); // 16
+    walls.push(new Boundary(250, 40, 250, 250     , "#0000ff")); // 17
+    walls.push(new Boundary(40, 250, 250, 250     , "#0000ff")); // 18
+    walls.push(new Boundary(40, 40, 40, 250       , "#008000")); // 19
+
+    walls.push(new Boundary(110, 110, 180, 110    , "#008000")); // 20
+    walls.push(new Boundary(180, 110, 180, 180    , "#0000ff")); // 21
+    walls.push(new Boundary(180, 180, 110, 180    , "#0000ff")); // 22
+    walls.push(new Boundary(110, 180, 110, 110    , "#008000")); // 23
+        // top left
+    walls.push(new Boundary(-250, 40, -40, 40     , "#0000ff")); // 24
+    walls.push(new Boundary(-40, 110, -40, 250, "#ff0000")); // 25
+    // walls.push(new Boundary(-40, 180, -40, 250, "#ff0000")); // 25
+    walls.push(new Boundary(-250, 250, -40, 250   , "#ff0000")); // 26
+    walls.push(new Boundary(-250, 40, -250, 250   , "#0000ff")); // 27
+
+    walls.push(new Boundary(-180, 110, -110, 110  , "#0000ff")); // 28
+    walls.push(new Boundary(-110, 110, -110, 180  , "#ff0000")); // 29
+    walls.push(new Boundary(-110, 180, -180, 180  , "#ff0000")); // 40
+    walls.push(new Boundary(-180, 180, -180, 110  , "#0000ff")); // 31
+    
+    // walls.push(new Boundary(50, -600, 50, 1200));
+
+    
+    player.pos.x = -215;
+    player.pos.y = -215;
 }
 
 
@@ -529,7 +623,7 @@ function copyWallsCode() {
     walls.forEach(w => {
         tmp = tmp + `walls.push(new Boundary(${w.pos.x}\t, ${w.pos.y}\t, ${w.pos.x + w.dir.x}\t, ${w.pos.y + w.dir.y}, "${w.hex}", ${w.opacity}, ${w.height0}, ${w.height1}));\n`
     });
-    tmp = tmp + `player.pos.x = ${player.pos.x};\nplayer.pos.y = ${player.pos.y};\nplayer.rotation = ${player.rotation};\nplayer.setAngle(degrees(${player.rotation}));\nplayer.setFarSight(${player.farSight});\nplayer.setVerticalLook(${player.vertRotation});\n`
+    tmp = tmp + `player.pos.x = ${player.pos.x};\nplayer.pos.y = ${player.pos.y};\nplayer.rotation = ${player.rotation};\nplayer.setAngle(degrees(player.rotation));\nplayer.setFarSight(${player.farSight});\nplayer.setVerticalLook(${player.vertRotation});\n`
     console.log(tmp);
     navigator.clipboard.writeText(tmp)
 }
@@ -540,9 +634,12 @@ function loadScene(sceneName) {
     player.setFarSight(1000);
     switch (sceneName) {
         case "blank":
-            currentRule = rules.Nothing;
+            currentRule = rules.nothing;
             clearWalls();
             resetPlayer();
+            break;
+        case "rotatingScene":
+            rotatingScene();
             break;
         case "example":
             exampleScene();
@@ -573,6 +670,9 @@ function loadScene(sceneName) {
             break;
         case "weirdCorridor":
             weirdCorridor();
+            break;
+        case "infiniteCorridor":
+            infiniteCorridor();
             break;
     }
     player.setFOVPos();

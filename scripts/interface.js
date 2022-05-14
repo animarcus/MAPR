@@ -123,14 +123,14 @@ const drawing = {
         if (currentCooldown > 0 && currentCooldown < cooldown) currentCooldown--;
         
         if (!this.isDrawing) {
-            if (((keysPressed["control"] && (keysPressed["z"] || keysPressed["Z"]) && !keysPressed["shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
+            if (((keysPressed["control"] && (keysPressed["z"]) && !keysPressed["shift"]) || undoWall) && currentCooldown == cooldown && walls.length > 0) { //control-Z
                 undoWall = false;
                 currentCooldown = cooldown - 1;
                 // console.log("undioing") // TEST
                 wallCount --;
                 wallsTemp.push(walls.pop());
             }
-            if (((keysPressed["control"] && (keysPressed["z"] || keysPressed["Z"]) && keysPressed["shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
+            if (((keysPressed["control"] && (keysPressed["z"]) && keysPressed["shift"]) || redoWall) && currentCooldown == cooldown && wallsTemp.length > 0) { //control-Z
                 redoWall = false;
                 currentCooldown = cooldown - 1;
                 // console.log("REDO") // TEST
@@ -154,7 +154,7 @@ const drawing = {
             set3Dctx();
         }
         set2Dctx();
-        circle(this.startpos.x, this.startpos.y, 5)
+        // circle(this.startpos.x, this.startpos.y, 5)
         if (this.isDrawing) circle(mouse.x, mouse.y, 5)
         set3Dctx();
     },
