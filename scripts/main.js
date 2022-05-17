@@ -62,7 +62,7 @@ if (prevScene) {
     localStorage.removeItem("prevScene");
 } else {
     // loadScene("rotatingScene");
-    loadScene("infiniteCorridor");
+    loadScene("mainPic");
     // loadScene("weirdCorridor");
 }
 
