@@ -64,7 +64,7 @@ if (prevScene) {
     
     // loadScene("forest");
     // loadScene("rotatingScene");
-    // loadScene("infiniteCorridor");
+    loadScene("mainPic");
     // loadScene("weirdCorridor");
 }
 loadDefaults();
