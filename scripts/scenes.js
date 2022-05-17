@@ -1,4 +1,5 @@
 function rotatingScene() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.rotatingScene.name;
 
     defaults['sliderH0'] = 0;
@@ -18,6 +19,7 @@ function rotatingScene() {
 }
 
 function exampleScene() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['camera']['x'] = 0;
@@ -109,6 +111,7 @@ function exampleScene() {
 }
 
 function colorsScene() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['camera']['x'] = 0;
@@ -182,6 +185,7 @@ function colorsScene() {
 }
 
 function allExamples() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['sliderH0'] = 265;
@@ -228,6 +232,7 @@ function allExamples() {
 }
 
 function heightShowcase() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['camera']['x'] = 0;
@@ -294,83 +299,98 @@ function heightShowcase() {
 
 }
 
-function roomShow() {
+function forest() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
-
-    defaults['camera']['x'] = 0;
-    defaults['camera']['y'] = -30;
-    defaults['camera']['viewY'] = 870;
-    defaults['camera']['viewX'] = 870;
-
-    defaults['sliderH0'] = 0;
-    defaults['sliderH1'] = 300;
+    defaults['camera']['x'] = 50;
+    defaults['camera']['y'] = -20;
+    defaults['camera']['viewX'] = 860;
+    defaults['camera']['viewY'] = 860;
+    
+    defaults['sliderH0'] = 376;
+    defaults['sliderH1'] = 625;
     defaults['sliderFovx'] = 55;
     defaults['sliderFovy'] = 280;
     defaults['sliderOpacity'] = 100;
     defaults['changeAll'] = false;
     loadDefaults();
-    walls.push(new Boundary(-370, 390, -370, 50, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-370, 390, 380, 390, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(380, -260, 380, 390, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-220, -260, 380, -260, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-270, 290, -270, 50, "#8dbfbc", 1, 0, 900));
-    // walls.push(new Boundary(-255, 50, -270, 50, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-70, 240, -70, 290, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-220, 240, -70, 240, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-220, 240, -220, -260, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-270, 290, -70, 290, "#8dbfbc", 1, 0, 900));
-    walls.push(new Boundary(-90, 134, -66, 147, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-66, 147, -53, 125, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-53, 125, -76, 111, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-76, 111, -90, 134, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(132, 121, 149, 142, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(149, 142, 177, 150, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(177, 150, 206, 135, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(206, 135, 204, 120, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(204, 120, 188, 98, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(188, 98, 159, 95, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(159, 95, 137, 104, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(137, 104, 132, 121, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-142, -139, -120, -120, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-120, -120, -84, -116, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-84, -116, -62, -136, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-62, -136, -67, -166, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-67, -166, -88, -185, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-88, -185, -117, -183, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-117, -183, -141, -162, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-141, -162, -142, -139, "#80450d", 1, 0, 600));
-    walls.push(new Boundary(-76, 99, -37, 123, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-37, 123, -62, 166, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-62, 166, -104, 141, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-104, 141, -76, 99, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(124, 121, 131, 99, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(131, 99, 157, 88, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(157, 88, 191, 92, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(191, 92, 213, 115, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(213, 115, 214, 138, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(214, 138, 177, 160, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(177, 160, 145, 149, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(145, 149, 124, 121, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-120, -113, -81, -109, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-81, -109, -54, -134, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-54, -134, -59, -168, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-59, -168, -83, -192, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-83, -192, -122, -190, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-122, -190, -148, -164, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-148, -164, -149, -135, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(-149, -135, -120, -113, "#3ab20c", 1, 250, 600));
-    walls.push(new Boundary(337, -95, 312, -146, "#4440bf", 1, 280, 999));
-    walls.push(new Boundary(291, -189, 267, -237, "#4440bf", 1, 280, 999));
-    walls.push(new Boundary(335, -72, 251, -249, "#4440bf", 1, 29, 128));
-    player.pos.x = -320;
-    player.pos.y = -40;
-    player.rotation = Math.PI/2;
+
+    walls.push(new Boundary(-90	, 134	, -66	, 147, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-66	, 147	, -53	, 125, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-53	, 125	, -76	, 111, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-76	, 111	, -90	, 134, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(132	, 121	, 149	, 142, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(149	, 142	, 177	, 150, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(177	, 150	, 206	, 135, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(206	, 135	, 204	, 120, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(204	, 120	, 188	, 98, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(188	, 98	, 159	, 95, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(159	, 95	, 137	, 104, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(137	, 104	, 132	, 121, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-142	, -139	, -120	, -120, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-120	, -120	, -84	, -116, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-84	, -116	, -62	, -136, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-62	, -136	, -67	, -166, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-67	, -166	, -88	, -185, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-88	, -185	, -117	, -183, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-117	, -183	, -141	, -162, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-141	, -162	, -142	, -139, "#80450d", 1, 0, 600));
+    walls.push(new Boundary(-76	, 99	, -37	, 123, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-37	, 123	, -62	, 166, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-62	, 166	, -104	, 141, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-104	, 141	, -76	, 99, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(124	, 121	, 131	, 99, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(131	, 99	, 157	, 88, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(157	, 88	, 191	, 92, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(191	, 92	, 213	, 115, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(213	, 115	, 214	, 138, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(214	, 138	, 177	, 160, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(177	, 160	, 145	, 149, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(145	, 149	, 124	, 121, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-120	, -113	, -81	, -109, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-81	, -109	, -54	, -134, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-54	, -134	, -59	, -168, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-59	, -168	, -83	, -192, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-83	, -192	, -122	, -190, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-122	, -190	, -148	, -164, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-148	, -164	, -149	, -135, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(-149	, -135	, -120	, -113, "#3ab20c", 1, 250, 600));
+    walls.push(new Boundary(152	, -237	, 174	, -203, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(174	, -203	, 224	, -205, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(224	, -205	, 241	, -244, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(241	, -244	, 225	, -272, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(225	, -272	, 187	, -281, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(187	, -281	, 158	, -267, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(158	, -267	, 152	, -237, "#bd6e00", 1, 0, 557));
+    walls.push(new Boundary(165	, -192	, 204	, -184, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(204	, -184	, 246	, -200, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(246	, -200	, 258	, -242, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(258	, -242	, 242	, -285, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(242	, -285	, 199	, -302, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(199	, -302	, 160	, -290, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(160	, -290	, 140	, -256, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(140	, -256	, 140	, -225, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(140	, -225	, 165	, -192, "#0eb930", 1, 297, 670));
+    walls.push(new Boundary(212	, -180	, 239	, -190, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(249	, -202	, 258	, -232, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(259	, -249	, 248	, -279, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(226	, -293	, 207	, -303, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(181	, -300	, 164	, -295, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(149	, -283	, 137	, -267, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(133	, -247	, 133	, -228, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(139	, -210	, 155	, -192, "#0eb930", 1, 376, 625));
+    walls.push(new Boundary(173	, -181	, 186	, -181, "#0eb930", 1, 376, 625));
+
+    player.pos.x = 284;
+    player.pos.y = 460;
+    player.rotation = -2.0245819323134246;
     player.setAngle(degrees(player.rotation));
     player.setFarSight(2000);
     player.setVerticalLook(0);
 }
 
 function mainPic() {
+    defaults['2DVisible'] = false;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['camera']['x'] = 0;
@@ -402,6 +422,7 @@ function mainPic() {
 }
 
 function testScene() {
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['sliderH0'] = 0;
@@ -424,6 +445,7 @@ function testScene() {
 }
 
 function weirdCorridor() {
+    defaults['2DVisible'] = false;
     defaults['currentRule'] = rules.weirdCorridor.name;
 
     defaults['camera']['x'] = 0;
@@ -463,7 +485,7 @@ function weirdCorridor() {
 }
 
 function infiniteCorridor() {
-
+    defaults['2DVisible'] = false;
     defaults['currentRule'] = rules.infiniteCorridor.name;
 
     defaults['camera']['x'] = 0;
@@ -533,6 +555,7 @@ function clearWalls() {
 
 function importWalls(imported) {
     clearWalls();
+    defaults['2DVisible'] = imported['2DVisible']
     defaults['currentRule'] = imported['currentRule']
     defaults['camera']['x'] = imported['camera']['x'];
     defaults['camera']['y'] = imported['camera']['y'];
@@ -566,6 +589,7 @@ function importWalls(imported) {
 }
 function exportWalls() {
     tmp = {
+        "2DVisible": show2DCanvas,
         "currentRule": currentRule.name,
         "camera": {
             "x": camera.x,
@@ -607,7 +631,8 @@ function exportWalls() {
 }
 
 function copyWallsCode() {
-    tmp = "defaults['currentRule'] = '" + currentRule.name + "';\n" +
+    tmp = "defaults['2DVisible'] = '" + show2DCanvas + "';\n" +
+        "defaults['currentRule'] = '" + currentRule.name + "';\n" +
         "defaults['camera']['x'] = " + camera.x + ";\n" +
         "defaults['camera']['y'] = " + camera.y + ";\n" +
         "defaults['camera']['viewX'] = " + camera.viewX + ";\n" +
@@ -647,9 +672,6 @@ function loadScene(sceneName) {
         case "colors":
             colorsScene();
             break;
-        case "penis":
-            penislol();
-            break;
         case "allExamples":
             allExamples();
             break;
@@ -662,8 +684,8 @@ function loadScene(sceneName) {
         case "heightShowcase":
             heightShowcase();
             break;
-        case "roomShow":
-            roomShow();
+        case "forest":
+            forest();
             break;
         case "testScene":
             testScene();

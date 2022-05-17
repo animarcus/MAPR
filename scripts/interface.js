@@ -25,6 +25,17 @@ function expand() {
     }
 }
 
+let show2DCanvas = true;
+function set2DVisibility(state) {
+    if (state) {
+        document.getElementById("canvas2D").style.display = "block"
+        show2DCanvas = !show2DCanvas;
+    } else {
+        document.getElementById("canvas2D").style.display = "none"
+        show2DCanvas = !show2DCanvas;
+    }
+}
+
 let undoWall = false;
 let redoWall = false;
 const cooldown = 15;
@@ -154,8 +165,11 @@ const drawing = {
             set3Dctx();
         }
         set2Dctx();
-        // circle(this.startpos.x, this.startpos.y, 5)
-        if (this.isDrawing) circle(mouse.x, mouse.y, 5)
+        
+        if (this.isDrawing) {
+            circle(mouse.x, mouse.y, 5);
+            circle(this.startpos.x, this.startpos.y, 5);
+        }
         set3Dctx();
     },
     snappingThreshold : 10,
@@ -348,6 +362,6 @@ function loadDefaults() {
     changeSetting("changeAll", -1);
     changeSetting("randomColor", -1);
     changeSetting("camera", defaults["camera"]);
-    // currentRule = 
-    currentRule = rules[defaults["currentRule"]]
+    set2DVisibility(defaults['2DVisible']);
+    currentRule = rules[defaults["currentRule"]];
 }

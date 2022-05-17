@@ -52,7 +52,6 @@ const defaults = {
     "sliderFovy": player.fov.yamount
 }
 
-loadDefaults();
 
 let prevScene = localStorage.getItem("prevScene");
 if (prevScene) {
@@ -61,12 +60,15 @@ if (prevScene) {
     importWalls(prevScene);
     localStorage.removeItem("prevScene");
 } else {
+    loadScene("mainPic");
+    
+    // loadScene("forest");
     // loadScene("rotatingScene");
-    loadScene("infiniteCorridor");
+    // loadScene("infiniteCorridor");
     // loadScene("weirdCorridor");
 }
+loadDefaults();
 
-// document.getElementById("canvas2D").style.display = "none"
 window.requestAnimationFrame(gameLoop);
 
 function gameLoop() {
