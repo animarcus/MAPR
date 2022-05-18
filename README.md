@@ -4,6 +4,27 @@ Stands for **M**arcus' **A**lgorithm for **P**seudo-3D **R**endering
 
 ---
 
+## Structure
+
+- index.html
+- scripts/
+  - main.js
+  - scenes.js
+  - rules.js
+  - x.js
+- styles/
+  - x.css
+
+## Custom levels
+
+The main page is contained on the [index.html](index.html) file.
+The main script running the game loop is [main.js](scripts/main.js). New levels (or scenes in the code) can be created with a function inside the [scenes.js](scripts/scenes.js) file. That function can be called inside the switch case statement of the `loadScene()` function. Then, in the [main.js](scripts/main.js) file, you can replace the loadScene string with whatever you include in it.
+To create custom rules for a level, take example of existing scene functions (the last two `infiniteCorridor() and weirdCorridor()` for example) to see how to reassign the `currentRule()` function. Inside the [rules.js](scripts/rules.js) file, you can add a custom function inside the rules object. That function's name is the one you assign to `currentRule()` inside [scenes.js](scripts/scenes.js).
+
+I have plans to create proper documentation in the future, but this might help with creating some custom levels.
+
+---
+
 This project was created for a high school graduation project and it's based on a pseudo-3D way of rendering called [Raycasting](https://en.wikipedia.org/wiki/Ray_casting). While I started out implementing it, I ended up not liking the way it looked so I set out to create my own technique for rendering. I also decided to create a cool acronym for it, because it is a whole new method I have yet to come across. Hence, the name MAPR. ([Also the domain name for the web site](https://mapr.me/))
 
 I wrote a full report about how all the features work in french. [It can be found here](https://github.com/animarcus/raycasting/tree/main/dossierEcrit). The folder includes a markdown file that I used to convert into a pdf with Pandoc. I plan on translating the whole document but I do not have the time yet.

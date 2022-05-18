@@ -64,7 +64,6 @@ if (prevScene) {
     
     // loadScene("forest");
     // loadScene("rotatingScene");
-    loadScene("mainPic");
     // loadScene("weirdCorridor");
 }
 loadDefaults();

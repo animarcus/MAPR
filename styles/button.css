@@ -24,6 +24,13 @@
 	top:1px;
 }
 
+.toggle2DButton {
+	background:linear-gradient(to bottom, #ffdada 5%, #ff9c9c 100%);
+}
+.toggle2DButton:hover {
+	background:linear-gradient(to bottom, #ffe4e4 5%, #ffabab 100%);
+}
+
 .levelButton {
 	width: 100%;
 }

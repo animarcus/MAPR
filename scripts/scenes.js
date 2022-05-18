@@ -390,7 +390,7 @@ function forest() {
 }
 
 function mainPic() {
-    defaults['2DVisible'] = false;
+    defaults['2DVisible'] = true;
     defaults['currentRule'] = rules.nothing.name;
 
     defaults['camera']['x'] = 0;
@@ -544,8 +544,7 @@ function infiniteCorridor() {
     player.pos.y = -215;
 }
 
-
-
+// SCENE FUNCTIONS STOP HERE
 
 function clearWalls() {
     renderWalls.splice(0, renderWalls.length);
