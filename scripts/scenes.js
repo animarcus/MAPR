@@ -452,6 +452,13 @@ function weirdCorridor() {
     defaults['camera']['y'] = 0;
     defaults['camera']['viewX'] = 600;
     defaults['camera']['viewY'] = 600;
+    
+    defaults['sliderH0'] = 0;
+    defaults['sliderH1'] = 300;
+    defaults['sliderFovx'] = 55;
+    defaults['sliderFovy'] = 280;
+    defaults['sliderOpacity'] = 100;
+    defaults['changeAll'] = false;
     loadDefaults();
 
     // rectangle
@@ -492,6 +499,13 @@ function infiniteCorridor() {
     defaults['camera']['y'] = 0;
     defaults['camera']['viewX'] = 600;
     defaults['camera']['viewY'] = 600;
+    
+    defaults['sliderH0'] = 0;
+    defaults['sliderH1'] = 300;
+    defaults['sliderFovx'] = 55;
+    defaults['sliderFovy'] = 280;
+    defaults['sliderOpacity'] = 100;
+    defaults['changeAll'] = false;
     loadDefaults();
     
         // bottom left
