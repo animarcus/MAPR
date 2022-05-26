@@ -2,6 +2,22 @@
 
 Stands for **M**arcus' **A**lgorithm for **P**seudo-3D **R**endering
 
+I have created my own **3D rendering engine** from scratch. It takes a birds-eye view of a level filled with walls and it renders a first-person perspective from the players position.
+
+This project is made with **no dependencies** whatsoever. Everything you see on the page was created by me. I've worked on this for almost two years and I am continuously adding features and improvements for it.
+
+It runs in any web browser and it is compatible with touch screen devices.
+
+![Screenshot of the web page](./img/PageScreenshot/webpage.png)
+
+---
+
+## Documentation
+
+Since I submitted this project as a high school graduation project, I wrote some documentation explaining how the engine works. It was originally written in french but I have translated in english too. Both PDFs can be found under [/documentation](./documentation/) ([/documentation](./documentation/mapr_en.pdf) and [/documentation](./documentation/mapr_fr.pdf))
+
+I had to write it for non tech-savy people so some of the explanations can seem rather basic. In the future, I am planning on rewriting better documentation with more code-oriented explanations.
+
 ---
 
 ## Structure
@@ -16,6 +32,8 @@ Stands for **M**arcus' **A**lgorithm for **P**seudo-3D **R**endering
   - x.css
 
 ## Custom levels
+
+If you want to create custom levels, download my code follow these instructions:
 
 The main page is contained on the [index.html](index.html) file.
 The main script running the game loop is [main.js](scripts/main.js). New levels (or scenes in the code) can be created with a function inside the [scenes.js](scripts/scenes.js) file. That function can be called inside the switch case statement of the `loadScene()` function. Then, in the [main.js](scripts/main.js) file, you can replace the loadScene string with whatever you include in it.
