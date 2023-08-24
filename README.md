@@ -14,7 +14,7 @@ It runs in any web browser and it is compatible with touch screen devices.
 
 ## Documentation
 
-Since I submitted this project as a high school graduation project, I wrote some documentation explaining how the engine works. It was originally written in french but I have translated in english too. Both PDFs can be found under [/documentation](./documentation/) ([/documentation](./documentation/mapr_en.pdf) and [/documentation](./documentation/mapr_fr.pdf))
+Since I submitted this project as a high school graduation project, I wrote some documentation explaining how the engine works. It was originally written in french but I have translated in english too. Both PDFs can be found under [/documentation/pdf](./documentation/pdf/) ([english version](./documentation/pdf/mapr_en.pdf) and [original french version](./documentation/pdf/mapr_fr.pdf))
 
 I had to write it for non tech-savy people so some of the explanations can seem rather basic. In the future, I am planning on rewriting better documentation with more code-oriented explanations.
 
@@ -27,9 +27,9 @@ I had to write it for non tech-savy people so some of the explanations can seem 
   - main.js
   - scenes.js
   - rules.js
-  - x.js
+  - *.js
 - styles/
-  - x.css
+  - *.css
 
 ## Custom levels
 
@@ -43,9 +43,7 @@ I have plans to create proper documentation in the future, but this might help w
 
 ---
 
-This project was created for a high school graduation project and it's based on a pseudo-3D way of rendering called [Raycasting](https://en.wikipedia.org/wiki/Ray_casting). While I started out implementing it, I ended up not liking the way it looked so I set out to create my own technique for rendering. I also decided to create a cool acronym for it, because it is a whole new method I have yet to come across. Hence, the name MAPR. ([Also the domain name for the web site](https://mapr.me/))
-
-I wrote a full report about how all the features work in french. [It can be found here](https://github.com/animarcus/raycasting/tree/main/dossierEcrit). The folder includes a markdown file that I used to convert into a pdf with Pandoc. I plan on translating the whole document but I do not have the time yet.
+This project was created for a high school graduation project and it's based on a pseudo-3D way of rendering called [Raycasting](https://en.wikipedia.org/wiki/Ray_casting). While I started out implementing it, I ended up not liking the way it looked so I set out to create my own technique for rendering. I also decided to create a cool acronym for it, because it is a whole new method I have yet to come across. Hence, the name MAPR. [See here for the live demo](https://animarcus.github.io/MAPR)
 
 ---
 

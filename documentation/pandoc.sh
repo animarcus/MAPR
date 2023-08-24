@@ -12,5 +12,5 @@ pandoc "$1" \
 	-V linkcolor:blue \
     -V geometry:a4paper \
     -V geometry:margin=1in \
-	-V lang=en \
+	-V lang=fr \
     -o "$2"
